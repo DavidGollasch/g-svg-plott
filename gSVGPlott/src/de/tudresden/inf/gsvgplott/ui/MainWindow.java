@@ -1,5 +1,11 @@
 package de.tudresden.inf.gsvgplott.ui;
 
+/**
+ * 
+ * @author David Gollasch
+ *
+ */
+
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
@@ -9,11 +15,15 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 
+import de.tudresden.inf.gsvgplott.data.Plotter;
+
 public class MainWindow {
 	
 	public static final String APP_NAME = "gSVGPlott";
 
 	protected Shell shlGsvgplott;
+	
+	private Plotter plotter;
 
 	/**
 	 * Launch the application.
@@ -26,6 +36,13 @@ public class MainWindow {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Constructor to initialize a new gSVGPlott Instance.
+	 */
+	public MainWindow() {
+		plotter = new Plotter();
 	}
 
 	/**
