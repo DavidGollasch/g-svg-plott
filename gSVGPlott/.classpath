@@ -16,5 +16,7 @@
 	<classpathentry kind="lib" path="/Applications/Eclipse KMCI/plugins/org.eclipse.ui.forms_3.6.100.v20140422-1825.jar" sourcepath="/Applications/Eclipse KMCI/plugins/org.eclipse.ui.forms_3.6.100.v20140422-1825.jar"/>
 	<classpathentry kind="lib" path="lib/svg-plott.jar"/>
 	<classpathentry kind="lib" path="lib/swing2swt.jar"/>
+	<classpathentry kind="lib" path="lib/forms-1.2.1.jar"/>
+	<classpathentry kind="lib" path="lib/MacWidgets.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -6,6 +6,8 @@ package de.tudresden.inf.gsvgplott.ui;
  *
  */
 
+import javax.swing.JFrame;
+
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
@@ -16,9 +18,12 @@ import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 
 import de.tudresden.inf.gsvgplott.data.Plotter;
+
 import org.eclipse.swt.browser.Browser;
+
 import swing2swt.layout.BorderLayout;
 import swing2swt.layout.BoxLayout;
+
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Label;
@@ -45,6 +50,9 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.widgets.TabItem;
+
+import com.explodingpixels.macwidgets.HudWindow;
+import org.eclipse.swt.custom.CTabItem;
 
 public class MainWindow {
 	
@@ -106,41 +114,36 @@ public class MainWindow {
 	 */
 	protected void createContents() {
 		shlGsvgplott = new Shell();
-		shlGsvgplott.setSize(new Point(1024, 600));
+		shlGsvgplott.setSize(new Point(1107, 650));
 		shlGsvgplott.setMinimumSize(new Point(500, 400));
 		shlGsvgplott.setText(MainWindow.APP_NAME);
 		shlGsvgplott.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
 		SashForm sashTopLevelColumns = new SashForm(shlGsvgplott, SWT.NONE);
+		sashTopLevelColumns.setFont(SWTResourceManager.getFont(".Helvetica Neue DeskInterface", 11, SWT.NORMAL));
 		
-		Group grpDataColumn = new Group(sashTopLevelColumns, SWT.NONE);
-		grpDataColumn.setFont(SWTResourceManager.getFont(".Helvetica Neue DeskInterface", 15, SWT.BOLD));
-		grpDataColumn.setText("Data");
-		grpDataColumn.setLayout(new FillLayout(SWT.HORIZONTAL));
-		
-		ScrolledComposite scrolledCompositeDataColumn = new ScrolledComposite(grpDataColumn, SWT.H_SCROLL | SWT.V_SCROLL);
+		ScrolledComposite scrolledCompositeDataColumn = new ScrolledComposite(sashTopLevelColumns, SWT.H_SCROLL | SWT.V_SCROLL);
 		scrolledCompositeDataColumn.setExpandVertical(true);
 		scrolledCompositeDataColumn.setExpandHorizontal(true);
 		
 		Composite compositeDataColumn = new Composite(scrolledCompositeDataColumn, SWT.NONE);
-		compositeDataColumn.setLayout(new FillLayout(SWT.HORIZONTAL));
+		compositeDataColumn.setLayout(new GridLayout(1, false));
 		
-		SashForm sashDataColumnRows = new SashForm(compositeDataColumn, SWT.BORDER | SWT.VERTICAL);
+		CLabel lblDataColumn = new CLabel(compositeDataColumn, SWT.NONE);
+		lblDataColumn.setFont(SWTResourceManager.getFont(".Helvetica Neue DeskInterface", 15, SWT.BOLD));
+		lblDataColumn.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		lblDataColumn.setText("Data");
 		
-		Composite compositeDataRow = new Composite(sashDataColumnRows, SWT.BORDER);
-		compositeDataRow.setLayout(new GridLayout(1, false));
-		
-		CLabel lblDataRowFunctions = new CLabel(compositeDataRow, SWT.NONE);
-		lblDataRowFunctions.setFont(SWTResourceManager.getFont(".Helvetica Neue DeskInterface", 11, SWT.BOLD));
-		lblDataRowFunctions.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		CLabel lblDataRowFunctions = new CLabel(compositeDataColumn, SWT.NONE);
+		lblDataRowFunctions.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		lblDataRowFunctions.setText("Functions");
 		
-		Label lblSepDataRowFunctions = new Label(compositeDataRow, SWT.SEPARATOR | SWT.HORIZONTAL);
+		Label lblSepDataRowFunctions = new Label(compositeDataColumn, SWT.SEPARATOR | SWT.HORIZONTAL | SWT.SHADOW_NONE);
 		lblSepDataRowFunctions.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		lblSepDataRowFunctions.setText("sep");
 		
-		Group grpDataRowFunction1 = new Group(compositeDataRow, SWT.NONE);
-		grpDataRowFunction1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		Group grpDataRowFunction1 = new Group(compositeDataColumn, SWT.NONE);
+		grpDataRowFunction1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		grpDataRowFunction1.setText("Function 1");
 		grpDataRowFunction1.setLayout(new GridLayout(3, false));
 		
@@ -163,63 +166,19 @@ public class MainWindow {
 		Button btnDRFRemove1 = new Button(compositeDRFControls1, SWT.FLAT);
 		btnDRFRemove1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		btnDRFRemove1.setText("-");
+		new Label(grpDataRowFunction1, SWT.NONE);
+		new Label(grpDataRowFunction1, SWT.NONE);
 		
-		ExpandBar expandBarDRF1Style = new ExpandBar(grpDataRowFunction1, SWT.NONE);
-		expandBarDRF1Style.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
-		
-		ExpandItem xpndtmDRFStyle1 = new ExpandItem(expandBarDRF1Style, SWT.NONE);
-		xpndtmDRFStyle1.setExpanded(true);
-		xpndtmDRFStyle1.setText("Style");
-		
-		Composite compositeDRFStyle1 = new Composite(expandBarDRF1Style, SWT.NONE);
-		xpndtmDRFStyle1.setControl(compositeDRFStyle1);
-		xpndtmDRFStyle1.setHeight(xpndtmDRFStyle1.getControl().computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
-		compositeDRFStyle1.setLayout(new GridLayout(4, false));
-		
-		CLabel lblDRFStyleScreen1 = new CLabel(compositeDRFStyle1, SWT.NONE);
-		lblDRFStyleScreen1.setText("Screen:");
-		
-		Combo comboDRFStyleScreenLType1 = new Combo(compositeDRFStyle1, SWT.READ_ONLY);
-		comboDRFStyleScreenLType1.setItems(new String[] {"----", "===="});
-		comboDRFStyleScreenLType1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		comboDRFStyleScreenLType1.select(0);
-		
-		Spinner spinnerDRFStyleScreenLWidth1 = new Spinner(compositeDRFStyle1, SWT.BORDER);
-		spinnerDRFStyleScreenLWidth1.setMinimum(1);
-		spinnerDRFStyleScreenLWidth1.setSelection(1);
-		
-		Combo comboDRFStyleScreenLColor1 = new Combo(compositeDRFStyle1, SWT.READ_ONLY);
-		comboDRFStyleScreenLColor1.setItems(new String[] {"black", "gray", "green", "red", "blue", "yellow", "white"});
-		comboDRFStyleScreenLColor1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		comboDRFStyleScreenLColor1.select(0);
-		
-		CLabel lblDRFStylePrint1 = new CLabel(compositeDRFStyle1, SWT.NONE);
-		lblDRFStylePrint1.setText("Print:");
-		
-		Combo comboDRFStylePrintLType1 = new Combo(compositeDRFStyle1, SWT.READ_ONLY);
-		comboDRFStylePrintLType1.setItems(new String[] {"----", "===="});
-		comboDRFStylePrintLType1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		comboDRFStylePrintLType1.select(0);
-		
-		Spinner spinnerDRFStylePrintLWidth1 = new Spinner(compositeDRFStyle1, SWT.BORDER);
-		spinnerDRFStylePrintLWidth1.setMinimum(1);
-		spinnerDRFStylePrintLWidth1.setSelection(1);
-		
-		Combo comboDRFStylePrintLColor1 = new Combo(compositeDRFStyle1, SWT.READ_ONLY);
-		comboDRFStylePrintLColor1.setItems(new String[] {"black", "gray", "green", "red", "blue", "yellow", "white"});
-		comboDRFStylePrintLColor1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		comboDRFStylePrintLColor1.select(0);
-		
-		CLabel lblDataRowMarkedpoints = new CLabel(compositeDataRow, SWT.NONE);
-		lblDataRowMarkedpoints.setFont(SWTResourceManager.getFont(".Helvetica Neue DeskInterface", 11, SWT.BOLD));
+		CLabel lblDataRowMarkedpoints = new CLabel(compositeDataColumn, SWT.NONE);
+		lblDataRowMarkedpoints.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		lblDataRowMarkedpoints.setText("Marked Points");
 		
-		Label lblSepMarkedpointsRow = new Label(compositeDataRow, SWT.SEPARATOR | SWT.HORIZONTAL);
-		lblSepMarkedpointsRow.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		Label lblSepMarkedpointsRow = new Label(compositeDataColumn, SWT.SEPARATOR | SWT.HORIZONTAL);
+		lblSepMarkedpointsRow.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		Group grpDataRowMarkedpointsPointList = new Group(compositeDataRow, SWT.NONE);
+		Group grpDataRowMarkedpointsPointList = new Group(compositeDataColumn, SWT.NONE);
+		grpDataRowMarkedpointsPointList.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		grpDataRowMarkedpointsPointList.setLayout(new GridLayout(3, false));
-		grpDataRowMarkedpointsPointList.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		grpDataRowMarkedpointsPointList.setText("Point List 1");
 		
 		CLabel lblDRMTitle1 = new CLabel(grpDataRowMarkedpointsPointList, SWT.NONE);
@@ -290,21 +249,19 @@ public class MainWindow {
 		btnDRMlistControlsRemove1.setLayoutData(gd_btnDRMlistControlsRemove1);
 		btnDRMlistControlsRemove1.setText("-");
 		new Label(grpDataRowMarkedpointsPointList, SWT.NONE);
-		sashDataColumnRows.setWeights(new int[] {1});
 		scrolledCompositeDataColumn.setContent(compositeDataColumn);
 		scrolledCompositeDataColumn.setMinSize(compositeDataColumn.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		
-		Group grpPlotoptionsColumn = new Group(sashTopLevelColumns, SWT.NONE);
-		grpPlotoptionsColumn.setFont(SWTResourceManager.getFont(".Helvetica Neue DeskInterface", 15, SWT.BOLD));
-		grpPlotoptionsColumn.setText("Plot Options");
-		grpPlotoptionsColumn.setLayout(new FillLayout(SWT.HORIZONTAL));
-		
-		ScrolledComposite scrolledCompositePlotoptionsColumn = new ScrolledComposite(grpPlotoptionsColumn, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		ScrolledComposite scrolledCompositePlotoptionsColumn = new ScrolledComposite(sashTopLevelColumns, SWT.H_SCROLL | SWT.V_SCROLL);
 		scrolledCompositePlotoptionsColumn.setExpandHorizontal(true);
 		scrolledCompositePlotoptionsColumn.setExpandVertical(true);
 		
 		Composite compositePlotoptionsColumn = new Composite(scrolledCompositePlotoptionsColumn, SWT.NONE);
 		compositePlotoptionsColumn.setLayout(new GridLayout(1, false));
+		
+		CLabel lblPlotoptionsColumn = new CLabel(compositePlotoptionsColumn, SWT.NONE);
+		lblPlotoptionsColumn.setFont(SWTResourceManager.getFont(".Helvetica Neue DeskInterface", 15, SWT.BOLD));
+		lblPlotoptionsColumn.setText("Plot Options");
 		
 		Group grpPlotoptionsGeneralRow = new Group(compositePlotoptionsColumn, SWT.NONE);
 		grpPlotoptionsGeneralRow.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -334,7 +291,7 @@ public class MainWindow {
 		btnPoGeneralShowGrid.setText("Show Grid");
 		
 		Group grpPlotoptionsXAxisRow = new Group(compositePlotoptionsColumn, SWT.NONE);
-		grpPlotoptionsXAxisRow.setLayout(new GridLayout(2, false));
+		grpPlotoptionsXAxisRow.setLayout(new GridLayout(4, false));
 		grpPlotoptionsXAxisRow.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		grpPlotoptionsXAxisRow.setText("X Axis");
 		
@@ -342,23 +299,20 @@ public class MainWindow {
 		lblPoXaxisTitle.setText("Title:");
 		
 		txtPoXaxisTitle = new Text(grpPlotoptionsXAxisRow, SWT.BORDER);
-		txtPoXaxisTitle.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		txtPoXaxisTitle.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		txtPoXaxisTitle.setToolTipText("Set x axis title");
 		
 		CLabel lblPoXaxisRange = new CLabel(grpPlotoptionsXAxisRow, SWT.NONE);
 		lblPoXaxisRange.setText("Range:");
 		
-		Composite compositePoXaxisRange = new Composite(grpPlotoptionsXAxisRow, SWT.BORDER);
-		compositePoXaxisRange.setLayout(new GridLayout(3, false));
-		
-		Spinner spinnerPoXaxisRangeFrom = new Spinner(compositePoXaxisRange, SWT.BORDER);
+		Spinner spinnerPoXaxisRangeFrom = new Spinner(grpPlotoptionsXAxisRow, SWT.BORDER);
 		spinnerPoXaxisRangeFrom.setMaximum(99999);
 		spinnerPoXaxisRangeFrom.setMinimum(-99999);
 		
-		CLabel lblPoXaxisRangeTo = new CLabel(compositePoXaxisRange, SWT.NONE);
+		CLabel lblPoXaxisRangeTo = new CLabel(grpPlotoptionsXAxisRow, SWT.NONE);
 		lblPoXaxisRangeTo.setText("to");
 		
-		Spinner spinnerPoXaxisRangeTo = new Spinner(compositePoXaxisRange, SWT.BORDER);
+		Spinner spinnerPoXaxisRangeTo = new Spinner(grpPlotoptionsXAxisRow, SWT.BORDER);
 		spinnerPoXaxisRangeTo.setMaximum(99999);
 		spinnerPoXaxisRangeTo.setMinimum(-99999);
 		
@@ -366,6 +320,7 @@ public class MainWindow {
 		lblPoXaxisDivisioning.setText("Divisioning:");
 		
 		Button btnPoXaxisPiDivisioning = new Button(grpPlotoptionsXAxisRow, SWT.CHECK);
+		btnPoXaxisPiDivisioning.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1));
 		btnPoXaxisPiDivisioning.setText("Pi Divisioning");
 		
 		CLabel lblPoXaxisHelplines = new CLabel(grpPlotoptionsXAxisRow, SWT.NONE);
@@ -373,34 +328,31 @@ public class MainWindow {
 		
 		txtPoXaxisHelplines = new Text(grpPlotoptionsXAxisRow, SWT.BORDER);
 		txtPoXaxisHelplines.setToolTipText("Enter y axis intersection points to define x axis helplines");
-		txtPoXaxisHelplines.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		txtPoXaxisHelplines.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		
 		Group grpPlotoptionsYAxisRow = new Group(compositePlotoptionsColumn, SWT.NONE);
 		grpPlotoptionsYAxisRow.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		grpPlotoptionsYAxisRow.setText("Y Axis");
-		grpPlotoptionsYAxisRow.setLayout(new GridLayout(2, false));
+		grpPlotoptionsYAxisRow.setLayout(new GridLayout(4, false));
 		
 		CLabel lblPoYaxisTitle = new CLabel(grpPlotoptionsYAxisRow, SWT.NONE);
 		lblPoYaxisTitle.setText("Title:");
 		
 		txtPoYaxisTitle = new Text(grpPlotoptionsYAxisRow, SWT.BORDER);
 		txtPoYaxisTitle.setToolTipText("Enter y axis title");
-		txtPoYaxisTitle.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		txtPoYaxisTitle.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		
 		CLabel lblPoYaxisRange = new CLabel(grpPlotoptionsYAxisRow, SWT.NONE);
 		lblPoYaxisRange.setText("Range:");
 		
-		Composite compositePoYaxisRange = new Composite(grpPlotoptionsYAxisRow, SWT.BORDER);
-		compositePoYaxisRange.setLayout(new GridLayout(3, false));
-		
-		Spinner spinnerPoYaxisRangeFrom = new Spinner(compositePoYaxisRange, SWT.BORDER);
+		Spinner spinnerPoYaxisRangeFrom = new Spinner(grpPlotoptionsYAxisRow, SWT.BORDER);
 		spinnerPoYaxisRangeFrom.setMaximum(99999);
 		spinnerPoYaxisRangeFrom.setMinimum(-99999);
 		
-		CLabel lblPoYaxisTo = new CLabel(compositePoYaxisRange, SWT.NONE);
+		CLabel lblPoYaxisTo = new CLabel(grpPlotoptionsYAxisRow, SWT.NONE);
 		lblPoYaxisTo.setText("to");
 		
-		Spinner spinnerPoYaxisTo = new Spinner(compositePoYaxisRange, SWT.BORDER);
+		Spinner spinnerPoYaxisTo = new Spinner(grpPlotoptionsYAxisRow, SWT.BORDER);
 		spinnerPoYaxisTo.setMaximum(99999);
 		spinnerPoYaxisTo.setMinimum(-99999);
 		
@@ -409,73 +361,66 @@ public class MainWindow {
 		
 		txtPoYaxisHelplines = new Text(grpPlotoptionsYAxisRow, SWT.BORDER);
 		txtPoYaxisHelplines.setToolTipText("Enter x axis intersection points to define y axis helplines");
-		txtPoYaxisHelplines.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		txtPoYaxisHelplines.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		
 		Group grpPlotoptionsIntegralAreaRow = new Group(compositePlotoptionsColumn, SWT.NONE);
 		grpPlotoptionsIntegralAreaRow.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		grpPlotoptionsIntegralAreaRow.setText("Integral Area");
-		grpPlotoptionsIntegralAreaRow.setLayout(new GridLayout(2, false));
+		grpPlotoptionsIntegralAreaRow.setLayout(new GridLayout(4, false));
 		
 		CLabel lblPoIntegralTitle = new CLabel(grpPlotoptionsIntegralAreaRow, SWT.NONE);
 		lblPoIntegralTitle.setText("Title:");
 		
 		txtPoIntegralTitle = new Text(grpPlotoptionsIntegralAreaRow, SWT.BORDER);
 		txtPoIntegralTitle.setToolTipText("Enter integral title");
-		txtPoIntegralTitle.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		txtPoIntegralTitle.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		
 		CLabel lblPoIntegralRange = new CLabel(grpPlotoptionsIntegralAreaRow, SWT.NONE);
 		lblPoIntegralRange.setText("Range:");
 		
-		Composite compositePoIntegralRange = new Composite(grpPlotoptionsIntegralAreaRow, SWT.BORDER);
-		compositePoIntegralRange.setLayout(new GridLayout(3, false));
-		
-		Spinner spinnerPoIntegralRangeFrom = new Spinner(compositePoIntegralRange, SWT.BORDER);
+		Spinner spinnerPoIntegralRangeFrom = new Spinner(grpPlotoptionsIntegralAreaRow, SWT.BORDER);
 		spinnerPoIntegralRangeFrom.setMaximum(99999);
 		spinnerPoIntegralRangeFrom.setMinimum(-99999);
 		
-		CLabel lblPoIntegralRangeTo = new CLabel(compositePoIntegralRange, SWT.NONE);
+		CLabel lblPoIntegralRangeTo = new CLabel(grpPlotoptionsIntegralAreaRow, SWT.NONE);
 		lblPoIntegralRangeTo.setText("to");
 		
-		Spinner spinnerPoIntegralRangeTo = new Spinner(compositePoIntegralRange, SWT.BORDER);
+		Spinner spinnerPoIntegralRangeTo = new Spinner(grpPlotoptionsIntegralAreaRow, SWT.BORDER);
 		spinnerPoIntegralRangeTo.setMaximum(99999);
 		spinnerPoIntegralRangeTo.setMinimum(-99999);
 		
 		CLabel lblPoIntegralBordering = new CLabel(grpPlotoptionsIntegralAreaRow, SWT.NONE);
 		lblPoIntegralBordering.setText("Bordering:");
 		
-		Composite compositePoIntegralBordering = new Composite(grpPlotoptionsIntegralAreaRow, SWT.BORDER);
-		compositePoIntegralBordering.setLayout(new GridLayout(3, false));
-		
-		Combo comboPoIntegralBorderingFrom = new Combo(compositePoIntegralBordering, SWT.READ_ONLY);
+		Combo comboPoIntegralBorderingFrom = new Combo(grpPlotoptionsIntegralAreaRow, SWT.READ_ONLY);
 		comboPoIntegralBorderingFrom.setItems(new String[] {"A", "B", "C", "D"});
-		comboPoIntegralBorderingFrom.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		CLabel lblPoIntegralAnd = new CLabel(compositePoIntegralBordering, SWT.NONE);
+		CLabel lblPoIntegralAnd = new CLabel(grpPlotoptionsIntegralAreaRow, SWT.NONE);
 		lblPoIntegralAnd.setText("&&");
 		
-		Combo comboPoIntegralBorderingTo = new Combo(compositePoIntegralBordering, SWT.NONE);
+		Combo comboPoIntegralBorderingTo = new Combo(grpPlotoptionsIntegralAreaRow, SWT.READ_ONLY);
 		comboPoIntegralBorderingTo.setItems(new String[] {"x axis", "A", "B", "C", "D"});
-		comboPoIntegralBorderingTo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		comboPoIntegralBorderingTo.select(0);
 		scrolledCompositePlotoptionsColumn.setContent(compositePlotoptionsColumn);
 		scrolledCompositePlotoptionsColumn.setMinSize(compositePlotoptionsColumn.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		
-		Group grpPreviewoutputColumn = new Group(sashTopLevelColumns, SWT.NONE);
-		grpPreviewoutputColumn.setForeground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-		grpPreviewoutputColumn.setBackground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
-		grpPreviewoutputColumn.setFont(SWTResourceManager.getFont(".Helvetica Neue DeskInterface", 15, SWT.BOLD));
-		grpPreviewoutputColumn.setText("Preview &&& Output");
-		grpPreviewoutputColumn.setLayout(new FillLayout(SWT.HORIZONTAL));
-		
-		ScrolledComposite scrolledCompositePreviewoutputColumn = new ScrolledComposite(grpPreviewoutputColumn, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		ScrolledComposite scrolledCompositePreviewoutputColumn = new ScrolledComposite(sashTopLevelColumns, SWT.H_SCROLL | SWT.V_SCROLL);
 		scrolledCompositePreviewoutputColumn.setExpandHorizontal(true);
 		scrolledCompositePreviewoutputColumn.setExpandVertical(true);
 		
 		Composite compositePreviewOutputColumn = new Composite(scrolledCompositePreviewoutputColumn, SWT.NONE);
+		compositePreviewOutputColumn.setBackground(SWTResourceManager.getColor(51, 51, 51));
 		compositePreviewOutputColumn.setLayout(new GridLayout(1, false));
 		
+		CLabel lblPreviewOutputColumn = new CLabel(compositePreviewOutputColumn, SWT.NONE);
+		lblPreviewOutputColumn.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		lblPreviewOutputColumn.setFont(SWTResourceManager.getFont(".Helvetica Neue DeskInterface", 15, SWT.BOLD));
+		lblPreviewOutputColumn.setForeground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+		lblPreviewOutputColumn.setBackground(SWTResourceManager.getColor(51, 51, 51));
+		lblPreviewOutputColumn.setText("Preview && Output");
+		
 		TabFolder tabFolderPreview = new TabFolder(compositePreviewOutputColumn, SWT.NONE);
-		GridData gd_tabFolderPreview = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
+		GridData gd_tabFolderPreview = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		gd_tabFolderPreview.heightHint = 350;
 		tabFolderPreview.setLayoutData(gd_tabFolderPreview);
 		
@@ -540,36 +485,19 @@ public class MainWindow {
 		tbtmPreviewPrintViewDescription.setControl(browserPreviewPrintViewDescription);
 		
 		Composite compositeOutput = new Composite(compositePreviewOutputColumn, SWT.NONE);
-		compositeOutput.setLayout(new GridLayout(2, false));
+		compositeOutput.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		compositeOutput.setBackground(SWTResourceManager.getColor(51, 51, 51));
+		compositeOutput.setLayout(new GridLayout(1, false));
 		
-		Group grpOutputStyle = new Group(compositeOutput, SWT.NONE);
-		grpOutputStyle.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
-		grpOutputStyle.setFont(SWTResourceManager.getFont(".Helvetica Neue DeskInterface", 11, SWT.BOLD));
-		grpOutputStyle.setForeground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-		grpOutputStyle.setText("Style");
-		grpOutputStyle.setLayout(new GridLayout(1, false));
-		
-		Button btnOutputStyleLoad = new Button(grpOutputStyle, SWT.NONE);
-		btnOutputStyleLoad.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		btnOutputStyleLoad.setText("Load...");
-		
-		Button btnOutputStyleModify = new Button(grpOutputStyle, SWT.NONE);
-		btnOutputStyleModify.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		btnOutputStyleModify.setText("Modify...");
-		
-		Button btnOutputStyleStore = new Button(grpOutputStyle, SWT.NONE);
-		btnOutputStyleStore.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		btnOutputStyleStore.setText("Store...");
-		
-		Group grpExport = new Group(compositeOutput, SWT.NONE);
-		grpExport.setFont(SWTResourceManager.getFont(".Helvetica Neue DeskInterface", 11, SWT.BOLD));
-		grpExport.setForeground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-		grpExport.setLayout(new GridLayout(1, false));
-		grpExport.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
-		grpExport.setText("Export");
-		
-		Button btnOutputExportExport = new Button(grpExport, SWT.NONE);
-		btnOutputExportExport.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		Button btnOutputExportExport = new Button(compositeOutput, SWT.NONE);
+		btnOutputExportExport.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
+		btnOutputExportExport.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseUp(MouseEvent e) {
+				EditFunctionStyle efs = new EditFunctionStyle(shlGsvgplott, 0);
+				efs.open();
+			}
+		});
 		btnOutputExportExport.setText("Export...");
 		
 		scrolledCompositePreviewoutputColumn.setContent(compositePreviewOutputColumn);
