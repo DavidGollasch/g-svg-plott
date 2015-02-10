@@ -64,7 +64,7 @@ public class EditFunctionStyle extends Dialog {
 	 * Create contents of the dialog.
 	 */
 	private void createContents() {
-		shlTest = new Shell(getParent(), SWT.NO_TRIM);
+		shlTest = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.TOOL);
 		shlTest.setText("Line Style");
 		shlTest.setBackground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
 		shlTest.setSize(343, 131);
