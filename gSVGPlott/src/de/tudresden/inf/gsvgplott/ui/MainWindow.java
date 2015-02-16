@@ -167,7 +167,7 @@ public class MainWindow {
 		
 		Button btnDRFStyle1 = new Button(grpDataRowFunction1, SWT.FLAT);
 		btnDRFStyle1.setToolTipText("Change style");
-		btnDRFStyle1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/edit-20.png"));
+		btnDRFStyle1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/edit-16.png"));
 		
 		Composite compositeDRFControls1 = new Composite(grpDataRowFunction1, SWT.NONE);
 		GridLayout gl_compositeDRFControls1 = new GridLayout(3, false);
@@ -181,23 +181,23 @@ public class MainWindow {
 		Button btnDRFMoveUp1 = new Button(compositeDRFControls1, SWT.FLAT);
 		btnDRFMoveUp1.setToolTipText("Move item up");
 		btnDRFMoveUp1.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
-		btnDRFMoveUp1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/up-20.png"));
+		btnDRFMoveUp1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/up-16.png"));
 		
 		Button btnDRFMoveDown1 = new Button(compositeDRFControls1, SWT.FLAT);
 		btnDRFMoveDown1.setToolTipText("Move item down");
 		btnDRFMoveDown1.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
-		btnDRFMoveDown1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/down-20.png"));
+		btnDRFMoveDown1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/down-16.png"));
 		
 		Button btnDRFRemove1 = new Button(compositeDRFControls1, SWT.FLAT);
 		btnDRFRemove1.setToolTipText("Remove item");
 		GridData gd_btnDRFRemove1 = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
 		gd_btnDRFRemove1.horizontalIndent = 5;
 		btnDRFRemove1.setLayoutData(gd_btnDRFRemove1);
-		btnDRFRemove1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/delete-20.png"));
+		btnDRFRemove1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/remove-16.png"));
 		btnDRFRemove1.setText("Remove");
 		
 		Button btnDataColumnFunctionsAddFunction = new Button(compositeDataColumn, SWT.FLAT);
-		btnDataColumnFunctionsAddFunction.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/add-20.png"));
+		btnDataColumnFunctionsAddFunction.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/add-16.png"));
 		btnDataColumnFunctionsAddFunction.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		btnDataColumnFunctionsAddFunction.setText("Add Function");
 		
@@ -221,7 +221,7 @@ public class MainWindow {
 		
 		Button btnDRMStyle1 = new Button(grpDataRowMarkedpointsPointList, SWT.FLAT);
 		btnDRMStyle1.setToolTipText("Change style");
-		btnDRMStyle1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/edit-20.png"));
+		btnDRMStyle1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/edit-16.png"));
 		
 		Composite compositeDRMlist1 = new Composite(grpDataRowMarkedpointsPointList, SWT.NONE);
 		compositeDRMlist1.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 2, 1));
@@ -273,22 +273,22 @@ public class MainWindow {
 		
 		Button btnDRMMoveUp1 = new Button(compositeDRMControls1, SWT.FLAT);
 		btnDRMMoveUp1.setToolTipText("Move item up");
-		btnDRMMoveUp1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/up-20.png"));
+		btnDRMMoveUp1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/up-16.png"));
 		
 		Button btnDRMMoveDown1 = new Button(compositeDRMControls1, SWT.FLAT);
 		btnDRMMoveDown1.setToolTipText("Move item down");
-		btnDRMMoveDown1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/down-20.png"));
+		btnDRMMoveDown1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/down-16.png"));
 		
 		Button btnDRMRemove1 = new Button(compositeDRMControls1, SWT.FLAT);
 		btnDRMRemove1.setToolTipText("Remove item");
 		GridData gd_btnDRMRemove1 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_btnDRMRemove1.horizontalIndent = 5;
 		btnDRMRemove1.setLayoutData(gd_btnDRMRemove1);
-		btnDRMRemove1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/delete-20.png"));
+		btnDRMRemove1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/remove-16.png"));
 		btnDRMRemove1.setText("Remove");
 		
 		Button btnDataColumnListsAddPointList = new Button(compositeDataColumn, SWT.FLAT);
-		btnDataColumnListsAddPointList.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/add-20.png"));
+		btnDataColumnListsAddPointList.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/add-16.png"));
 		btnDataColumnListsAddPointList.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		btnDataColumnListsAddPointList.setText("Add Point List");
 		scrolledCompositeDataColumn.setContent(compositeDataColumn);
@@ -308,34 +308,37 @@ public class MainWindow {
 		Group grpPlotoptionsGeneralRow = new Group(compositePlotoptionsColumn, SWT.NONE);
 		grpPlotoptionsGeneralRow.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		grpPlotoptionsGeneralRow.setText("General");
-		grpPlotoptionsGeneralRow.setLayout(new GridLayout(3, false));
+		grpPlotoptionsGeneralRow.setLayout(new GridLayout(4, false));
 		
 		CLabel lblPoGeneralTitle = new CLabel(grpPlotoptionsGeneralRow, SWT.NONE);
 		lblPoGeneralTitle.setText("Title:");
 		
 		txtPoGeneralTitle = new Text(grpPlotoptionsGeneralRow, SWT.BORDER);
 		txtPoGeneralTitle.setToolTipText("Enter title of diagram");
-		txtPoGeneralTitle.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		txtPoGeneralTitle.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		
 		Button btnPlotoptionsGeneralStyle = new Button(grpPlotoptionsGeneralRow, SWT.FLAT);
 		btnPlotoptionsGeneralStyle.setToolTipText("Change style");
-		btnPlotoptionsGeneralStyle.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/edit-20.png"));
+		btnPlotoptionsGeneralStyle.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/edit-16.png"));
 		
 		CLabel lblPoGeneralSize = new CLabel(grpPlotoptionsGeneralRow, SWT.NONE);
 		lblPoGeneralSize.setText("Size (Width):");
 		
 		Spinner spinnerPoGeneralSize = new Spinner(grpPlotoptionsGeneralRow, SWT.BORDER);
-		spinnerPoGeneralSize.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
 		spinnerPoGeneralSize.setIncrement(10);
 		spinnerPoGeneralSize.setMaximum(99999);
 		spinnerPoGeneralSize.setMinimum(0);
 		spinnerPoGeneralSize.setSelection(217);
 		
+		CLabel lblPoGeneralSizeMm = new CLabel(grpPlotoptionsGeneralRow, SWT.NONE);
+		lblPoGeneralSizeMm.setText("mm");
+		new Label(grpPlotoptionsGeneralRow, SWT.NONE);
+		
 		CLabel lblPoGeneralGrid = new CLabel(grpPlotoptionsGeneralRow, SWT.NONE);
 		lblPoGeneralGrid.setText("Grid:");
 		
 		Button btnPoGeneralShowGrid = new Button(grpPlotoptionsGeneralRow, SWT.CHECK);
-		btnPoGeneralShowGrid.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+		btnPoGeneralShowGrid.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1));
 		btnPoGeneralShowGrid.setText("Show Grid");
 		
 		Group grpPlotoptionsXAxisRow = new Group(compositePlotoptionsColumn, SWT.NONE);
@@ -352,7 +355,7 @@ public class MainWindow {
 		
 		Button btnPlotoptionsXAxisStyle = new Button(grpPlotoptionsXAxisRow, SWT.FLAT);
 		btnPlotoptionsXAxisStyle.setToolTipText("Change style");
-		btnPlotoptionsXAxisStyle.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/edit-20.png"));
+		btnPlotoptionsXAxisStyle.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/edit-16.png"));
 		
 		CLabel lblPoXaxisRange = new CLabel(grpPlotoptionsXAxisRow, SWT.NONE);
 		lblPoXaxisRange.setText("Range:");
@@ -398,7 +401,7 @@ public class MainWindow {
 		
 		Button btnPlotoptionsYAxisStyle = new Button(grpPlotoptionsYAxisRow, SWT.FLAT);
 		btnPlotoptionsYAxisStyle.setToolTipText("Change style");
-		btnPlotoptionsYAxisStyle.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/edit-20.png"));
+		btnPlotoptionsYAxisStyle.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/edit-16.png"));
 		
 		CLabel lblPoYaxisRange = new CLabel(grpPlotoptionsYAxisRow, SWT.NONE);
 		lblPoYaxisRange.setText("Range:");
@@ -437,7 +440,7 @@ public class MainWindow {
 		
 		Button btnPlotoptionsIntegralStyle = new Button(grpPlotoptionsIntegralAreaRow, SWT.FLAT);
 		btnPlotoptionsIntegralStyle.setToolTipText("Change style");
-		btnPlotoptionsIntegralStyle.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/edit-20.png"));
+		btnPlotoptionsIntegralStyle.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/edit-16.png"));
 		
 		CLabel lblPoIntegralRange = new CLabel(grpPlotoptionsIntegralAreaRow, SWT.NONE);
 		lblPoIntegralRange.setText("Range:");
@@ -500,6 +503,7 @@ public class MainWindow {
 		TabFolder tabFolderPreviewScreenView = new TabFolder(compositePreviewScreenView, SWT.NONE);
 		
 		TabItem tbtmPreviewScreenViewGraph = new TabItem(tabFolderPreviewScreenView, SWT.NONE);
+		tbtmPreviewScreenViewGraph.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
 		tbtmPreviewScreenViewGraph.setText("Graph");
 		
 		Browser browserPreviewScreenViewGraph = new Browser(tabFolderPreviewScreenView, SWT.NONE);
@@ -507,6 +511,7 @@ public class MainWindow {
 		tbtmPreviewScreenViewGraph.setControl(browserPreviewScreenViewGraph);
 		
 		TabItem tbtmPreviewScreenViewLegend = new TabItem(tabFolderPreviewScreenView, SWT.NONE);
+		tbtmPreviewScreenViewLegend.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/legend-16.png"));
 		tbtmPreviewScreenViewLegend.setText("Legend");
 		
 		Browser browserPreviewScreenViewLegend = new Browser(tabFolderPreviewScreenView, SWT.NONE);
@@ -514,6 +519,7 @@ public class MainWindow {
 		tbtmPreviewScreenViewLegend.setControl(browserPreviewScreenViewLegend);
 		
 		TabItem tbtmPreviewScreenViewDescription = new TabItem(tabFolderPreviewScreenView, SWT.NONE);
+		tbtmPreviewScreenViewDescription.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/list-16.png"));
 		tbtmPreviewScreenViewDescription.setText("Description");
 		
 		Browser browserPreviewScreenViewDescription = new Browser(tabFolderPreviewScreenView, SWT.NONE);
@@ -530,6 +536,7 @@ public class MainWindow {
 		TabFolder tabFolderPreviewPrintView = new TabFolder(compositePreviewPrintView, SWT.NONE);
 		
 		TabItem tbtmPreviewPrintViewGraph = new TabItem(tabFolderPreviewPrintView, SWT.NONE);
+		tbtmPreviewPrintViewGraph.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
 		tbtmPreviewPrintViewGraph.setText("Graph");
 		
 		Browser browserPreviewPrintViewGraph = new Browser(tabFolderPreviewPrintView, SWT.NONE);
@@ -537,6 +544,7 @@ public class MainWindow {
 		tbtmPreviewPrintViewGraph.setControl(browserPreviewPrintViewGraph);
 		
 		TabItem tbtmPreviewPrintViewLegend = new TabItem(tabFolderPreviewPrintView, SWT.NONE);
+		tbtmPreviewPrintViewLegend.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/legend-16.png"));
 		tbtmPreviewPrintViewLegend.setText("Legend");
 		
 		Browser browserPreviewPrintViewLegend = new Browser(tabFolderPreviewPrintView, SWT.NONE);
@@ -544,6 +552,7 @@ public class MainWindow {
 		tbtmPreviewPrintViewLegend.setControl(browserPreviewPrintViewLegend);
 		
 		TabItem tbtmPreviewPrintViewDescription = new TabItem(tabFolderPreviewPrintView, SWT.NONE);
+		tbtmPreviewPrintViewDescription.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/list-16.png"));
 		tbtmPreviewPrintViewDescription.setText("Description");
 		
 		Browser browserPreviewPrintViewDescription = new Browser(tabFolderPreviewPrintView, SWT.NONE);
@@ -556,7 +565,7 @@ public class MainWindow {
 		compositeOutput.setLayout(new GridLayout(1, false));
 		
 		Button btnOutputExportExport = new Button(compositeOutput, SWT.FLAT);
-		btnOutputExportExport.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/finish-20.png"));
+		btnOutputExportExport.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/share-16.png"));
 		btnOutputExportExport.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
 		btnOutputExportExport.addMouseListener(new MouseAdapter() {
 			@Override
@@ -636,6 +645,7 @@ public class MainWindow {
 		mntmExtrasLanguageEnglish.setText("English (Default)");
 		
 		MenuItem mntmExtrasPreferences = new MenuItem(extras_1, SWT.NONE);
+		mntmExtrasPreferences.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/settings-16.png"));
 		mntmExtrasPreferences.setText("Preferences...");
 		
 		MenuItem mntmHelpSubmenu = new MenuItem(menu, SWT.CASCADE);
