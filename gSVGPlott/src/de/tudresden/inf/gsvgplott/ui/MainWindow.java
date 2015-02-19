@@ -567,13 +567,6 @@ public class MainWindow {
 		Button btnOutputExportExport = new Button(compositeOutput, SWT.FLAT);
 		btnOutputExportExport.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/share-16.png"));
 		btnOutputExportExport.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
-		btnOutputExportExport.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseUp(MouseEvent e) {
-				EditFunctionStyle efs = new EditFunctionStyle(shlGsvgplott, 0);
-				efs.open();
-			}
-		});
 		btnOutputExportExport.setText("Export...");
 		
 		scrolledCompositePreviewoutputColumn.setContent(compositePreviewOutputColumn);
