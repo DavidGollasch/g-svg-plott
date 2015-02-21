@@ -17,7 +17,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 
-import de.tudresden.inf.gsvgplott.data.State;
+import de.tudresden.inf.gsvgplott.data.Diagram;
 
 import org.eclipse.swt.browser.Browser;
 
@@ -65,7 +65,7 @@ public class MainWindow {
 
 	protected Shell shlGsvgplott;
 	
-	private State plotter;
+	private Diagram diagram;
 	private Text txtPoGeneralTitle;
 	private Text txtPoXaxisTitle;
 	private Text txtPoXaxisHelplines;
@@ -75,6 +75,7 @@ public class MainWindow {
 	private Text txtDRFfunc1;
 	private Text txtDRMtitle1;
 	private Table tableDRMlist1;
+	private Text txtDRFTitle1;
 
 	/**
 	 * Launch the application.
@@ -100,7 +101,7 @@ public class MainWindow {
 	 * Constructor to initialize a new gSVGPlott Instance.
 	 */
 	public MainWindow() {
-		plotter = new State();
+		diagram = new Diagram(null, 0, false, null, null);
 	}
 
 	/**
@@ -157,6 +158,16 @@ public class MainWindow {
 		grpDataRowFunction1.setText("Function 1");
 		grpDataRowFunction1.setLayout(new GridLayout(3, false));
 		
+		CLabel lblDRFTitle1 = new CLabel(grpDataRowFunction1, SWT.NONE);
+		lblDRFTitle1.setText("Title:");
+		
+		txtDRFTitle1 = new Text(grpDataRowFunction1, SWT.BORDER);
+		txtDRFTitle1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		Button btnDRFStyle1 = new Button(grpDataRowFunction1, SWT.FLAT);
+		btnDRFStyle1.setToolTipText("Change style");
+		btnDRFStyle1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/edit-16.png"));
+		
 		CLabel lblDRFfunc1 = new CLabel(grpDataRowFunction1, SWT.NONE);
 		lblDRFfunc1.setSize(39, 19);
 		lblDRFfunc1.setText("y(x) = ");
@@ -164,10 +175,7 @@ public class MainWindow {
 		txtDRFfunc1 = new Text(grpDataRowFunction1, SWT.BORDER);
 		txtDRFfunc1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		txtDRFfunc1.setSize(194, 19);
-		
-		Button btnDRFStyle1 = new Button(grpDataRowFunction1, SWT.FLAT);
-		btnDRFStyle1.setToolTipText("Change style");
-		btnDRFStyle1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/edit-16.png"));
+		new Label(grpDataRowFunction1, SWT.NONE);
 		
 		Composite compositeDRFControls1 = new Composite(grpDataRowFunction1, SWT.NONE);
 		GridLayout gl_compositeDRFControls1 = new GridLayout(3, false);
