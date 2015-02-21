@@ -77,7 +77,7 @@ public class LineStyleToolbox extends Dialog {
 	private void createContents() {
 		shlTest = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.TOOL);
 		shlTest.setText("Line Style");
-		shlTest.setSize(209, 371);
+		shlTest.setSize(215, 310);
 		shlTest.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
 		CTabFolder tabFolder = new CTabFolder(shlTest, SWT.BORDER);
@@ -108,17 +108,29 @@ public class LineStyleToolbox extends Dialog {
 		tblclmnScreenLineStyle.setWidth(193);
 		tblclmnScreenLineStyle.setText("Line Style");
 		
-		TableItem tableItemScreenStyleSolid = new TableItem(tableScreenLineStyle, SWT.NONE);
-		tableItemScreenStyleSolid.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
-		tableItemScreenStyleSolid.setText("Solid");
+		TableItem tableItemScreenStyle1 = new TableItem(tableScreenLineStyle, SWT.NONE);
+		tableItemScreenStyle1.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
+		tableItemScreenStyle1.setText("Solid");
 		
-		TableItem tableItemScreenStyleDashed = new TableItem(tableScreenLineStyle, SWT.NONE);
-		tableItemScreenStyleDashed.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
-		tableItemScreenStyleDashed.setText("Dashed");
+		TableItem tableItemScreenStyle2 = new TableItem(tableScreenLineStyle, SWT.NONE);
+		tableItemScreenStyle2.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
+		tableItemScreenStyle2.setText("Dotted");
 		
-		TableItem tableItemScreenStyleDotted = new TableItem(tableScreenLineStyle, SWT.NONE);
-		tableItemScreenStyleDotted.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
-		tableItemScreenStyleDotted.setText("Dotted");
+		TableItem tableItemScreenStyle3 = new TableItem(tableScreenLineStyle, SWT.NONE);
+		tableItemScreenStyle3.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
+		tableItemScreenStyle3.setText("Dashed");
+		
+		TableItem tableItemScreenStyle4 = new TableItem(tableScreenLineStyle, 0);
+		tableItemScreenStyle4.setText("Longdashed");
+		tableItemScreenStyle4.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
+		
+		TableItem tableItemScreenStyle5 = new TableItem(tableScreenLineStyle, 0);
+		tableItemScreenStyle5.setText("Dashdotted");
+		tableItemScreenStyle5.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
+		
+		TableItem tableItemScreenStyle6 = new TableItem(tableScreenLineStyle, 0);
+		tableItemScreenStyle6.setText("Dashdoubledotted");
+		tableItemScreenStyle6.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
 		
 		CLabel lblScreenWidth = new CLabel(compositeScreen, SWT.NONE);
 		lblScreenWidth.setText("Width");
@@ -202,17 +214,6 @@ public class LineStyleToolbox extends Dialog {
 		
 		TableItem tableItemScreenColor3 = new TableItem(tableScreenLineColor, 0);
 		tableItemScreenColor3.setText("Color 3");
-		
-		CLabel lblText = new CLabel(compositeScreen, SWT.NONE);
-		lblText.setText("Font");
-		new Label(compositeScreen, SWT.NONE);
-		
-		CLabel lblThisIsAn = new CLabel(compositeScreen, SWT.NONE);
-		lblThisIsAn.setText("This is an example.");
-		
-		Button btnChange = new Button(compositeScreen, SWT.NONE);
-		btnChange.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		btnChange.setText("Change");
 		
 		CTabItem tbtmPrint = new CTabItem(tabFolder, SWT.NONE);
 		tbtmPrint.setText("Print");
@@ -333,17 +334,6 @@ public class LineStyleToolbox extends Dialog {
 		
 		TableItem tableItem_15 = new TableItem(table_2, 0);
 		tableItem_15.setText("Color 3");
-		
-		CLabel label_6 = new CLabel(compositePrint, SWT.NONE);
-		label_6.setText("Font");
-		new Label(compositePrint, SWT.NONE);
-		
-		CLabel label_7 = new CLabel(compositePrint, SWT.NONE);
-		label_7.setText("This is an example.");
-		
-		Button button = new Button(compositePrint, SWT.NONE);
-		button.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		button.setText("Change");
 
 	}
 }
