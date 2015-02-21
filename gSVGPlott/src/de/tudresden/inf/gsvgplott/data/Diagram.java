@@ -9,7 +9,7 @@ import java.util.List;
  *
  */
 
-public class State {
+public class Diagram {
 	private String title;
 	private int size;
 	private boolean showGrid;
@@ -26,7 +26,7 @@ public class State {
 	 * @param xaxis
 	 * @param yaxis
 	 */
-	public State(String title, int size, boolean showGrid, XAxis xaxis,
+	public Diagram(String title, int size, boolean showGrid, XAxis xaxis,
 			YAxis yaxis) {
 		super();
 		this.title = title;
@@ -44,7 +44,7 @@ public class State {
 	 */
 	@Override
 	public String toString() {
-		return "State [title=" + title + ", size=" + size + ", showGrid="
+		return "Diagram [title=" + title + ", size=" + size + ", showGrid="
 				+ showGrid + ", xaxis=" + xaxis + ", yaxis=" + yaxis
 				+ ", functions=" + functions + ", markedPointLists="
 				+ markedPointLists + ", integral=" + integral + "]";
@@ -83,7 +83,7 @@ public class State {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		State other = (State) obj;
+		Diagram other = (Diagram) obj;
 		if (functions == null) {
 			if (other.functions != null)
 				return false;
