@@ -3,6 +3,11 @@ package de.tudresden.inf.gsvgplott.data;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.tudresden.inf.gsvgplott.data.style.AreaStyle;
+import de.tudresden.inf.gsvgplott.data.style.LineStyle;
+import de.tudresden.inf.gsvgplott.data.style.OverrideStyle;
+import de.tudresden.inf.gsvgplott.data.style.TextStyle;
+
 /**
  * 
  * @author David Gollasch
@@ -18,6 +23,11 @@ public class Diagram {
 	private List<Function> functions;
 	private List<MarkedPointList> markedPointLists;
 	private Integral integral;
+	
+	private LineStyle gridStyle;
+	private AreaStyle backgroundStyle;
+	private TextStyle textStyle;
+	private OverrideStyle overrideStyle;
 	
 	/**
 	 * @param title
@@ -37,6 +47,11 @@ public class Diagram {
 		this.functions = new ArrayList<Function>();
 		this.markedPointLists = new ArrayList<MarkedPointList>();
 		this.integral = null;
+		
+		this.gridStyle = null;
+		this.backgroundStyle = null;
+		this.textStyle = null;
+		this.overrideStyle = null;
 	}
 	
 	/* (non-Javadoc)
@@ -216,5 +231,61 @@ public class Diagram {
 	 */
 	public void setIntegral(Integral integral) {
 		this.integral = integral;
+	}
+
+	/**
+	 * @return the gridStyle
+	 */
+	public LineStyle getGridStyle() {
+		return gridStyle;
+	}
+
+	/**
+	 * @param gridStyle the gridStyle to set
+	 */
+	public void setGridStyle(LineStyle gridStyle) {
+		this.gridStyle = gridStyle;
+	}
+
+	/**
+	 * @return the backgroundStyle
+	 */
+	public AreaStyle getBackgroundStyle() {
+		return backgroundStyle;
+	}
+
+	/**
+	 * @param backgroundStyle the backgroundStyle to set
+	 */
+	public void setBackgroundStyle(AreaStyle backgroundStyle) {
+		this.backgroundStyle = backgroundStyle;
+	}
+
+	/**
+	 * @return the textStyle
+	 */
+	public TextStyle getTextStyle() {
+		return textStyle;
+	}
+
+	/**
+	 * @param textStyle the textStyle to set
+	 */
+	public void setTextStyle(TextStyle textStyle) {
+		this.textStyle = textStyle;
+	}
+
+	/**
+	 * @return the overrideStyle
+	 */
+	public OverrideStyle getOverrideStyle() {
+		return overrideStyle;
+	}
+
+	/**
+	 * @param overrideStyle the overrideStyle to set
+	 */
+	public void setOverrideStyle(OverrideStyle overrideStyle) {
+		this.overrideStyle = overrideStyle;
 	}
 }

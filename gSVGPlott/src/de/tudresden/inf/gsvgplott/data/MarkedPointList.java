@@ -6,6 +6,8 @@ package de.tudresden.inf.gsvgplott.data;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.tudresden.inf.gsvgplott.data.style.PointStyle;
+
 /**
  * @author David Gollasch
  *
@@ -14,6 +16,8 @@ public class MarkedPointList {
 	private String title;
 	private List<Point> points;
 	
+	private PointStyle pointStyle;
+	
 	/**
 	 * @param title
 	 */
@@ -21,6 +25,8 @@ public class MarkedPointList {
 		super();
 		this.title = title;
 		this.points = new ArrayList<Point>();
+		
+		this.pointStyle = null;
 	}
 
 	/* (non-Javadoc)
@@ -91,5 +97,19 @@ public class MarkedPointList {
 	 */
 	public void setPoints(ArrayList<Point> points) {
 		this.points = points;
+	}
+
+	/**
+	 * @return the pointStyle
+	 */
+	public PointStyle getPointStyle() {
+		return pointStyle;
+	}
+
+	/**
+	 * @param pointStyle the pointStyle to set
+	 */
+	public void setPointStyle(PointStyle pointStyle) {
+		this.pointStyle = pointStyle;
 	}
 }

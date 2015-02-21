@@ -3,6 +3,8 @@
  */
 package de.tudresden.inf.gsvgplott.data;
 
+import de.tudresden.inf.gsvgplott.data.style.LineStyle;
+
 /**
  * @author David Gollasch
  *
@@ -10,6 +12,8 @@ package de.tudresden.inf.gsvgplott.data;
 public class Function {
 	private String title;
 	private String function;
+	
+	private LineStyle functionStyle;
 	
 	/**
 	 * @param title
@@ -19,6 +23,8 @@ public class Function {
 		super();
 		this.title = title;
 		this.function = function;
+		
+		this.functionStyle = null;
 	}
 	
 	/* (non-Javadoc)
@@ -90,5 +96,19 @@ public class Function {
 	 */
 	public void setFunction(String function) {
 		this.function = function;
+	}
+
+	/**
+	 * @return the functionStyle
+	 */
+	public LineStyle getFunctionStyle() {
+		return functionStyle;
+	}
+
+	/**
+	 * @param functionStyle the functionStyle to set
+	 */
+	public void setFunctionStyle(LineStyle functionStyle) {
+		this.functionStyle = functionStyle;
 	}
 }

@@ -6,6 +6,8 @@ package de.tudresden.inf.gsvgplott.data;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.tudresden.inf.gsvgplott.data.style.LineStyle;
+
 /**
  * @author David Gollasch
  *
@@ -15,6 +17,9 @@ public abstract class Axis {
 	protected double rangeFrom;
 	protected double rangeTo;
 	protected List<Helpline> helplines;
+	
+	protected LineStyle axisStyle;
+	protected LineStyle helplineStyle;
 	
 	/**
 	 * @param title
@@ -27,6 +32,9 @@ public abstract class Axis {
 		this.rangeFrom = rangeFrom;
 		this.rangeTo = rangeTo;
 		this.helplines = new ArrayList<Helpline>();
+		
+		this.axisStyle = null;
+		this.helplineStyle = null;
 	}
 
 	/* (non-Javadoc)
@@ -141,5 +149,33 @@ public abstract class Axis {
 	 */
 	public void setHelplines(ArrayList<Helpline> helplines) {
 		this.helplines = helplines;
+	}
+
+	/**
+	 * @return the axisStyle
+	 */
+	public LineStyle getAxisStyle() {
+		return axisStyle;
+	}
+
+	/**
+	 * @param axisStyle the axisStyle to set
+	 */
+	public void setAxisStyle(LineStyle axisStyle) {
+		this.axisStyle = axisStyle;
+	}
+
+	/**
+	 * @return the helplineStyle
+	 */
+	public LineStyle getHelplineStyle() {
+		return helplineStyle;
+	}
+
+	/**
+	 * @param helplineStyle the helplineStyle to set
+	 */
+	public void setHelplineStyle(LineStyle helplineStyle) {
+		this.helplineStyle = helplineStyle;
 	}
 }

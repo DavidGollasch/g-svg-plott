@@ -3,6 +3,8 @@
  */
 package de.tudresden.inf.gsvgplott.data;
 
+import de.tudresden.inf.gsvgplott.data.style.AreaStyle;
+
 /**
  * @author David Gollasch
  *
@@ -13,6 +15,8 @@ public class Integral {
 	private double rangeTo;
 	private Function border1;
 	private Function border2;
+	
+	private AreaStyle areaStyle;
 	
 	/**
 	 * @param title
@@ -29,6 +33,8 @@ public class Integral {
 		this.rangeTo = rangeTo;
 		this.border1 = border1;
 		this.border2 = border2;
+		
+		this.areaStyle = null;
 	}
 
 	/* (non-Javadoc)
@@ -154,6 +160,20 @@ public class Integral {
 	 */
 	public void setBorder2(Function border2) {
 		this.border2 = border2;
+	}
+
+	/**
+	 * @return the areaStyle
+	 */
+	public AreaStyle getAreaStyle() {
+		return areaStyle;
+	}
+
+	/**
+	 * @param areaStyle the areaStyle to set
+	 */
+	public void setAreaStyle(AreaStyle areaStyle) {
+		this.areaStyle = areaStyle;
 	}
 	
 	
