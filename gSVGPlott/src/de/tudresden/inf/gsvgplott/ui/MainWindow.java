@@ -17,7 +17,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 
-import de.tudresden.inf.gsvgplott.data.Plotter;
+import de.tudresden.inf.gsvgplott.data.State;
 
 import org.eclipse.swt.browser.Browser;
 
@@ -65,7 +65,7 @@ public class MainWindow {
 
 	protected Shell shlGsvgplott;
 	
-	private Plotter plotter;
+	private State plotter;
 	private Text txtPoGeneralTitle;
 	private Text txtPoXaxisTitle;
 	private Text txtPoXaxisHelplines;
@@ -100,7 +100,7 @@ public class MainWindow {
 	 * Constructor to initialize a new gSVGPlott Instance.
 	 */
 	public MainWindow() {
-		plotter = new Plotter();
+		plotter = new State();
 	}
 
 	/**

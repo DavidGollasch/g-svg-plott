@@ -3,30 +3,32 @@
  */
 package de.tudresden.inf.gsvgplott.data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author David Gollasch
  *
  */
-public class Function {
+public class MarkedPointList {
 	private String title;
-	private String function;
+	private List<Point> points;
 	
 	/**
 	 * @param title
-	 * @param function
 	 */
-	public Function(String title, String function) {
+	public MarkedPointList(String title) {
 		super();
 		this.title = title;
-		this.function = function;
+		this.points = new ArrayList<Point>();
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "Function [title=" + title + ", function=" + function + "]";
+		return "MarkedPointList [title=" + title + ", points=" + points + "]";
 	}
 	
 	/* (non-Javadoc)
@@ -36,8 +38,7 @@ public class Function {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((function == null) ? 0 : function.hashCode());
+		result = prime * result + ((points == null) ? 0 : points.hashCode());
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		return result;
 	}
@@ -53,11 +54,11 @@ public class Function {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Function other = (Function) obj;
-		if (function == null) {
-			if (other.function != null)
+		MarkedPointList other = (MarkedPointList) obj;
+		if (points == null) {
+			if (other.points != null)
 				return false;
-		} else if (!function.equals(other.function))
+		} else if (!points.equals(other.points))
 			return false;
 		if (title == null) {
 			if (other.title != null)
@@ -80,15 +81,15 @@ public class Function {
 		this.title = title;
 	}
 	/**
-	 * @return the function
+	 * @return the points
 	 */
-	public String getFunction() {
-		return function;
+	public List<Point> getPoints() {
+		return points;
 	}
 	/**
-	 * @param function the function to set
+	 * @param points the points to set
 	 */
-	public void setFunction(String function) {
-		this.function = function;
+	public void setPoints(ArrayList<Point> points) {
+		this.points = points;
 	}
 }

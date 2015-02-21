@@ -3,63 +3,143 @@
  */
 package de.tudresden.inf.gsvgplott.data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author David Gollasch
  *
  */
-public class Axis {
+public abstract class Axis {
+	protected String title;
+	protected double rangeFrom;
+	protected double rangeTo;
+	protected List<Helpline> helplines;
 	
-	private String title;
-	private int rangeFrom;
-	private int rangeTo;
-	private boolean piDivisioning;
-	
-	private List<Double> helplinesAxisIntersections;
-	
-	public Axis() {
-		
+	/**
+	 * @param title
+	 * @param rangeFrom
+	 * @param rangeTo
+	 */
+	public Axis(String title, double rangeFrom, double rangeTo) {
+		super();
+		this.title = title;
+		this.rangeFrom = rangeFrom;
+		this.rangeTo = rangeTo;
+		this.helplines = new ArrayList<Helpline>();
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Axis [title=" + title + ", rangeFrom=" + rangeFrom
+				+ ", rangeTo=" + rangeTo + ", helplines=" + helplines + "]";
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((helplines == null) ? 0 : helplines.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(rangeFrom);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(rangeTo);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((title == null) ? 0 : title.hashCode());
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Axis other = (Axis) obj;
+		if (helplines == null) {
+			if (other.helplines != null)
+				return false;
+		} else if (!helplines.equals(other.helplines))
+			return false;
+		if (Double.doubleToLongBits(rangeFrom) != Double
+				.doubleToLongBits(other.rangeFrom))
+			return false;
+		if (Double.doubleToLongBits(rangeTo) != Double
+				.doubleToLongBits(other.rangeTo))
+			return false;
+		if (title == null) {
+			if (other.title != null)
+				return false;
+		} else if (!title.equals(other.title))
+			return false;
+		return true;
+	}
+
+	/**
+	 * @return the title
+	 */
 	public String getTitle() {
 		return title;
 	}
 
+	/**
+	 * @param title the title to set
+	 */
 	public void setTitle(String title) {
 		this.title = title;
 	}
 
-	public int getRangeFrom() {
+	/**
+	 * @return the rangeFrom
+	 */
+	public double getRangeFrom() {
 		return rangeFrom;
 	}
 
-	public void setRangeFrom(int rangeFrom) {
+	/**
+	 * @param rangeFrom the rangeFrom to set
+	 */
+	public void setRangeFrom(double rangeFrom) {
 		this.rangeFrom = rangeFrom;
 	}
 
-	public int getRangeTo() {
+	/**
+	 * @return the rangeTo
+	 */
+	public double getRangeTo() {
 		return rangeTo;
 	}
 
-	public void setRangeTo(int rangeTo) {
+	/**
+	 * @param rangeTo the rangeTo to set
+	 */
+	public void setRangeTo(double rangeTo) {
 		this.rangeTo = rangeTo;
 	}
 
-	public boolean isPiDivisioning() {
-		return piDivisioning;
+	/**
+	 * @return the helplines
+	 */
+	public List<Helpline> getHelplines() {
+		return helplines;
 	}
 
-	public void setPiDivisioning(boolean piDivisioning) {
-		this.piDivisioning = piDivisioning;
-	}
-
-	public List<Double> getHelplinesAxisIntersections() {
-		return helplinesAxisIntersections;
-	}
-
-	public void setHelplinesAxisIntersections(
-			List<Double> helplinesAxisIntersections) {
-		this.helplinesAxisIntersections = helplinesAxisIntersections;
+	/**
+	 * @param helplines the helplines to set
+	 */
+	public void setHelplines(ArrayList<Helpline> helplines) {
+		this.helplines = helplines;
 	}
 }
