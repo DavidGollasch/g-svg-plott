@@ -18,8 +18,11 @@ public abstract class Axis {
 	protected double rangeTo;
 	protected List<Helpline> helplines;
 	
-	protected LineStyle axisStyle;
-	protected LineStyle helplineStyle;
+	protected LineStyle axisScreenStyle;
+	protected LineStyle helplineScreenStyle;
+	
+	protected LineStyle axisPrintStyle;
+	protected LineStyle helplinePrintStyle;
 	
 	/**
 	 * @param title
@@ -33,8 +36,10 @@ public abstract class Axis {
 		this.rangeTo = rangeTo;
 		this.helplines = new ArrayList<Helpline>();
 		
-		this.axisStyle = null;
-		this.helplineStyle = null;
+		this.axisScreenStyle = null;
+		this.helplineScreenStyle = null;
+		this.axisPrintStyle = null;
+		this.helplinePrintStyle = null;
 	}
 
 	/* (non-Javadoc)
@@ -152,30 +157,58 @@ public abstract class Axis {
 	}
 
 	/**
-	 * @return the axisStyle
+	 * @return the axisScreenStyle
 	 */
-	public LineStyle getAxisStyle() {
-		return axisStyle;
+	public LineStyle getAxisScreenStyle() {
+		return axisScreenStyle;
 	}
 
 	/**
-	 * @param axisStyle the axisStyle to set
+	 * @param axisScreenStyle the axisScreenStyle to set
 	 */
-	public void setAxisStyle(LineStyle axisStyle) {
-		this.axisStyle = axisStyle;
+	public void setAxisScreenStyle(LineStyle axisScreenStyle) {
+		this.axisScreenStyle = axisScreenStyle;
 	}
 
 	/**
-	 * @return the helplineStyle
+	 * @return the helplineScreenStyle
 	 */
-	public LineStyle getHelplineStyle() {
-		return helplineStyle;
+	public LineStyle getHelplineScreenStyle() {
+		return helplineScreenStyle;
 	}
 
 	/**
-	 * @param helplineStyle the helplineStyle to set
+	 * @param helplineScreenStyle the helplineScreenStyle to set
 	 */
-	public void setHelplineStyle(LineStyle helplineStyle) {
-		this.helplineStyle = helplineStyle;
+	public void setHelplineScreenStyle(LineStyle helplineScreenStyle) {
+		this.helplineScreenStyle = helplineScreenStyle;
+	}
+
+	/**
+	 * @return the axisPrintStyle
+	 */
+	public LineStyle getAxisPrintStyle() {
+		return axisPrintStyle;
+	}
+
+	/**
+	 * @param axisPrintStyle the axisPrintStyle to set
+	 */
+	public void setAxisPrintStyle(LineStyle axisPrintStyle) {
+		this.axisPrintStyle = axisPrintStyle;
+	}
+
+	/**
+	 * @return the helplinePrintStyle
+	 */
+	public LineStyle getHelplinePrintStyle() {
+		return helplinePrintStyle;
+	}
+
+	/**
+	 * @param helplinePrintStyle the helplinePrintStyle to set
+	 */
+	public void setHelplinePrintStyle(LineStyle helplinePrintStyle) {
+		this.helplinePrintStyle = helplinePrintStyle;
 	}
 }

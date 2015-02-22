@@ -24,9 +24,14 @@ public class Diagram {
 	private List<MarkedPointList> markedPointLists;
 	private Integral integral;
 	
-	private LineStyle gridStyle;
-	private AreaStyle backgroundStyle;
-	private TextStyle textStyle;
+	private LineStyle gridScreenStyle;
+	private AreaStyle backgroundScreenStyle;
+	private TextStyle textScreenStyle;
+	
+	private LineStyle gridPrintStyle;
+	private AreaStyle backgroundPrintStyle;
+	private TextStyle textPrintStyle;
+	
 	private OverrideStyle overrideStyle;
 	
 	/**
@@ -48,9 +53,14 @@ public class Diagram {
 		this.markedPointLists = new ArrayList<MarkedPointList>();
 		this.integral = null;
 		
-		this.gridStyle = null;
-		this.backgroundStyle = null;
-		this.textStyle = null;
+		this.gridScreenStyle = null;
+		this.backgroundScreenStyle = null;
+		this.textScreenStyle = null;
+		
+		this.gridPrintStyle = null;
+		this.backgroundPrintStyle = null;
+		this.textPrintStyle = null;
+		
 		this.overrideStyle = null;
 	}
 	
@@ -234,45 +244,87 @@ public class Diagram {
 	}
 
 	/**
-	 * @return the gridStyle
+	 * @return the gridScreenStyle
 	 */
-	public LineStyle getGridStyle() {
-		return gridStyle;
+	public LineStyle getGridScreenStyle() {
+		return gridScreenStyle;
 	}
 
 	/**
-	 * @param gridStyle the gridStyle to set
+	 * @param gridScreenStyle the gridScreenStyle to set
 	 */
-	public void setGridStyle(LineStyle gridStyle) {
-		this.gridStyle = gridStyle;
+	public void setGridScreenStyle(LineStyle gridScreenStyle) {
+		this.gridScreenStyle = gridScreenStyle;
 	}
 
 	/**
-	 * @return the backgroundStyle
+	 * @return the backgroundScreenStyle
 	 */
-	public AreaStyle getBackgroundStyle() {
-		return backgroundStyle;
+	public AreaStyle getBackgroundScreenStyle() {
+		return backgroundScreenStyle;
 	}
 
 	/**
-	 * @param backgroundStyle the backgroundStyle to set
+	 * @param backgroundScreenStyle the backgroundScreenStyle to set
 	 */
-	public void setBackgroundStyle(AreaStyle backgroundStyle) {
-		this.backgroundStyle = backgroundStyle;
+	public void setBackgroundScreenStyle(AreaStyle backgroundScreenStyle) {
+		this.backgroundScreenStyle = backgroundScreenStyle;
 	}
 
 	/**
-	 * @return the textStyle
+	 * @return the textScreenStyle
 	 */
-	public TextStyle getTextStyle() {
-		return textStyle;
+	public TextStyle getTextScreenStyle() {
+		return textScreenStyle;
 	}
 
 	/**
-	 * @param textStyle the textStyle to set
+	 * @param textScreenStyle the textScreenStyle to set
 	 */
-	public void setTextStyle(TextStyle textStyle) {
-		this.textStyle = textStyle;
+	public void setTextScreenStyle(TextStyle textScreenStyle) {
+		this.textScreenStyle = textScreenStyle;
+	}
+
+	/**
+	 * @return the gridPrintStyle
+	 */
+	public LineStyle getGridPrintStyle() {
+		return gridPrintStyle;
+	}
+
+	/**
+	 * @param gridPrintStyle the gridPrintStyle to set
+	 */
+	public void setGridPrintStyle(LineStyle gridPrintStyle) {
+		this.gridPrintStyle = gridPrintStyle;
+	}
+
+	/**
+	 * @return the backgroundPrintStyle
+	 */
+	public AreaStyle getBackgroundPrintStyle() {
+		return backgroundPrintStyle;
+	}
+
+	/**
+	 * @param backgroundPrintStyle the backgroundPrintStyle to set
+	 */
+	public void setBackgroundPrintStyle(AreaStyle backgroundPrintStyle) {
+		this.backgroundPrintStyle = backgroundPrintStyle;
+	}
+
+	/**
+	 * @return the textPrintStyle
+	 */
+	public TextStyle getTextPrintStyle() {
+		return textPrintStyle;
+	}
+
+	/**
+	 * @param textPrintStyle the textPrintStyle to set
+	 */
+	public void setTextPrintStyle(TextStyle textPrintStyle) {
+		this.textPrintStyle = textPrintStyle;
 	}
 
 	/**

@@ -16,7 +16,8 @@ public class MarkedPointList {
 	private String title;
 	private List<Point> points;
 	
-	private PointStyle pointStyle;
+	private PointStyle pointScreenStyle;
+	private PointStyle pointPrintStyle;
 	
 	/**
 	 * @param title
@@ -26,7 +27,8 @@ public class MarkedPointList {
 		this.title = title;
 		this.points = new ArrayList<Point>();
 		
-		this.pointStyle = null;
+		this.pointScreenStyle = null;
+		this.pointPrintStyle = null;
 	}
 
 	/* (non-Javadoc)
@@ -100,16 +102,30 @@ public class MarkedPointList {
 	}
 
 	/**
-	 * @return the pointStyle
+	 * @return the pointScreenStyle
 	 */
-	public PointStyle getPointStyle() {
-		return pointStyle;
+	public PointStyle getPointScreenStyle() {
+		return pointScreenStyle;
 	}
 
 	/**
-	 * @param pointStyle the pointStyle to set
+	 * @param pointScreenStyle the pointScreenStyle to set
 	 */
-	public void setPointStyle(PointStyle pointStyle) {
-		this.pointStyle = pointStyle;
+	public void setPointScreenStyle(PointStyle pointScreenStyle) {
+		this.pointScreenStyle = pointScreenStyle;
+	}
+
+	/**
+	 * @return the pointPrintStyle
+	 */
+	public PointStyle getPointPrintStyle() {
+		return pointPrintStyle;
+	}
+
+	/**
+	 * @param pointPrintStyle the pointPrintStyle to set
+	 */
+	public void setPointPrintStyle(PointStyle pointPrintStyle) {
+		this.pointPrintStyle = pointPrintStyle;
 	}
 }

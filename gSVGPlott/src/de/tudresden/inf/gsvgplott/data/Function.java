@@ -13,7 +13,8 @@ public class Function {
 	private String title;
 	private String function;
 	
-	private LineStyle functionStyle;
+	private LineStyle functionScreenStyle;
+	private LineStyle functionPrintStyle;
 	
 	/**
 	 * @param title
@@ -24,7 +25,8 @@ public class Function {
 		this.title = title;
 		this.function = function;
 		
-		this.functionStyle = null;
+		this.functionScreenStyle = null;
+		this.functionPrintStyle = null;
 	}
 	
 	/* (non-Javadoc)
@@ -99,16 +101,30 @@ public class Function {
 	}
 
 	/**
-	 * @return the functionStyle
+	 * @return the functionScreenStyle
 	 */
-	public LineStyle getFunctionStyle() {
-		return functionStyle;
+	public LineStyle getFunctionScreenStyle() {
+		return functionScreenStyle;
 	}
 
 	/**
-	 * @param functionStyle the functionStyle to set
+	 * @param functionScreenStyle the functionScreenStyle to set
 	 */
-	public void setFunctionStyle(LineStyle functionStyle) {
-		this.functionStyle = functionStyle;
+	public void setFunctionScreenStyle(LineStyle functionScreenStyle) {
+		this.functionScreenStyle = functionScreenStyle;
+	}
+
+	/**
+	 * @return the functionPrintStyle
+	 */
+	public LineStyle getFunctionPrintStyle() {
+		return functionPrintStyle;
+	}
+
+	/**
+	 * @param functionPrintStyle the functionPrintStyle to set
+	 */
+	public void setFunctionPrintStyle(LineStyle functionPrintStyle) {
+		this.functionPrintStyle = functionPrintStyle;
 	}
 }

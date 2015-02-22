@@ -16,7 +16,8 @@ public class Integral {
 	private Function border1;
 	private Function border2;
 	
-	private AreaStyle areaStyle;
+	private AreaStyle areaScreenStyle;
+	private AreaStyle areaPrintStyle;
 	
 	/**
 	 * @param title
@@ -34,7 +35,8 @@ public class Integral {
 		this.border1 = border1;
 		this.border2 = border2;
 		
-		this.areaStyle = null;
+		this.areaScreenStyle = null;
+		this.areaPrintStyle = null;
 	}
 
 	/* (non-Javadoc)
@@ -163,17 +165,31 @@ public class Integral {
 	}
 
 	/**
-	 * @return the areaStyle
+	 * @return the areaScreenStyle
 	 */
-	public AreaStyle getAreaStyle() {
-		return areaStyle;
+	public AreaStyle getAreaScreenStyle() {
+		return areaScreenStyle;
 	}
 
 	/**
-	 * @param areaStyle the areaStyle to set
+	 * @param areaScreenStyle the areaScreenStyle to set
 	 */
-	public void setAreaStyle(AreaStyle areaStyle) {
-		this.areaStyle = areaStyle;
+	public void setAreaScreenStyle(AreaStyle areaScreenStyle) {
+		this.areaScreenStyle = areaScreenStyle;
+	}
+
+	/**
+	 * @return the areaPrintStyle
+	 */
+	public AreaStyle getAreaPrintStyle() {
+		return areaPrintStyle;
+	}
+
+	/**
+	 * @param areaPrintStyle the areaPrintStyle to set
+	 */
+	public void setAreaPrintStyle(AreaStyle areaPrintStyle) {
+		this.areaPrintStyle = areaPrintStyle;
 	}
 	
 	
