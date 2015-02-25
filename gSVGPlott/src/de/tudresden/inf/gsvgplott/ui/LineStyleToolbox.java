@@ -40,9 +40,9 @@ public class LineStyleToolbox extends Dialog {
 	private Table tableScreenLineStyle;
 	private Table tableScreenLineWidth;
 	private Table tableScreenLineColor;
-	private Table table;
-	private Table table_1;
-	private Table table_2;
+	private Table tablePrintLineStyle;
+	private Table tablePrintLineWidth;
+	private Table tablePrintLineColor;
 
 	/**
 	 * Create the dialog.
@@ -222,117 +222,117 @@ public class LineStyleToolbox extends Dialog {
 		tbtmPrint.setControl(compositePrint);
 		compositePrint.setLayout(new GridLayout(2, false));
 		
-		CLabel label = new CLabel(compositePrint, SWT.NONE);
-		label.setText("Style");
+		CLabel lblPrintStyle = new CLabel(compositePrint, SWT.NONE);
+		lblPrintStyle.setText("Style");
 		
-		CLabel label_1 = new CLabel(compositePrint, SWT.NONE);
-		label_1.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		label_1.setText("(selected)");
+		CLabel lblPrintStyleSelected = new CLabel(compositePrint, SWT.NONE);
+		lblPrintStyleSelected.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		lblPrintStyleSelected.setText("(selected)");
 		
-		table = new Table(compositePrint, SWT.FULL_SELECTION);
-		GridData gd_table = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
-		gd_table.minimumHeight = 50;
-		gd_table.widthHint = 132;
-		table.setLayoutData(gd_table);
+		tablePrintLineStyle = new Table(compositePrint, SWT.FULL_SELECTION);
+		GridData gd_tablePrintLineStyle = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
+		gd_tablePrintLineStyle.minimumHeight = 50;
+		gd_tablePrintLineStyle.widthHint = 132;
+		tablePrintLineStyle.setLayoutData(gd_tablePrintLineStyle);
 		
-		TableColumn tableColumn = new TableColumn(table, SWT.NONE);
-		tableColumn.setWidth(193);
-		tableColumn.setText("Line Style");
-		tableColumn.setResizable(false);
+		TableColumn tblclmnPrintLineStyle = new TableColumn(tablePrintLineStyle, SWT.NONE);
+		tblclmnPrintLineStyle.setWidth(193);
+		tblclmnPrintLineStyle.setText("Line Style");
+		tblclmnPrintLineStyle.setResizable(false);
 		
-		TableItem tableItem = new TableItem(table, 0);
+		TableItem tableItem = new TableItem(tablePrintLineStyle, 0);
 		tableItem.setText("Solid");
 		tableItem.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
 		
-		TableItem tableItem_1 = new TableItem(table, 0);
+		TableItem tableItem_1 = new TableItem(tablePrintLineStyle, 0);
 		tableItem_1.setText("Dashed");
 		tableItem_1.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
 		
-		TableItem tableItem_2 = new TableItem(table, 0);
+		TableItem tableItem_2 = new TableItem(tablePrintLineStyle, 0);
 		tableItem_2.setText("Dotted");
 		tableItem_2.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
 		
-		CLabel label_2 = new CLabel(compositePrint, SWT.NONE);
-		label_2.setText("Width");
+		CLabel lblPrintWidth = new CLabel(compositePrint, SWT.NONE);
+		lblPrintWidth.setText("Width");
 		
-		CLabel label_3 = new CLabel(compositePrint, SWT.NONE);
-		label_3.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		label_3.setText("(selected)");
+		CLabel lblPrintWidthSelected = new CLabel(compositePrint, SWT.NONE);
+		lblPrintWidthSelected.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		lblPrintWidthSelected.setText("(selected)");
 		
-		table_1 = new Table(compositePrint, SWT.FULL_SELECTION);
-		GridData gd_table_1 = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
-		gd_table_1.minimumHeight = 50;
-		table_1.setLayoutData(gd_table_1);
+		tablePrintLineWidth = new Table(compositePrint, SWT.FULL_SELECTION);
+		GridData gd_tablePrintLineWidth = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
+		gd_tablePrintLineWidth.minimumHeight = 50;
+		tablePrintLineWidth.setLayoutData(gd_tablePrintLineWidth);
 		
-		TableColumn tableColumn_2 = new TableColumn(table_1, SWT.NONE);
-		tableColumn_2.setWidth(193);
-		tableColumn_2.setText("Line Width");
-		tableColumn_2.setResizable(false);
+		TableColumn tblclmnPrintLineWidth = new TableColumn(tablePrintLineWidth, SWT.NONE);
+		tblclmnPrintLineWidth.setWidth(193);
+		tblclmnPrintLineWidth.setText("Line Width");
+		tblclmnPrintLineWidth.setResizable(false);
 		
-		TableItem tableItem_3 = new TableItem(table_1, 0);
+		TableItem tableItem_3 = new TableItem(tablePrintLineWidth, 0);
 		tableItem_3.setText("1px");
 		tableItem_3.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
 		
-		TableItem tableItem_4 = new TableItem(table_1, 0);
+		TableItem tableItem_4 = new TableItem(tablePrintLineWidth, 0);
 		tableItem_4.setText("2px");
 		tableItem_4.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
 		
-		TableItem tableItem_5 = new TableItem(table_1, 0);
+		TableItem tableItem_5 = new TableItem(tablePrintLineWidth, 0);
 		tableItem_5.setText("3px");
 		tableItem_5.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
 		
-		TableItem tableItem_6 = new TableItem(table_1, 0);
+		TableItem tableItem_6 = new TableItem(tablePrintLineWidth, 0);
 		tableItem_6.setText("4px");
 		tableItem_6.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
 		
-		TableItem tableItem_7 = new TableItem(table_1, 0);
+		TableItem tableItem_7 = new TableItem(tablePrintLineWidth, 0);
 		tableItem_7.setText("5px");
 		tableItem_7.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
 		
-		TableItem tableItem_8 = new TableItem(table_1, 0);
+		TableItem tableItem_8 = new TableItem(tablePrintLineWidth, 0);
 		tableItem_8.setText("6px");
 		tableItem_8.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
 		
-		TableItem tableItem_9 = new TableItem(table_1, 0);
+		TableItem tableItem_9 = new TableItem(tablePrintLineWidth, 0);
 		tableItem_9.setText("7px");
 		tableItem_9.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
 		
-		TableItem tableItem_10 = new TableItem(table_1, 0);
+		TableItem tableItem_10 = new TableItem(tablePrintLineWidth, 0);
 		tableItem_10.setText("8px");
 		tableItem_10.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
 		
-		TableItem tableItem_11 = new TableItem(table_1, 0);
+		TableItem tableItem_11 = new TableItem(tablePrintLineWidth, 0);
 		tableItem_11.setText("9px");
 		tableItem_11.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
 		
-		TableItem tableItem_12 = new TableItem(table_1, 0);
+		TableItem tableItem_12 = new TableItem(tablePrintLineWidth, 0);
 		tableItem_12.setText("10px");
 		tableItem_12.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
 		
-		CLabel label_4 = new CLabel(compositePrint, SWT.NONE);
-		label_4.setText("Color");
+		CLabel lblPrintColor = new CLabel(compositePrint, SWT.NONE);
+		lblPrintColor.setText("Color");
 		
-		CLabel label_5 = new CLabel(compositePrint, SWT.NONE);
-		label_5.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		label_5.setText("(selected)");
+		CLabel lblPrintColorSelected = new CLabel(compositePrint, SWT.NONE);
+		lblPrintColorSelected.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		lblPrintColorSelected.setText("(selected)");
 		
-		table_2 = new Table(compositePrint, SWT.FULL_SELECTION);
-		GridData gd_table_2 = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
-		gd_table_2.minimumHeight = 50;
-		table_2.setLayoutData(gd_table_2);
+		tablePrintLineColor = new Table(compositePrint, SWT.FULL_SELECTION);
+		GridData gd_tablePrintLineColor = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
+		gd_tablePrintLineColor.minimumHeight = 50;
+		tablePrintLineColor.setLayoutData(gd_tablePrintLineColor);
 		
-		TableColumn tableColumn_4 = new TableColumn(table_2, SWT.NONE);
-		tableColumn_4.setWidth(193);
-		tableColumn_4.setText("Line Color");
-		tableColumn_4.setResizable(false);
+		TableColumn tblclmnPrintLineColor = new TableColumn(tablePrintLineColor, SWT.NONE);
+		tblclmnPrintLineColor.setWidth(193);
+		tblclmnPrintLineColor.setText("Line Color");
+		tblclmnPrintLineColor.setResizable(false);
 		
-		TableItem tableItem_13 = new TableItem(table_2, 0);
+		TableItem tableItem_13 = new TableItem(tablePrintLineColor, 0);
 		tableItem_13.setText("Color 1");
 		
-		TableItem tableItem_14 = new TableItem(table_2, 0);
+		TableItem tableItem_14 = new TableItem(tablePrintLineColor, 0);
 		tableItem_14.setText("Color 2");
 		
-		TableItem tableItem_15 = new TableItem(table_2, 0);
+		TableItem tableItem_15 = new TableItem(tablePrintLineColor, 0);
 		tableItem_15.setText("Color 3");
 
 	}

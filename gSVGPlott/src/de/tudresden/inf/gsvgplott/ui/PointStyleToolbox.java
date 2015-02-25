@@ -39,8 +39,8 @@ public class PointStyleToolbox extends Dialog {
 	protected Shell shlTest;
 	private Table tableScreenLineStyle;
 	private Table tableScreenLineColor;
-	private Table table;
-	private Table table_2;
+	private Table tablePrintLineStyle;
+	private Table tablePrintLineColor;
 
 	/**
 	 * Create the dialog.
@@ -75,7 +75,7 @@ public class PointStyleToolbox extends Dialog {
 	private void createContents() {
 		shlTest = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.TOOL);
 		shlTest.setText("Point Style");
-		shlTest.setSize(209, 371);
+		shlTest.setSize(209, 305);
 		shlTest.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
 		CTabFolder tabFolder = new CTabFolder(shlTest, SWT.BORDER);
@@ -144,16 +144,9 @@ public class PointStyleToolbox extends Dialog {
 		TableItem tableItemScreenColor3 = new TableItem(tableScreenLineColor, 0);
 		tableItemScreenColor3.setText("Color 3");
 		
-		CLabel lblText = new CLabel(compositeScreen, SWT.NONE);
-		lblText.setText("Font");
+		Button btnScreenBordered = new Button(compositeScreen, SWT.CHECK);
+		btnScreenBordered.setText("Bordered");
 		new Label(compositeScreen, SWT.NONE);
-		
-		CLabel lblThisIsAn = new CLabel(compositeScreen, SWT.NONE);
-		lblThisIsAn.setText("This is an example.");
-		
-		Button btnChange = new Button(compositeScreen, SWT.NONE);
-		btnChange.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		btnChange.setText("Change");
 		
 		CTabItem tbtmPrint = new CTabItem(tabFolder, SWT.NONE);
 		tbtmPrint.setText("Print");
@@ -162,72 +155,65 @@ public class PointStyleToolbox extends Dialog {
 		tbtmPrint.setControl(compositePrint);
 		compositePrint.setLayout(new GridLayout(2, false));
 		
-		CLabel label = new CLabel(compositePrint, SWT.NONE);
-		label.setText("Style");
+		CLabel lblPrintStyle = new CLabel(compositePrint, SWT.NONE);
+		lblPrintStyle.setText("Style");
 		
-		CLabel label_1 = new CLabel(compositePrint, SWT.NONE);
-		label_1.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		label_1.setText("(selected)");
+		CLabel lblPrintStyleSelected = new CLabel(compositePrint, SWT.NONE);
+		lblPrintStyleSelected.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		lblPrintStyleSelected.setText("(selected)");
 		
-		table = new Table(compositePrint, SWT.FULL_SELECTION);
-		GridData gd_table = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
-		gd_table.minimumHeight = 50;
-		gd_table.widthHint = 132;
-		table.setLayoutData(gd_table);
+		tablePrintLineStyle = new Table(compositePrint, SWT.FULL_SELECTION);
+		GridData gd_tablePrintLineStyle = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
+		gd_tablePrintLineStyle.minimumHeight = 50;
+		gd_tablePrintLineStyle.widthHint = 132;
+		tablePrintLineStyle.setLayoutData(gd_tablePrintLineStyle);
 		
-		TableColumn tableColumn = new TableColumn(table, SWT.NONE);
-		tableColumn.setWidth(193);
-		tableColumn.setText("Line Style");
-		tableColumn.setResizable(false);
+		TableColumn tblclmnPrintLineStyle = new TableColumn(tablePrintLineStyle, SWT.NONE);
+		tblclmnPrintLineStyle.setWidth(193);
+		tblclmnPrintLineStyle.setText("Line Style");
+		tblclmnPrintLineStyle.setResizable(false);
 		
-		TableItem tableItem = new TableItem(table, 0);
+		TableItem tableItem = new TableItem(tablePrintLineStyle, 0);
 		tableItem.setText("Solid");
 		tableItem.setImage(SWTResourceManager.getImage(PointStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
 		
-		TableItem tableItem_1 = new TableItem(table, 0);
+		TableItem tableItem_1 = new TableItem(tablePrintLineStyle, 0);
 		tableItem_1.setText("Dashed");
 		tableItem_1.setImage(SWTResourceManager.getImage(PointStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
 		
-		TableItem tableItem_2 = new TableItem(table, 0);
+		TableItem tableItem_2 = new TableItem(tablePrintLineStyle, 0);
 		tableItem_2.setText("Dotted");
 		tableItem_2.setImage(SWTResourceManager.getImage(PointStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
 		
-		CLabel label_4 = new CLabel(compositePrint, SWT.NONE);
-		label_4.setText("Color");
+		CLabel lblPrintColor = new CLabel(compositePrint, SWT.NONE);
+		lblPrintColor.setText("Color");
 		
-		CLabel label_5 = new CLabel(compositePrint, SWT.NONE);
-		label_5.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		label_5.setText("(selected)");
+		CLabel lblPrintColorSelected = new CLabel(compositePrint, SWT.NONE);
+		lblPrintColorSelected.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		lblPrintColorSelected.setText("(selected)");
 		
-		table_2 = new Table(compositePrint, SWT.FULL_SELECTION);
-		GridData gd_table_2 = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
-		gd_table_2.minimumHeight = 50;
-		table_2.setLayoutData(gd_table_2);
+		tablePrintLineColor = new Table(compositePrint, SWT.FULL_SELECTION);
+		GridData gd_tablePrintLineColor = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
+		gd_tablePrintLineColor.minimumHeight = 50;
+		tablePrintLineColor.setLayoutData(gd_tablePrintLineColor);
 		
-		TableColumn tableColumn_4 = new TableColumn(table_2, SWT.NONE);
-		tableColumn_4.setWidth(193);
-		tableColumn_4.setText("Line Color");
-		tableColumn_4.setResizable(false);
+		TableColumn tblclmnPrintLineColor = new TableColumn(tablePrintLineColor, SWT.NONE);
+		tblclmnPrintLineColor.setWidth(193);
+		tblclmnPrintLineColor.setText("Line Color");
+		tblclmnPrintLineColor.setResizable(false);
 		
-		TableItem tableItem_13 = new TableItem(table_2, 0);
+		TableItem tableItem_13 = new TableItem(tablePrintLineColor, 0);
 		tableItem_13.setText("Color 1");
 		
-		TableItem tableItem_14 = new TableItem(table_2, 0);
+		TableItem tableItem_14 = new TableItem(tablePrintLineColor, 0);
 		tableItem_14.setText("Color 2");
 		
-		TableItem tableItem_15 = new TableItem(table_2, 0);
+		TableItem tableItem_15 = new TableItem(tablePrintLineColor, 0);
 		tableItem_15.setText("Color 3");
 		
-		CLabel label_6 = new CLabel(compositePrint, SWT.NONE);
-		label_6.setText("Font");
+		Button btnPrintBordered = new Button(compositePrint, SWT.CHECK);
+		btnPrintBordered.setText("Bordered");
 		new Label(compositePrint, SWT.NONE);
-		
-		CLabel label_7 = new CLabel(compositePrint, SWT.NONE);
-		label_7.setText("This is an example.");
-		
-		Button button = new Button(compositePrint, SWT.NONE);
-		button.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		button.setText("Change");
 
 	}
 }

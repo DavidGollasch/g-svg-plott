@@ -69,11 +69,11 @@ public class StoreStyleDialog extends Dialog {
 		composite.setLayout(new GridLayout(2, false));
 		composite.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 2, 1));
 		
-		Button btnNewButton = new Button(composite, SWT.NONE);
-		GridData gd_btnNewButton = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_btnNewButton.widthHint = 70;
-		btnNewButton.setLayoutData(gd_btnNewButton);
-		btnNewButton.setText("OK");
+		Button btnOK = new Button(composite, SWT.NONE);
+		GridData gd_btnOK = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_btnOK.widthHint = 70;
+		btnOK.setLayoutData(gd_btnOK);
+		btnOK.setText("OK");
 		
 		Button btnCancel = new Button(composite, SWT.NONE);
 		GridData gd_btnCancel = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
