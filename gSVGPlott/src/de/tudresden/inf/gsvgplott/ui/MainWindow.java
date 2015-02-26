@@ -7,7 +7,9 @@ package de.tudresden.inf.gsvgplott.ui;
  */
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -18,6 +20,8 @@ import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 
 import de.tudresden.inf.gsvgplott.data.Diagram;
+import de.tudresden.inf.gsvgplott.data.Function;
+import de.tudresden.inf.gsvgplott.data.MarkedPointList;
 
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.layout.FillLayout;
@@ -61,12 +65,14 @@ public class MainWindow {
 	 */
 	private List<Group> functions;
 	private int functionIDcounter;
+	private Map<Group, Function> functionMap;
 	
 	/**
 	 * List of all point lists as Group widgets
 	 */
 	private List<Group> pointlists;
 	private int pointlistIDcounter;
+	private Map<Group, MarkedPointList> pointlistMap;
 	
 	/**
 	 * This shell will only be used to prepare widgets to show them later on.
@@ -104,8 +110,10 @@ public class MainWindow {
 		diagram = new Diagram(null, 0, false, null, null);
 		
 		functions = new ArrayList<Group>();
+		functionMap = new HashMap<Group, Function>();
 		functionIDcounter = 0;
 		pointlists = new ArrayList<Group>();
+		pointlistMap = new HashMap<Group, MarkedPointList>();
 		pointlistIDcounter = 0;
 		
 		temporaryContainer = new Shell();
@@ -149,165 +157,165 @@ public class MainWindow {
 		compositeDataColumn = new Composite(scrolledCompositeDataColumn, SWT.NONE);
 		compositeDataColumn.setLayout(new GridLayout(1, false));
 		
-		CLabel lblDataColumn = new CLabel(compositeDataColumn, SWT.NONE);
-		lblDataColumn.setFont(SWTResourceManager.getFont(".Helvetica Neue DeskInterface", 15, SWT.BOLD));
-		lblDataColumn.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		lblDataColumn.setText("Data");
-		
-		CLabel lblDataRowFunctions = new CLabel(compositeDataColumn, SWT.NONE);
-		lblDataRowFunctions.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		lblDataRowFunctions.setText("Functions");
-		
-		Label lblSepDataRowFunctions = new Label(compositeDataColumn, SWT.SEPARATOR | SWT.HORIZONTAL | SWT.SHADOW_NONE);
-		lblSepDataRowFunctions.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		lblSepDataRowFunctions.setText("sep");
-		
-		Group grpDataRowFunction1 = new Group(compositeDataColumn, SWT.NONE);
-		grpDataRowFunction1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		grpDataRowFunction1.setText("Function 1");
-		grpDataRowFunction1.setLayout(new GridLayout(3, false));
-		
-		CLabel lblDRFTitle1 = new CLabel(grpDataRowFunction1, SWT.NONE);
-		lblDRFTitle1.setText("Title:");
-		
-		Text txtDRFTitle1 = new Text(grpDataRowFunction1, SWT.BORDER);
-		txtDRFTitle1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		Button btnDRFStyle1 = new Button(grpDataRowFunction1, SWT.FLAT);
-		btnDRFStyle1.setToolTipText("Change style");
-		btnDRFStyle1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/edit-16.png"));
-		
-		CLabel lblDRFfunc1 = new CLabel(grpDataRowFunction1, SWT.NONE);
-		lblDRFfunc1.setSize(39, 19);
-		lblDRFfunc1.setText("y(x) = ");
-		
-		Text txtDRFfunc1 = new Text(grpDataRowFunction1, SWT.BORDER);
-		txtDRFfunc1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		txtDRFfunc1.setSize(194, 19);
-		new Label(grpDataRowFunction1, SWT.NONE);
-		
-		Composite compositeDRFControls1 = new Composite(grpDataRowFunction1, SWT.NONE);
-		GridLayout gl_compositeDRFControls1 = new GridLayout(3, false);
-		gl_compositeDRFControls1.verticalSpacing = 0;
-		gl_compositeDRFControls1.marginWidth = 0;
-		gl_compositeDRFControls1.marginHeight = 0;
-		gl_compositeDRFControls1.horizontalSpacing = 0;
-		compositeDRFControls1.setLayout(gl_compositeDRFControls1);
-		compositeDRFControls1.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1));
-		
-		Button btnDRFMoveUp1 = new Button(compositeDRFControls1, SWT.FLAT);
-		btnDRFMoveUp1.setToolTipText("Move item up");
-		btnDRFMoveUp1.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
-		btnDRFMoveUp1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/up-16.png"));
-		
-		Button btnDRFMoveDown1 = new Button(compositeDRFControls1, SWT.FLAT);
-		btnDRFMoveDown1.setToolTipText("Move item down");
-		btnDRFMoveDown1.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
-		btnDRFMoveDown1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/down-16.png"));
-		
-		Button btnDRFRemove1 = new Button(compositeDRFControls1, SWT.FLAT);
-		btnDRFRemove1.setToolTipText("Remove item");
-		GridData gd_btnDRFRemove1 = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
-		gd_btnDRFRemove1.horizontalIndent = 5;
-		btnDRFRemove1.setLayoutData(gd_btnDRFRemove1);
-		btnDRFRemove1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/remove-16.png"));
-		btnDRFRemove1.setText("Remove");
-		
-		Button btnDataColumnFunctionsAddFunction = new Button(compositeDataColumn, SWT.FLAT);
-		btnDataColumnFunctionsAddFunction.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/add-16.png"));
-		btnDataColumnFunctionsAddFunction.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		btnDataColumnFunctionsAddFunction.setText("Add Function");
-		
-		CLabel lblDataRowMarkedpoints = new CLabel(compositeDataColumn, SWT.NONE);
-		lblDataRowMarkedpoints.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		lblDataRowMarkedpoints.setText("Marked Points");
-		
-		Label lblSepMarkedpointsRow = new Label(compositeDataColumn, SWT.SEPARATOR | SWT.HORIZONTAL);
-		lblSepMarkedpointsRow.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		Group grpDataRowMarkedpointsPointList = new Group(compositeDataColumn, SWT.NONE);
-		grpDataRowMarkedpointsPointList.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		grpDataRowMarkedpointsPointList.setLayout(new GridLayout(4, false));
-		grpDataRowMarkedpointsPointList.setText("Point List 1");
-		
-		CLabel lblDRMTitle1 = new CLabel(grpDataRowMarkedpointsPointList, SWT.NONE);
-		lblDRMTitle1.setText("Title:");
-		
-		Text txtDRMtitle1 = new Text(grpDataRowMarkedpointsPointList, SWT.BORDER);
-		txtDRMtitle1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
-		
-		Button btnDRMStyle1 = new Button(grpDataRowMarkedpointsPointList, SWT.FLAT);
-		btnDRMStyle1.setToolTipText("Change style");
-		btnDRMStyle1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/edit-16.png"));
-		
-		Composite compositeDRMlist1 = new Composite(grpDataRowMarkedpointsPointList, SWT.NONE);
-		compositeDRMlist1.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 2, 1));
-		compositeDRMlist1.setLayout(null);
-		
-		Table tableDRMlist1 = new Table(compositeDRMlist1, SWT.BORDER | SWT.CHECK | SWT.FULL_SELECTION | SWT.MULTI);
-		tableDRMlist1.setBounds(0, 0, 185, 64);
-		tableDRMlist1.setLinesVisible(true);
-		tableDRMlist1.setHeaderVisible(true);
-		
-		TableColumn tblclmnDRMXValue1 = new TableColumn(tableDRMlist1, SWT.NONE);
-		tblclmnDRMXValue1.setWidth(75);
-		tblclmnDRMXValue1.setText("X Value");
-		
-		TableColumn tblclmnDRMYValue1 = new TableColumn(tableDRMlist1, SWT.NONE);
-		tblclmnDRMYValue1.setWidth(75);
-		tblclmnDRMYValue1.setText("Y Value");
-		
-		TableItem tableItemDRMlist1point2 = new TableItem(tableDRMlist1, SWT.NONE);
-		tableItemDRMlist1point2.setText(new String[] {"3.5", "4.5"});
-		
-		TableItem tableItemDRMlist1point1 = new TableItem(tableDRMlist1, SWT.NONE);
-		tableItemDRMlist1point1.setText(new String[] {"1.5", "2.5"});
-		
-		Composite compositeDRMlistControls1 = new Composite(grpDataRowMarkedpointsPointList, SWT.NONE);
-		compositeDRMlistControls1.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 2, 1));
-		GridLayout gl_compositeDRMlistControls1 = new GridLayout(1, false);
-		gl_compositeDRMlistControls1.horizontalSpacing = 0;
-		gl_compositeDRMlistControls1.marginWidth = 0;
-		gl_compositeDRMlistControls1.marginHeight = 0;
-		gl_compositeDRMlistControls1.verticalSpacing = 0;
-		compositeDRMlistControls1.setLayout(gl_compositeDRMlistControls1);
-		
-		Button btnDRMlistAdd1 = new Button(compositeDRMlistControls1, SWT.NONE);
-		btnDRMlistAdd1.setText("Add...");
-		
-		Button btnDRMlistRemove1 = new Button(compositeDRMlistControls1, SWT.NONE);
-		btnDRMlistRemove1.setEnabled(false);
-		btnDRMlistRemove1.setText("Remove");
-		
-		Composite compositeDRMControls1 = new Composite(grpDataRowMarkedpointsPointList, SWT.NONE);
-		compositeDRMControls1.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 4, 1));
-		GridLayout gl_compositeDRMControls1 = new GridLayout(3, false);
-		gl_compositeDRMControls1.verticalSpacing = 0;
-		gl_compositeDRMControls1.marginWidth = 0;
-		gl_compositeDRMControls1.marginHeight = 0;
-		gl_compositeDRMControls1.horizontalSpacing = 0;
-		compositeDRMControls1.setLayout(gl_compositeDRMControls1);
-		
-		Button btnDRMMoveUp1 = new Button(compositeDRMControls1, SWT.FLAT);
-		btnDRMMoveUp1.setToolTipText("Move item up");
-		btnDRMMoveUp1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/up-16.png"));
-		
-		Button btnDRMMoveDown1 = new Button(compositeDRMControls1, SWT.FLAT);
-		btnDRMMoveDown1.setToolTipText("Move item down");
-		btnDRMMoveDown1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/down-16.png"));
-		
-		Button btnDRMRemove1 = new Button(compositeDRMControls1, SWT.FLAT);
-		btnDRMRemove1.setToolTipText("Remove item");
-		GridData gd_btnDRMRemove1 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_btnDRMRemove1.horizontalIndent = 5;
-		btnDRMRemove1.setLayoutData(gd_btnDRMRemove1);
-		btnDRMRemove1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/remove-16.png"));
-		btnDRMRemove1.setText("Remove");
-		
-		Button btnDataColumnListsAddPointList = new Button(compositeDataColumn, SWT.FLAT);
-		btnDataColumnListsAddPointList.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/add-16.png"));
-		btnDataColumnListsAddPointList.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		btnDataColumnListsAddPointList.setText("Add Point List");
+//		CLabel lblDataColumn = new CLabel(compositeDataColumn, SWT.NONE);
+//		lblDataColumn.setFont(SWTResourceManager.getFont(".Helvetica Neue DeskInterface", 15, SWT.BOLD));
+//		lblDataColumn.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+//		lblDataColumn.setText("Data");
+//		
+//		CLabel lblDataRowFunctions = new CLabel(compositeDataColumn, SWT.NONE);
+//		lblDataRowFunctions.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+//		lblDataRowFunctions.setText("Functions");
+//		
+//		Label lblSepDataRowFunctions = new Label(compositeDataColumn, SWT.SEPARATOR | SWT.HORIZONTAL | SWT.SHADOW_NONE);
+//		lblSepDataRowFunctions.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+//		lblSepDataRowFunctions.setText("sep");
+//		
+//		Group grpDataRowFunction1 = new Group(compositeDataColumn, SWT.NONE);
+//		grpDataRowFunction1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+//		grpDataRowFunction1.setText("Function 1");
+//		grpDataRowFunction1.setLayout(new GridLayout(3, false));
+//		
+//		CLabel lblDRFTitle1 = new CLabel(grpDataRowFunction1, SWT.NONE);
+//		lblDRFTitle1.setText("Title:");
+//		
+//		Text txtDRFTitle1 = new Text(grpDataRowFunction1, SWT.BORDER);
+//		txtDRFTitle1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+//		
+//		Button btnDRFStyle1 = new Button(grpDataRowFunction1, SWT.FLAT);
+//		btnDRFStyle1.setToolTipText("Change style");
+//		btnDRFStyle1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/edit-16.png"));
+//		
+//		CLabel lblDRFfunc1 = new CLabel(grpDataRowFunction1, SWT.NONE);
+//		lblDRFfunc1.setSize(39, 19);
+//		lblDRFfunc1.setText("y(x) = ");
+//		
+//		Text txtDRFfunc1 = new Text(grpDataRowFunction1, SWT.BORDER);
+//		txtDRFfunc1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+//		txtDRFfunc1.setSize(194, 19);
+//		new Label(grpDataRowFunction1, SWT.NONE);
+//		
+//		Composite compositeDRFControls1 = new Composite(grpDataRowFunction1, SWT.NONE);
+//		GridLayout gl_compositeDRFControls1 = new GridLayout(3, false);
+//		gl_compositeDRFControls1.verticalSpacing = 0;
+//		gl_compositeDRFControls1.marginWidth = 0;
+//		gl_compositeDRFControls1.marginHeight = 0;
+//		gl_compositeDRFControls1.horizontalSpacing = 0;
+//		compositeDRFControls1.setLayout(gl_compositeDRFControls1);
+//		compositeDRFControls1.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1));
+//		
+//		Button btnDRFMoveUp1 = new Button(compositeDRFControls1, SWT.FLAT);
+//		btnDRFMoveUp1.setToolTipText("Move item up");
+//		btnDRFMoveUp1.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
+//		btnDRFMoveUp1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/up-16.png"));
+//		
+//		Button btnDRFMoveDown1 = new Button(compositeDRFControls1, SWT.FLAT);
+//		btnDRFMoveDown1.setToolTipText("Move item down");
+//		btnDRFMoveDown1.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
+//		btnDRFMoveDown1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/down-16.png"));
+//		
+//		Button btnDRFRemove1 = new Button(compositeDRFControls1, SWT.FLAT);
+//		btnDRFRemove1.setToolTipText("Remove item");
+//		GridData gd_btnDRFRemove1 = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
+//		gd_btnDRFRemove1.horizontalIndent = 5;
+//		btnDRFRemove1.setLayoutData(gd_btnDRFRemove1);
+//		btnDRFRemove1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/remove-16.png"));
+//		btnDRFRemove1.setText("Remove");
+//		
+//		Button btnDataColumnFunctionsAddFunction = new Button(compositeDataColumn, SWT.FLAT);
+//		btnDataColumnFunctionsAddFunction.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/add-16.png"));
+//		btnDataColumnFunctionsAddFunction.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+//		btnDataColumnFunctionsAddFunction.setText("Add Function");
+//		
+//		CLabel lblDataRowMarkedpoints = new CLabel(compositeDataColumn, SWT.NONE);
+//		lblDataRowMarkedpoints.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+//		lblDataRowMarkedpoints.setText("Marked Points");
+//		
+//		Label lblSepMarkedpointsRow = new Label(compositeDataColumn, SWT.SEPARATOR | SWT.HORIZONTAL);
+//		lblSepMarkedpointsRow.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+//		
+//		Group grpDataRowMarkedpointsPointList = new Group(compositeDataColumn, SWT.NONE);
+//		grpDataRowMarkedpointsPointList.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+//		grpDataRowMarkedpointsPointList.setLayout(new GridLayout(4, false));
+//		grpDataRowMarkedpointsPointList.setText("Point List 1");
+//		
+//		CLabel lblDRMTitle1 = new CLabel(grpDataRowMarkedpointsPointList, SWT.NONE);
+//		lblDRMTitle1.setText("Title:");
+//		
+//		Text txtDRMtitle1 = new Text(grpDataRowMarkedpointsPointList, SWT.BORDER);
+//		txtDRMtitle1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+//		
+//		Button btnDRMStyle1 = new Button(grpDataRowMarkedpointsPointList, SWT.FLAT);
+//		btnDRMStyle1.setToolTipText("Change style");
+//		btnDRMStyle1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/edit-16.png"));
+//		
+//		Composite compositeDRMlist1 = new Composite(grpDataRowMarkedpointsPointList, SWT.NONE);
+//		compositeDRMlist1.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 2, 1));
+//		compositeDRMlist1.setLayout(null);
+//		
+//		Table tableDRMlist1 = new Table(compositeDRMlist1, SWT.BORDER | SWT.CHECK | SWT.FULL_SELECTION | SWT.MULTI);
+//		tableDRMlist1.setBounds(0, 0, 185, 64);
+//		tableDRMlist1.setLinesVisible(true);
+//		tableDRMlist1.setHeaderVisible(true);
+//		
+//		TableColumn tblclmnDRMXValue1 = new TableColumn(tableDRMlist1, SWT.NONE);
+//		tblclmnDRMXValue1.setWidth(75);
+//		tblclmnDRMXValue1.setText("X Value");
+//		
+//		TableColumn tblclmnDRMYValue1 = new TableColumn(tableDRMlist1, SWT.NONE);
+//		tblclmnDRMYValue1.setWidth(75);
+//		tblclmnDRMYValue1.setText("Y Value");
+//		
+//		TableItem tableItemDRMlist1point2 = new TableItem(tableDRMlist1, SWT.NONE);
+//		tableItemDRMlist1point2.setText(new String[] {"3.5", "4.5"});
+//		
+//		TableItem tableItemDRMlist1point1 = new TableItem(tableDRMlist1, SWT.NONE);
+//		tableItemDRMlist1point1.setText(new String[] {"1.5", "2.5"});
+//		
+//		Composite compositeDRMlistControls1 = new Composite(grpDataRowMarkedpointsPointList, SWT.NONE);
+//		compositeDRMlistControls1.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 2, 1));
+//		GridLayout gl_compositeDRMlistControls1 = new GridLayout(1, false);
+//		gl_compositeDRMlistControls1.horizontalSpacing = 0;
+//		gl_compositeDRMlistControls1.marginWidth = 0;
+//		gl_compositeDRMlistControls1.marginHeight = 0;
+//		gl_compositeDRMlistControls1.verticalSpacing = 0;
+//		compositeDRMlistControls1.setLayout(gl_compositeDRMlistControls1);
+//		
+//		Button btnDRMlistAdd1 = new Button(compositeDRMlistControls1, SWT.NONE);
+//		btnDRMlistAdd1.setText("Add...");
+//		
+//		Button btnDRMlistRemove1 = new Button(compositeDRMlistControls1, SWT.NONE);
+//		btnDRMlistRemove1.setEnabled(false);
+//		btnDRMlistRemove1.setText("Remove");
+//		
+//		Composite compositeDRMControls1 = new Composite(grpDataRowMarkedpointsPointList, SWT.NONE);
+//		compositeDRMControls1.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 4, 1));
+//		GridLayout gl_compositeDRMControls1 = new GridLayout(3, false);
+//		gl_compositeDRMControls1.verticalSpacing = 0;
+//		gl_compositeDRMControls1.marginWidth = 0;
+//		gl_compositeDRMControls1.marginHeight = 0;
+//		gl_compositeDRMControls1.horizontalSpacing = 0;
+//		compositeDRMControls1.setLayout(gl_compositeDRMControls1);
+//		
+//		Button btnDRMMoveUp1 = new Button(compositeDRMControls1, SWT.FLAT);
+//		btnDRMMoveUp1.setToolTipText("Move item up");
+//		btnDRMMoveUp1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/up-16.png"));
+//		
+//		Button btnDRMMoveDown1 = new Button(compositeDRMControls1, SWT.FLAT);
+//		btnDRMMoveDown1.setToolTipText("Move item down");
+//		btnDRMMoveDown1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/down-16.png"));
+//		
+//		Button btnDRMRemove1 = new Button(compositeDRMControls1, SWT.FLAT);
+//		btnDRMRemove1.setToolTipText("Remove item");
+//		GridData gd_btnDRMRemove1 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+//		gd_btnDRMRemove1.horizontalIndent = 5;
+//		btnDRMRemove1.setLayoutData(gd_btnDRMRemove1);
+//		btnDRMRemove1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/remove-16.png"));
+//		btnDRMRemove1.setText("Remove");
+//		
+//		Button btnDataColumnListsAddPointList = new Button(compositeDataColumn, SWT.FLAT);
+//		btnDataColumnListsAddPointList.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/add-16.png"));
+//		btnDataColumnListsAddPointList.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+//		btnDataColumnListsAddPointList.setText("Add Point List");
 		scrolledCompositeDataColumn.setContent(compositeDataColumn);
 		scrolledCompositeDataColumn.setMinSize(compositeDataColumn.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		
@@ -1119,7 +1127,7 @@ public class MainWindow {
 		
 		CLabel lblDRFfunc1 = new CLabel(grpDataRowFunction1, SWT.NONE);
 		lblDRFfunc1.setSize(39, 19);
-		lblDRFfunc1.setText("y(x) = ");
+		lblDRFfunc1.setText("f(x) = ");
 		
 		Text txtDRFfunc1 = new Text(grpDataRowFunction1, SWT.BORDER);
 		txtDRFfunc1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
