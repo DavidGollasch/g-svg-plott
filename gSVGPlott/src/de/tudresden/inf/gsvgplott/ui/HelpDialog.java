@@ -9,6 +9,8 @@ import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
 
 public class HelpDialog extends Dialog {
 
@@ -46,18 +48,24 @@ public class HelpDialog extends Dialog {
 	 * Create contents of the dialog.
 	 */
 	private void createContents() {
-		shlHelp = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.RESIZE);
+		shlHelp = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.RESIZE | SWT.APPLICATION_MODAL);
 		shlHelp.setSize(600, 383);
 		shlHelp.setText("Help");
 		shlHelp.setLayout(new GridLayout(1, false));
 		
 		Browser browser = new Browser(shlHelp, SWT.NONE);
+		browser.setUrl("http://gollasch-it.de");
 		browser.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		Button btnClose = new Button(shlHelp, SWT.NONE);
+		btnClose.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseUp(MouseEvent e) {
+				shlHelp.close();
+			}
+		});
 		btnClose.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		btnClose.setText("Close");
-
 	}
 
 }

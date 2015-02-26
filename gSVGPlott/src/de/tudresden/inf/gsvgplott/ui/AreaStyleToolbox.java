@@ -35,7 +35,7 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
-public class GeneralStyleToolbox extends Dialog {
+public class AreaStyleToolbox extends Dialog {
 
 	protected Object result;
 	protected Shell shlToolbox;
@@ -52,7 +52,7 @@ public class GeneralStyleToolbox extends Dialog {
 	 * @param parent
 	 * @param style
 	 */
-	public GeneralStyleToolbox(Shell parent, int style) {
+	public AreaStyleToolbox(Shell parent, int style) {
 		super(parent, SWT.BORDER | SWT.CLOSE);
 		setText("SWT Dialog");
 	}
@@ -90,8 +90,8 @@ public class GeneralStyleToolbox extends Dialog {
 	 */
 	private void createContents() {
 		shlToolbox = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.TOOL);
-		shlToolbox.setText("General Style");
-		shlToolbox.setSize(209, 255);
+		shlToolbox.setText("Area Style");
+		shlToolbox.setSize(209, 196);
 		shlToolbox.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
 		CTabFolder tabFolder = new CTabFolder(shlToolbox, SWT.BORDER);
@@ -105,19 +105,8 @@ public class GeneralStyleToolbox extends Dialog {
 		tbtmScreen.setControl(compositeScreen);
 		compositeScreen.setLayout(new GridLayout(2, false));
 		
-		CLabel lblScreenFont = new CLabel(compositeScreen, SWT.NONE);
-		lblScreenFont.setText("Font");
-		
-		Button btnScreenFont = new Button(compositeScreen, SWT.NONE);
-		btnScreenFont.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		btnScreenFont.setText("...");
-		
-		CLabel lblScreenFontSelected = new CLabel(compositeScreen, SWT.NONE);
-		lblScreenFontSelected.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
-		lblScreenFontSelected.setText("(selected)");
-		
 		CLabel lblScreenColor = new CLabel(compositeScreen, SWT.NONE);
-		lblScreenColor.setText("Background Color");
+		lblScreenColor.setText("Fill Color");
 		
 		CLabel lblScreenColorSelected = new CLabel(compositeScreen, SWT.NONE);
 		lblScreenColorSelected.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -149,19 +138,8 @@ public class GeneralStyleToolbox extends Dialog {
 		tbtmPrint.setControl(compositePrint);
 		compositePrint.setLayout(new GridLayout(2, false));
 		
-		CLabel lblPrintFont = new CLabel(compositePrint, SWT.NONE);
-		lblPrintFont.setText("Font");
-		
-		Button btnPrintFont = new Button(compositePrint, SWT.NONE);
-		btnPrintFont.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		btnPrintFont.setText("...");
-		
-		CLabel lblPrintFontSelected = new CLabel(compositePrint, SWT.NONE);
-		lblPrintFontSelected.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
-		lblPrintFontSelected.setText("(selected)");
-		
 		CLabel lblPrintColor = new CLabel(compositePrint, SWT.NONE);
-		lblPrintColor.setText("Background Color");
+		lblPrintColor.setText("Fill Color");
 		
 		CLabel lblPrintColorSelected = new CLabel(compositePrint, SWT.NONE);
 		lblPrintColorSelected.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));

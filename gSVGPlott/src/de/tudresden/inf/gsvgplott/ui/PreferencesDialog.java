@@ -43,7 +43,7 @@ public class PreferencesDialog extends Dialog {
 	 * Create contents of the dialog.
 	 */
 	private void createContents() {
-		shlPreferences = new Shell(getParent(), getStyle());
+		shlPreferences = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
 		shlPreferences.setSize(405, 204);
 		shlPreferences.setText("Preferences");
 		

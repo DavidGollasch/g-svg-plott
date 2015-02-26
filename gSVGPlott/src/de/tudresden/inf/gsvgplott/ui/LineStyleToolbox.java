@@ -15,8 +15,10 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Point;
 
 import com.explodingpixels.macwidgets.HudWindow;
+
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.FormData;
@@ -43,6 +45,11 @@ public class LineStyleToolbox extends Dialog {
 	private Table tablePrintLineStyle;
 	private Table tablePrintLineWidth;
 	private Table tablePrintLineColor;
+	
+	/**
+	 * Location the window should open
+	 */
+	private Point openingLocation = null;
 
 	/**
 	 * Create the dialog.
@@ -63,6 +70,9 @@ public class LineStyleToolbox extends Dialog {
 		shlTest.open();
 		shlTest.layout();
 		Display display = getParent().getDisplay();
+		if(openingLocation != null) {
+			shlTest.setLocation(openingLocation.x, openingLocation.y);
+		}
 		while (!shlTest.isDisposed()) {
 			if (!display.readAndDispatch()) {
 				display.sleep();
@@ -70,12 +80,20 @@ public class LineStyleToolbox extends Dialog {
 		}
 		return result;
 	}
+	
+	/**
+	 * Specify the location the dialog should open
+	 * @param pt new location
+	 */
+	public void setOpeningLocation(Point pt) {
+		openingLocation = pt;
+	}
 
 	/**
 	 * Create contents of the dialog.
 	 */
 	private void createContents() {
-		shlTest = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.TOOL);
+		shlTest = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.TOOL | SWT.APPLICATION_MODAL);
 		shlTest.setText("Line Style");
 		shlTest.setSize(215, 310);
 		shlTest.setLayout(new FillLayout(SWT.HORIZONTAL));

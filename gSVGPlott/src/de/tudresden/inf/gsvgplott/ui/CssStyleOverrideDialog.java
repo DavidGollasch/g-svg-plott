@@ -10,6 +10,11 @@ import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.jface.text.TextViewer;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 public class CssStyleOverrideDialog extends Dialog {
 
@@ -47,18 +52,17 @@ public class CssStyleOverrideDialog extends Dialog {
 	 * Create contents of the dialog.
 	 */
 	private void createContents() {
-		shlCssStyleOverride = new Shell(getParent(), getStyle());
+		shlCssStyleOverride = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.RESIZE | SWT.APPLICATION_MODAL);
 		shlCssStyleOverride.setSize(419, 293);
 		shlCssStyleOverride.setText("CSS Style Override");
-		RowLayout rl_shlCssStyleOverride = new RowLayout(SWT.VERTICAL);
-		rl_shlCssStyleOverride.fill = true;
-		shlCssStyleOverride.setLayout(rl_shlCssStyleOverride);
+		shlCssStyleOverride.setLayout(new GridLayout(1, false));
 		
 		CLabel lblCustomCss = new CLabel(shlCssStyleOverride, SWT.NONE);
 		lblCustomCss.setText("Custom CSS:");
 		
-		StyledText styledText = new StyledText(shlCssStyleOverride, SWT.BORDER);
-		styledText.setLayoutData(new RowData(406, 202));
+		StyledText styledText = new StyledText(shlCssStyleOverride, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
+		styledText.setFont(SWTResourceManager.getFont("Courier New", 12, SWT.BOLD));
+		styledText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		styledText.setText("This is text.");
 		
 		Composite composite = new Composite(shlCssStyleOverride, SWT.NONE);

@@ -6,10 +6,7 @@ package de.tudresden.inf.gsvgplott.ui;
  *
  */
 
-import javax.swing.JFrame;
-
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Button;
@@ -20,15 +17,10 @@ import org.eclipse.swt.events.MouseEvent;
 import de.tudresden.inf.gsvgplott.data.Diagram;
 
 import org.eclipse.swt.browser.Browser;
-
-import swing2swt.layout.BorderLayout;
-import swing2swt.layout.BoxLayout;
-
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.custom.ViewForm;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
@@ -36,28 +28,18 @@ import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.custom.CLabel;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Combo;
-import org.eclipse.swt.widgets.ExpandBar;
-import org.eclipse.swt.widgets.ExpandItem;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
-import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.jface.viewers.TableViewerColumn;
-import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.widgets.TabItem;
-
-import com.explodingpixels.macwidgets.HudWindow;
-import org.eclipse.swt.custom.CTabItem;
-import org.eclipse.swt.layout.RowLayout;
-import org.eclipse.swt.layout.FormLayout;
-import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.layout.FormAttachment;
-import org.eclipse.swt.custom.StackLayout;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 
 public class MainWindow {
 	
@@ -111,6 +93,7 @@ public class MainWindow {
 		Display display = Display.getDefault();
 		
 		createContents();
+		operatePrepareView(); //invoked to prepare all view details before opening
 		shlGsvgplott.open();
 		shlGsvgplott.layout();
 		while (!shlGsvgplott.isDisposed()) {
@@ -326,6 +309,12 @@ public class MainWindow {
 		txtPoGeneralTitle.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		
 		Button btnPlotoptionsGeneralStyle = new Button(grpPlotoptionsGeneralRow, SWT.FLAT);
+		btnPlotoptionsGeneralStyle.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseUp(MouseEvent e) {
+				triggerOptionsGeneralStyleToolbox();
+			}
+		});
 		btnPlotoptionsGeneralStyle.setToolTipText("Change style");
 		btnPlotoptionsGeneralStyle.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/edit-16.png"));
 		
@@ -362,6 +351,12 @@ public class MainWindow {
 		txtPoXaxisTitle.setToolTipText("Set x axis title");
 		
 		Button btnPlotoptionsXAxisStyle = new Button(grpPlotoptionsXAxisRow, SWT.FLAT);
+		btnPlotoptionsXAxisStyle.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseUp(MouseEvent e) {
+				triggerOptionsXaxisStyleToolbox();
+			}
+		});
 		btnPlotoptionsXAxisStyle.setToolTipText("Change style");
 		btnPlotoptionsXAxisStyle.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/edit-16.png"));
 		
@@ -393,7 +388,16 @@ public class MainWindow {
 		txtPoXaxisHelplines = new Text(grpPlotoptionsXAxisRow, SWT.BORDER);
 		txtPoXaxisHelplines.setToolTipText("Enter y axis intersection points to define x axis helplines");
 		txtPoXaxisHelplines.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
-		new Label(grpPlotoptionsXAxisRow, SWT.NONE);
+		
+		Button btnPlotoptionsXAxisHelplineStyle = new Button(grpPlotoptionsXAxisRow, SWT.FLAT);
+		btnPlotoptionsXAxisHelplineStyle.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseUp(MouseEvent e) {
+				triggerOptionsXaxisHelplineStyleToolbox();
+			}
+		});
+		btnPlotoptionsXAxisHelplineStyle.setToolTipText("Change style");
+		btnPlotoptionsXAxisHelplineStyle.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/edit-16.png"));
 		
 		Group grpPlotoptionsYAxisRow = new Group(compositePlotoptionsColumn, SWT.NONE);
 		grpPlotoptionsYAxisRow.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
@@ -408,6 +412,12 @@ public class MainWindow {
 		txtPoYaxisTitle.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		
 		Button btnPlotoptionsYAxisStyle = new Button(grpPlotoptionsYAxisRow, SWT.FLAT);
+		btnPlotoptionsYAxisStyle.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseUp(MouseEvent e) {
+				triggerOptionsYaxisStyleToolbox();
+			}
+		});
 		btnPlotoptionsYAxisStyle.setToolTipText("Change style");
 		btnPlotoptionsYAxisStyle.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/edit-16.png"));
 		
@@ -432,7 +442,16 @@ public class MainWindow {
 		txtPoYaxisHelplines = new Text(grpPlotoptionsYAxisRow, SWT.BORDER);
 		txtPoYaxisHelplines.setToolTipText("Enter x axis intersection points to define y axis helplines");
 		txtPoYaxisHelplines.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
-		new Label(grpPlotoptionsYAxisRow, SWT.NONE);
+		
+		Button btnPlotoptionsYAxisHelplineStyle = new Button(grpPlotoptionsYAxisRow, SWT.FLAT);
+		btnPlotoptionsYAxisHelplineStyle.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseUp(MouseEvent e) {
+				triggerOptionsYaxisHelplineStyleToolbox();
+			}
+		});
+		btnPlotoptionsYAxisHelplineStyle.setToolTipText("Change style");
+		btnPlotoptionsYAxisHelplineStyle.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/edit-16.png"));
 		
 		Group grpPlotoptionsIntegralAreaRow = new Group(compositePlotoptionsColumn, SWT.NONE);
 		grpPlotoptionsIntegralAreaRow.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
@@ -447,6 +466,12 @@ public class MainWindow {
 		txtPoIntegralTitle.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		
 		Button btnPlotoptionsIntegralStyle = new Button(grpPlotoptionsIntegralAreaRow, SWT.FLAT);
+		btnPlotoptionsIntegralStyle.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseUp(MouseEvent e) {
+				triggerOptionsIntegralStyleToolbox();
+			}
+		});
 		btnPlotoptionsIntegralStyle.setToolTipText("Change style");
 		btnPlotoptionsIntegralStyle.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/edit-16.png"));
 		
@@ -573,6 +598,12 @@ public class MainWindow {
 		compositeOutput.setLayout(new GridLayout(1, false));
 		
 		Button btnOutputExportExport = new Button(compositeOutput, SWT.FLAT);
+		btnOutputExportExport.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseUp(MouseEvent e) {
+				triggerExport();
+			}
+		});
 		btnOutputExportExport.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/share-16.png"));
 		btnOutputExportExport.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
 		btnOutputExportExport.setText("Export...");
@@ -591,21 +622,45 @@ public class MainWindow {
 		mntmFileSubmenu.setMenu(file_1);
 		
 		MenuItem mntmFileNew = new MenuItem(file_1, SWT.NONE);
+		mntmFileNew.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				triggerMenuNew();
+			}
+		});
 		mntmFileNew.setText("New");
 		
 		MenuItem menuItemSeparator1 = new MenuItem(file_1, SWT.SEPARATOR);
 		menuItemSeparator1.setText("sep");
 		
 		MenuItem mntmFileOpen = new MenuItem(file_1, SWT.NONE);
+		mntmFileOpen.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				triggerMenuOpen();
+			}
+		});
 		mntmFileOpen.setText("Open...");
 		
 		MenuItem menuItemSeparator2 = new MenuItem(file_1, SWT.SEPARATOR);
 		menuItemSeparator2.setText("sep");
 		
 		MenuItem mntmFileSave = new MenuItem(file_1, SWT.NONE);
+		mntmFileSave.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				triggerMenuSave();
+			}
+		});
 		mntmFileSave.setText("Save");
 		
 		MenuItem mntmSaveAs = new MenuItem(file_1, SWT.NONE);
+		mntmSaveAs.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				triggerMenuSaveAs();
+			}
+		});
 		mntmSaveAs.setText("Save As...");
 		
 		MenuItem mntmExtrasSubmenu = new MenuItem(menu, SWT.CASCADE);
@@ -621,15 +676,39 @@ public class MainWindow {
 		mntmExtrasStyle.setMenu(menu_1);
 		
 		MenuItem mntmExtrasStyleStyleManager = new MenuItem(menu_1, SWT.NONE);
+		mntmExtrasStyleStyleManager.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				triggerMenuStyleManager();
+			}
+		});
 		mntmExtrasStyleStyleManager.setText("Style Manager...");
 		
 		MenuItem mntmExtrasStyleStoreStyle = new MenuItem(menu_1, SWT.NONE);
+		mntmExtrasStyleStoreStyle.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				triggerMenuStoreStyle();
+			}
+		});
 		mntmExtrasStyleStoreStyle.setText("Store Style");
 		
 		MenuItem mntmExtrasStyleResetAll = new MenuItem(menu_1, SWT.NONE);
+		mntmExtrasStyleResetAll.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				triggerMenuResetStyle();
+			}
+		});
 		mntmExtrasStyleResetAll.setText("Reset All");
 		
 		MenuItem mntmExtrasCssStyleOverride = new MenuItem(extras_1, SWT.NONE);
+		mntmExtrasCssStyleOverride.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				triggerMenuCssStyleOverride();
+			}
+		});
 		mntmExtrasCssStyleOverride.setText("CSS Style Override...");
 		
 		MenuItem menuItemSeparator3 = new MenuItem(extras_1, SWT.SEPARATOR);
@@ -646,6 +725,12 @@ public class MainWindow {
 		mntmExtrasLanguageEnglish.setText("English (Default)");
 		
 		MenuItem mntmExtrasPreferences = new MenuItem(extras_1, SWT.NONE);
+		mntmExtrasPreferences.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				triggerMenuPreferences();
+			}
+		});
 		mntmExtrasPreferences.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/settings-16.png"));
 		mntmExtrasPreferences.setText("Preferences...");
 		
@@ -656,32 +741,194 @@ public class MainWindow {
 		mntmHelpSubmenu.setMenu(menu_3);
 		
 		MenuItem mntmHelpHelp = new MenuItem(menu_3, SWT.NONE);
-		mntmHelpHelp.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/help-16.png"));
-		mntmHelpHelp.setText("Help...");
-		
-		/*
-		Button btnClose = new Button(shlGsvgplott, SWT.NONE);
-		btnClose.addMouseListener(new MouseAdapter() {
+		mntmHelpHelp.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void mouseUp(MouseEvent e) {
-				MessageBox messageBox = new MessageBox(shlGsvgplott, SWT.ICON_QUESTION |SWT.YES | SWT.NO);
-			    messageBox.setMessage("Are you sure that you want to close this application?");
-			    int rc = messageBox.open();
-			    
-			    switch (rc) {
-				case SWT.YES:
-					shlGsvgplott.close();
-					break;
-				case SWT.NO:
-					break;
-				default: //do nothing
-					break;
-				}
+			public void widgetSelected(SelectionEvent e) {
+				triggerMenuHelp();
 			}
 		});
-		btnClose.setBounds(10, 10, 95, 28);
-		btnClose.setText("Close");
-		*/
+		mntmHelpHelp.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/help-16.png"));
+		mntmHelpHelp.setText("Help...");
 
+	}
+
+	/**
+	 * Open tool box for General styling
+	 */
+	protected void triggerOptionsGeneralStyleToolbox() {
+		GeneralStyleToolbox gt = new GeneralStyleToolbox(shlGsvgplott, 0);
+		gt.setOpeningLocation(Display.getDefault().getCursorLocation());
+		gt.open();
+	}
+	
+	/**
+	 * Open tool box for X Axis styling
+	 */
+	protected void triggerOptionsXaxisStyleToolbox() {
+		LineStyleToolbox lt = new LineStyleToolbox(shlGsvgplott, 0);
+		lt.setOpeningLocation(Display.getDefault().getCursorLocation());
+		lt.open();
+		
+	}
+	
+	/**
+	 * Open tool box for X Axis Helpline styling
+	 */
+	protected void triggerOptionsXaxisHelplineStyleToolbox() {
+		LineStyleToolbox lt = new LineStyleToolbox(shlGsvgplott, 0);
+		lt.setOpeningLocation(Display.getDefault().getCursorLocation());
+		lt.open();
+	}
+	
+	/**
+	 * Open tool box for Y Axis styling
+	 */
+	protected void triggerOptionsYaxisStyleToolbox() {
+		LineStyleToolbox lt = new LineStyleToolbox(shlGsvgplott, 0);
+		lt.setOpeningLocation(Display.getDefault().getCursorLocation());
+		lt.open();
+	}
+	
+	/**
+	 * Open tool box for Y Axis Helpline styling
+	 */
+	protected void triggerOptionsYaxisHelplineStyleToolbox() {
+		LineStyleToolbox lt = new LineStyleToolbox(shlGsvgplott, 0);
+		lt.setOpeningLocation(Display.getDefault().getCursorLocation());
+		lt.open();
+	}
+	
+	/**
+	 * Open tool box for Integral styling
+	 */
+	protected void triggerOptionsIntegralStyleToolbox() {
+		AreaStyleToolbox at = new AreaStyleToolbox(shlGsvgplott, 0);
+		at.setOpeningLocation(Display.getDefault().getCursorLocation());
+		at.open();
+	}
+
+	/**
+	 * Export project
+	 */
+	protected void triggerExport() {
+		FileDialog fd = new FileDialog(shlGsvgplott, SWT.SAVE);
+        fd.setText("Export");
+        //fd.setFilterPath("C:/");
+        String[] filterExt = { "*.svg", "*.xml", "*.*" };
+        fd.setFilterExtensions(filterExt);
+        String selected = fd.open();
+        
+		//TODO: export file
+        System.out.println(selected);
+	}
+
+	/**
+	 * Create new file
+	 */
+	protected void triggerMenuNew() {
+		//TODO: new file
+	}
+	
+	/**
+	 * Open file
+	 */
+	protected void triggerMenuOpen() {
+		FileDialog fd = new FileDialog(shlGsvgplott, SWT.OPEN);
+        fd.setText("Open");
+        //fd.setFilterPath("C:/");
+        String[] filterExt = { "*.gsp", "*.xml", "*.*" };
+        fd.setFilterExtensions(filterExt);
+        String selected = fd.open();
+        
+        //TODO: actually open the file, parse data, update view and diagram object
+        System.out.println(selected);
+	}
+	
+	/**
+	 * Save file
+	 */
+	protected void triggerMenuSave() {
+        
+		//TODO: save file if file name already known
+		
+		triggerMenuSaveAs();
+	}
+	
+	/**
+	 * Save file as
+	 */
+	protected void triggerMenuSaveAs() {
+		FileDialog fd = new FileDialog(shlGsvgplott, SWT.SAVE);
+        fd.setText("Save");
+        //fd.setFilterPath("C:/");
+        String[] filterExt = { "*.gsp", "*.xml", "*.*" };
+        fd.setFilterExtensions(filterExt);
+        String selected = fd.open();
+        
+		//TODO: save file as
+        System.out.println(selected);
+	}
+	
+	/**
+	 * Open Style Manager
+	 */
+	protected void triggerMenuStyleManager() {
+		StyleManagerDialog sd = new StyleManagerDialog(shlGsvgplott, 0);
+		sd.open();
+	}
+	
+	/**
+	 * Store current style
+	 */
+	protected void triggerMenuStoreStyle() {
+		StoreStyleDialog sd = new StoreStyleDialog(shlGsvgplott, 0);
+		sd.open();
+	}
+	
+	/**
+	 * Reset Style
+	 */
+	protected void triggerMenuResetStyle() {
+		//TODO: Reset Style
+	}
+	
+	/**
+	 * Open CSS Style Override Dialog
+	 */
+	protected void triggerMenuCssStyleOverride() {
+		//TODO: Open CSS Style Override Dialog
+		CssStyleOverrideDialog cd = new CssStyleOverrideDialog(shlGsvgplott, 0);
+		cd.open();
+	}
+	
+	/**
+	 * Open Preferences Dialog
+	 */
+	protected void triggerMenuPreferences() {
+		PreferencesDialog pd = new PreferencesDialog(shlGsvgplott, 0);
+		pd.open();
+	}
+	
+	/**
+	 * Open Help Dialog
+	 */
+	protected void triggerMenuHelp() {
+		HelpDialog hd = new HelpDialog(shlGsvgplott, 0);
+		hd.open();
+	}
+	
+	/**
+	 * This method will be invoked on startup to prepare all views and contents to start
+	 * working (remove example values, fill default values, etc.)
+	 */
+	protected void operatePrepareView() {
+		//TODO: to be implemented
+	}
+	
+	/**
+	 * This method invokes the creation of preview diagrams out of the current Diagram instance
+	 */
+	protected void operateGeneratePreview() {
+		//TODO: to be implemented
 	}
 }

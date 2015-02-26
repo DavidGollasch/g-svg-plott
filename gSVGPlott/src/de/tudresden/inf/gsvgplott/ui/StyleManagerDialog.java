@@ -44,7 +44,7 @@ public class StyleManagerDialog extends Dialog {
 	 * Create contents of the dialog.
 	 */
 	private void createContents() {
-		shlStyleManager = new Shell(getParent(), getStyle());
+		shlStyleManager = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
 		shlStyleManager.setSize(289, 277);
 		shlStyleManager.setText("Style Manager");
 		
@@ -76,9 +76,9 @@ public class StyleManagerDialog extends Dialog {
 		btnApply.setBounds(10, 221, 95, 28);
 		btnApply.setText("Apply");
 		
-		Button btnCancel = new Button(shlStyleManager, SWT.NONE);
-		btnCancel.setBounds(111, 221, 95, 28);
-		btnCancel.setText("Cancel");
+		Button btnClose = new Button(shlStyleManager, SWT.NONE);
+		btnClose.setBounds(111, 221, 95, 28);
+		btnClose.setText("Close");
 
 	}
 }
