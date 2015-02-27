@@ -10,16 +10,16 @@ import java.awt.Color;
  *
  */
 public class LineStyle {
-	private LineType style;
+	private String style;
 	private int width;
 	private Color color;
 	
 	/**
-	 * @param style
+	 * @param style Style based on the stroke-dasharray property from SVG (take the LineTypePalette here)
 	 * @param width
 	 * @param color
 	 */
-	public LineStyle(LineType style, int width, Color color) {
+	public LineStyle(String style, int width, Color color) {
 		super();
 		this.style = style;
 		this.width = width;
@@ -75,13 +75,13 @@ public class LineStyle {
 	/**
 	 * @return the style
 	 */
-	public LineType getStyle() {
+	public String getStyle() {
 		return style;
 	}
 	/**
-	 * @param style the style to set
+	 * @param style the style to set (use the LineTypePalette here)
 	 */
-	public void setStyle(LineType style) {
+	public void setStyle(String style) {
 		this.style = style;
 	}
 	/**

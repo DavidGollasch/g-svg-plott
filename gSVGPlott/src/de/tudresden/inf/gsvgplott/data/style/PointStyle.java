@@ -10,18 +10,18 @@ import java.awt.Color;
  *
  */
 public class PointStyle {
-	private PointType style;
+	private String style;
 	private boolean showBorder;
 	private int size;
 	private Color color;
 	
 	/**
-	 * @param style
+	 * @param style SVG symbol representation (use the PointTypePalette here)
 	 * @param showBorder
 	 * @param size
 	 * @param color
 	 */
-	public PointStyle(PointType style, boolean showBorder, int size, Color color) {
+	public PointStyle(String style, boolean showBorder, int size, Color color) {
 		super();
 		this.style = style;
 		this.showBorder = showBorder;
@@ -81,13 +81,13 @@ public class PointStyle {
 	/**
 	 * @return the style
 	 */
-	public PointType getStyle() {
+	public String getStyle() {
 		return style;
 	}
 	/**
-	 * @param style the style to set
+	 * @param style the style to set (based on the PointTypePalette)
 	 */
-	public void setStyle(PointType style) {
+	public void setStyle(String style) {
 		this.style = style;
 	}
 	/**
