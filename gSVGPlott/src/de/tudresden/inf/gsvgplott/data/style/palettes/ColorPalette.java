@@ -1,7 +1,7 @@
 /**
  * 
  */
-package de.tudresden.inf.gsvgplott.data.style;
+package de.tudresden.inf.gsvgplott.data.style.palettes;
 
 import java.awt.Color;
 import java.lang.reflect.*;
