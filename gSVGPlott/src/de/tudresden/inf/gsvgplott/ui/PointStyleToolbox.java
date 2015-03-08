@@ -29,6 +29,7 @@ import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.Spinner;
 
 public class PointStyleToolbox extends Dialog {
 
@@ -94,7 +95,7 @@ public class PointStyleToolbox extends Dialog {
 	private void createContents() {
 		shlToolbox = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.TOOL);
 		shlToolbox.setText("Point Style");
-		shlToolbox.setSize(209, 305);
+		shlToolbox.setSize(236, 305);
 		shlToolbox.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
 		CTabFolder tabFolder = new CTabFolder(shlToolbox, SWT.BORDER);
@@ -106,13 +107,13 @@ public class PointStyleToolbox extends Dialog {
 		
 		Composite compositeScreen = new Composite(tabFolder, SWT.NONE);
 		tbtmScreen.setControl(compositeScreen);
-		compositeScreen.setLayout(new GridLayout(2, false));
+		compositeScreen.setLayout(new GridLayout(4, false));
 		
 		CLabel lblScreenStyle = new CLabel(compositeScreen, SWT.NONE);
 		lblScreenStyle.setText("Style");
 		
 		lblScreenStyleSelected = new CLabel(compositeScreen, SWT.NONE);
-		lblScreenStyleSelected.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		lblScreenStyleSelected.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 3, 1));
 		lblScreenStyleSelected.setText("(selected)");
 		
 		tableScreenPointStyle = new Table(compositeScreen, SWT.FULL_SELECTION);
@@ -123,7 +124,7 @@ public class PointStyleToolbox extends Dialog {
 				lblScreenStyleSelected.setText(selectedItem.getText());
 			}
 		});
-		GridData gd_tableScreenPointStyle = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
+		GridData gd_tableScreenPointStyle = new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1);
 		gd_tableScreenPointStyle.minimumHeight = 50;
 		tableScreenPointStyle.setLayoutData(gd_tableScreenPointStyle);
 		
@@ -140,7 +141,7 @@ public class PointStyleToolbox extends Dialog {
 		lblScreenColor.setText("Color");
 		
 		lblScreenColorSelected = new CLabel(compositeScreen, SWT.NONE);
-		lblScreenColorSelected.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		lblScreenColorSelected.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 3, 1));
 		lblScreenColorSelected.setText("(selected)");
 		
 		tableScreenPointColor = new Table(compositeScreen, SWT.FULL_SELECTION);
@@ -152,7 +153,7 @@ public class PointStyleToolbox extends Dialog {
 				lblScreenColorSelected.setBackground(selectedItem.getImage());
 			}
 		});
-		GridData gd_tableScreenPointColor = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
+		GridData gd_tableScreenPointColor = new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1);
 		gd_tableScreenPointColor.minimumHeight = 50;
 		tableScreenPointColor.setLayoutData(gd_tableScreenPointColor);
 		
@@ -172,20 +173,30 @@ public class PointStyleToolbox extends Dialog {
 		
 		btnScreenBordered = new Button(compositeScreen, SWT.CHECK);
 		btnScreenBordered.setText("Bordered");
-		new Label(compositeScreen, SWT.NONE);
+		
+		CLabel lblScreenSize = new CLabel(compositeScreen, SWT.NONE);
+		lblScreenSize.setText("Size:");
+		
+		Spinner spinnerScreenSize = new Spinner(compositeScreen, SWT.BORDER);
+		spinnerScreenSize.setMaximum(999);
+		spinnerScreenSize.setMinimum(1);
+		spinnerScreenSize.setSelection(15);
+		
+		CLabel lblScreenPx = new CLabel(compositeScreen, SWT.NONE);
+		lblScreenPx.setText("px");
 		
 		CTabItem tbtmPrint = new CTabItem(tabFolder, SWT.NONE);
 		tbtmPrint.setText("Print");
 		
 		Composite compositePrint = new Composite(tabFolder, SWT.NONE);
 		tbtmPrint.setControl(compositePrint);
-		compositePrint.setLayout(new GridLayout(2, false));
+		compositePrint.setLayout(new GridLayout(4, false));
 		
 		CLabel lblPrintStyle = new CLabel(compositePrint, SWT.NONE);
 		lblPrintStyle.setText("Style");
 		
 		lblPrintStyleSelected = new CLabel(compositePrint, SWT.NONE);
-		lblPrintStyleSelected.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		lblPrintStyleSelected.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 3, 1));
 		lblPrintStyleSelected.setText("(selected)");
 		
 		tablePrintPointStyle = new Table(compositePrint, SWT.FULL_SELECTION);
@@ -196,7 +207,7 @@ public class PointStyleToolbox extends Dialog {
 				lblPrintStyleSelected.setText(selectedItem.getText());
 			}
 		});
-		GridData gd_tablePrintPointStyle = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
+		GridData gd_tablePrintPointStyle = new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1);
 		gd_tablePrintPointStyle.minimumHeight = 50;
 		gd_tablePrintPointStyle.widthHint = 132;
 		tablePrintPointStyle.setLayoutData(gd_tablePrintPointStyle);
@@ -214,7 +225,7 @@ public class PointStyleToolbox extends Dialog {
 		lblPrintColor.setText("Color");
 		
 		lblPrintColorSelected = new CLabel(compositePrint, SWT.NONE);
-		lblPrintColorSelected.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		lblPrintColorSelected.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 3, 1));
 		lblPrintColorSelected.setText("(selected)");
 		
 		tablePrintPointColor = new Table(compositePrint, SWT.FULL_SELECTION);
@@ -226,7 +237,7 @@ public class PointStyleToolbox extends Dialog {
 				lblPrintColorSelected.setBackground(selectedItem.getImage());
 			}
 		});
-		GridData gd_tablePrintPointColor = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
+		GridData gd_tablePrintPointColor = new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1);
 		gd_tablePrintPointColor.minimumHeight = 50;
 		tablePrintPointColor.setLayoutData(gd_tablePrintPointColor);
 		
@@ -246,7 +257,17 @@ public class PointStyleToolbox extends Dialog {
 		
 		btnPrintBordered = new Button(compositePrint, SWT.CHECK);
 		btnPrintBordered.setText("Bordered");
-		new Label(compositePrint, SWT.NONE);
+		
+		CLabel lblPrintSize = new CLabel(compositePrint, SWT.NONE);
+		lblPrintSize.setText("Size:");
+		
+		Spinner spinnerPrintSize = new Spinner(compositePrint, SWT.BORDER);
+		spinnerPrintSize.setMaximum(999);
+		spinnerPrintSize.setMinimum(1);
+		spinnerPrintSize.setSelection(15);
+		
+		CLabel lblPrintPx = new CLabel(compositePrint, SWT.NONE);
+		lblPrintPx.setText("px");
 		
 		this.fillPointTypes();
 		this.fillColors();
