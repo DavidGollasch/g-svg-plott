@@ -1,12 +1,16 @@
 package de.tudresden.inf.gsvgplott.ui;
 
+import java.awt.Color;
+import java.util.Map;
+
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
-
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.layout.GridData;
@@ -17,17 +21,23 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
+import de.tudresden.inf.gsvgplott.data.style.palettes.ColorPalette;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+
 public class AreaStyleToolbox extends Dialog {
 
 	protected Object result;
 	protected Shell shlToolbox;
-	private Table tableScreenBgColor;
 	private Table tablePrintBgColor;
 	
 	/**
 	 * Location the window should open
 	 */
 	private Point openingLocation = null;
+	private Table tableScreenBgColor;
+	private CLabel lblScreenColorSelected;
+	private CLabel lblPrintColorSelected;
 
 	/**
 	 * Create the dialog.
@@ -90,11 +100,19 @@ public class AreaStyleToolbox extends Dialog {
 		CLabel lblScreenColor = new CLabel(compositeScreen, SWT.NONE);
 		lblScreenColor.setText("Fill Color");
 		
-		CLabel lblScreenColorSelected = new CLabel(compositeScreen, SWT.NONE);
+		lblScreenColorSelected = new CLabel(compositeScreen, SWT.NONE);
 		lblScreenColorSelected.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblScreenColorSelected.setText("(selected)");
 		
 		tableScreenBgColor = new Table(compositeScreen, SWT.FULL_SELECTION);
+		tableScreenBgColor.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				TableItem selectedItem = tableScreenBgColor.getSelection()[0];
+				lblScreenColorSelected.setText(selectedItem.getText());
+				lblScreenColorSelected.setBackground(selectedItem.getImage());
+			}
+		});
 		GridData gd_tableScreenBgColor = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
 		gd_tableScreenBgColor.minimumHeight = 50;
 		tableScreenBgColor.setLayoutData(gd_tableScreenBgColor);
@@ -123,11 +141,19 @@ public class AreaStyleToolbox extends Dialog {
 		CLabel lblPrintColor = new CLabel(compositePrint, SWT.NONE);
 		lblPrintColor.setText("Fill Color");
 		
-		CLabel lblPrintColorSelected = new CLabel(compositePrint, SWT.NONE);
+		lblPrintColorSelected = new CLabel(compositePrint, SWT.NONE);
 		lblPrintColorSelected.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblPrintColorSelected.setText("(selected)");
 		
 		tablePrintBgColor = new Table(compositePrint, SWT.FULL_SELECTION);
+		tablePrintBgColor.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				TableItem selectedItem = tablePrintBgColor.getSelection()[0];
+				lblPrintColorSelected.setText(selectedItem.getText());
+				lblPrintColorSelected.setBackground(selectedItem.getImage());
+			}
+		});
 		tablePrintBgColor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		
 		TableColumn tblclmnPrintBgColor = new TableColumn(tablePrintBgColor, SWT.NONE);
@@ -143,6 +169,40 @@ public class AreaStyleToolbox extends Dialog {
 		
 		TableItem tableItem_2 = new TableItem(tablePrintBgColor, 0);
 		tableItem_2.setText("Color 3");
+		
+		fillColors();
 
+	}
+	
+	private void fillColors() {
+		this.tableScreenBgColor.removeAll();
+		this.tablePrintBgColor.removeAll();
+		
+		Map<String, Color> palette = ColorPalette.getPalette();
+		for(String key : ColorPalette.getOrderedPaletteKeys()) {
+			Color c = palette.get(key);
+			
+			TableItem item1 = new TableItem(tableScreenBgColor, SWT.NONE);
+			TableItem item2 = new TableItem(tablePrintBgColor, SWT.NONE);
+			
+			Image icon = new Image(getParent().getDisplay(), 16, 16);
+			
+			GC gc = new GC(icon);
+			org.eclipse.swt.graphics.Color newcolor = new org.eclipse.swt.graphics.Color(this.getParent().getDisplay(), c.getRed(), c.getGreen(), c.getBlue());
+			gc.setBackground(newcolor);
+			gc.setForeground(newcolor);
+			gc.fillRectangle(0, 0, 16, 16);
+			gc.dispose();
+			
+			item1.setImage(icon);
+			item2.setImage(icon);
+			
+			String name = key.toUpperCase().substring(0, 1);
+			if(key.length() > 1) {
+				name = name + key.toLowerCase().substring(1);
+			}
+			item1.setText(name);
+			item2.setText(name);
+		}
 	}
 }

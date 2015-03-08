@@ -9,7 +9,6 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.SWT;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.swt.widgets.Button;
-
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -259,12 +258,14 @@ public class PointStyleToolbox extends Dialog {
 		this.tablePrintPointStyle.removeAll();
 		
 		Map<String, String> palette = PointTypePalette.getPalette();
-		for (Map.Entry<String, String> entry : palette.entrySet()) {
+		for (String key : PointTypePalette.getOrderedPaletteKeys()) {
+			//String value = palette.get(key);
+			
 			TableItem item1 = new TableItem(tableScreenPointStyle, SWT.NONE);
 			TableItem item2 = new TableItem(tablePrintPointStyle, SWT.NONE);
 			Image icon = null;
 			try {
-				icon = SWTResourceManager.getImage(PointStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/points/" + entry.getKey().toLowerCase() + ".png");
+				icon = SWTResourceManager.getImage(PointStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/points/" + key.toLowerCase() + ".png");
 			} catch (Exception e) {
 				// nothing happens. icon stays null
 			}
@@ -273,9 +274,9 @@ public class PointStyleToolbox extends Dialog {
 				item2.setImage(icon);
 			}
 			
-			String name = entry.getKey().toUpperCase().substring(0, 1);
-			if(entry.getKey().length() > 1) {
-				name = name + entry.getKey().toLowerCase().substring(1);
+			String name = key.toUpperCase().substring(0, 1);
+			if(key.length() > 1) {
+				name = name + key.toLowerCase().substring(1);
 			}
 			item1.setText(name);
 			item2.setText(name);
@@ -287,14 +288,16 @@ public class PointStyleToolbox extends Dialog {
 		this.tablePrintPointColor.removeAll();
 		
 		Map<String, Color> palette = ColorPalette.getPalette();
-		for(Map.Entry<String, Color> entry : palette.entrySet()) {
+		for(String key : ColorPalette.getOrderedPaletteKeys()) {
+			Color c = palette.get(key);
+			
 			TableItem item1 = new TableItem(tableScreenPointColor, SWT.NONE);
 			TableItem item2 = new TableItem(tablePrintPointColor, SWT.NONE);
 			
 			Image icon = new Image(getParent().getDisplay(), 16, 16);
 			
 			GC gc = new GC(icon);
-			org.eclipse.swt.graphics.Color newcolor = new org.eclipse.swt.graphics.Color(this.getParent().getDisplay(), entry.getValue().getRed(), entry.getValue().getGreen(), entry.getValue().getBlue());
+			org.eclipse.swt.graphics.Color newcolor = new org.eclipse.swt.graphics.Color(this.getParent().getDisplay(), c.getRed(), c.getGreen(), c.getBlue());
 			gc.setBackground(newcolor);
 			gc.setForeground(newcolor);
 			gc.fillRectangle(0, 0, 16, 16);
@@ -303,9 +306,9 @@ public class PointStyleToolbox extends Dialog {
 			item1.setImage(icon);
 			item2.setImage(icon);
 			
-			String name = entry.getKey().toUpperCase().substring(0, 1);
-			if(entry.getKey().length() > 1) {
-				name = name + entry.getKey().toLowerCase().substring(1);
+			String name = key.toUpperCase().substring(0, 1);
+			if(key.length() > 1) {
+				name = name + key.toLowerCase().substring(1);
 			}
 			item1.setText(name);
 			item2.setText(name);

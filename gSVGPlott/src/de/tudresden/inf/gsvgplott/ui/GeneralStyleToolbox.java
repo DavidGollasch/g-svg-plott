@@ -251,14 +251,16 @@ public class GeneralStyleToolbox extends Dialog {
 		this.tablePrintBgColor.removeAll();
 		
 		Map<String, Color> palette = ColorPalette.getPalette();
-		for(Map.Entry<String, Color> entry : palette.entrySet()) {
+		for(String key : ColorPalette.getOrderedPaletteKeys()) {
+			Color c = palette.get(key);
+			
 			TableItem item1 = new TableItem(tableScreenBgColor, SWT.NONE);
 			TableItem item2 = new TableItem(tablePrintBgColor, SWT.NONE);
 			
 			Image icon = new Image(getParent().getDisplay(), 16, 16);
 			
 			GC gc = new GC(icon);
-			org.eclipse.swt.graphics.Color newcolor = new org.eclipse.swt.graphics.Color(this.getParent().getDisplay(), entry.getValue().getRed(), entry.getValue().getGreen(), entry.getValue().getBlue());
+			org.eclipse.swt.graphics.Color newcolor = new org.eclipse.swt.graphics.Color(this.getParent().getDisplay(), c.getRed(), c.getGreen(), c.getBlue());
 			gc.setBackground(newcolor);
 			gc.setForeground(newcolor);
 			gc.fillRectangle(0, 0, 16, 16);
@@ -267,9 +269,9 @@ public class GeneralStyleToolbox extends Dialog {
 			item1.setImage(icon);
 			item2.setImage(icon);
 			
-			String name = entry.getKey().toUpperCase().substring(0, 1);
-			if(entry.getKey().length() > 1) {
-				name = name + entry.getKey().toLowerCase().substring(1);
+			String name = key.toUpperCase().substring(0, 1);
+			if(key.length() > 1) {
+				name = name + key.toLowerCase().substring(1);
 			}
 			item1.setText(name);
 			item2.setText(name);
