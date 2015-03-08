@@ -16,9 +16,6 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
-
 import de.tudresden.inf.gsvgplott.data.Diagram;
 import de.tudresden.inf.gsvgplott.data.Function;
 import de.tudresden.inf.gsvgplott.data.MarkedPointList;
@@ -44,7 +41,6 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -343,9 +339,9 @@ public class MainWindow {
 		txtPoGeneralTitle.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		
 		Button btnPlotoptionsGeneralStyle = new Button(grpPlotoptionsGeneralRow, SWT.FLAT);
-		btnPlotoptionsGeneralStyle.addMouseListener(new MouseAdapter() {
+		btnPlotoptionsGeneralStyle.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void mouseUp(MouseEvent e) {
+			public void widgetSelected(SelectionEvent e) {
 				triggerOptionsGeneralStyleToolbox();
 			}
 		});
@@ -385,9 +381,9 @@ public class MainWindow {
 		txtPoXaxisTitle.setToolTipText("Set x axis title");
 		
 		Button btnPlotoptionsXAxisStyle = new Button(grpPlotoptionsXAxisRow, SWT.FLAT);
-		btnPlotoptionsXAxisStyle.addMouseListener(new MouseAdapter() {
+		btnPlotoptionsXAxisStyle.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void mouseUp(MouseEvent e) {
+			public void widgetSelected(SelectionEvent e) {
 				triggerOptionsXaxisStyleToolbox();
 			}
 		});
@@ -424,9 +420,9 @@ public class MainWindow {
 		txtPoXaxisHelplines.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		
 		Button btnPlotoptionsXAxisHelplineStyle = new Button(grpPlotoptionsXAxisRow, SWT.FLAT);
-		btnPlotoptionsXAxisHelplineStyle.addMouseListener(new MouseAdapter() {
+		btnPlotoptionsXAxisHelplineStyle.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void mouseUp(MouseEvent e) {
+			public void widgetSelected(SelectionEvent e) {
 				triggerOptionsXaxisHelplineStyleToolbox();
 			}
 		});
@@ -446,9 +442,9 @@ public class MainWindow {
 		txtPoYaxisTitle.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		
 		Button btnPlotoptionsYAxisStyle = new Button(grpPlotoptionsYAxisRow, SWT.FLAT);
-		btnPlotoptionsYAxisStyle.addMouseListener(new MouseAdapter() {
+		btnPlotoptionsYAxisStyle.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void mouseUp(MouseEvent e) {
+			public void widgetSelected(SelectionEvent e) {
 				triggerOptionsYaxisStyleToolbox();
 			}
 		});
@@ -478,9 +474,9 @@ public class MainWindow {
 		txtPoYaxisHelplines.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		
 		Button btnPlotoptionsYAxisHelplineStyle = new Button(grpPlotoptionsYAxisRow, SWT.FLAT);
-		btnPlotoptionsYAxisHelplineStyle.addMouseListener(new MouseAdapter() {
+		btnPlotoptionsYAxisHelplineStyle.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void mouseUp(MouseEvent e) {
+			public void widgetSelected(SelectionEvent e) {
 				triggerOptionsYaxisHelplineStyleToolbox();
 			}
 		});
@@ -500,9 +496,9 @@ public class MainWindow {
 		txtPoIntegralTitle.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		
 		Button btnPlotoptionsIntegralStyle = new Button(grpPlotoptionsIntegralAreaRow, SWT.FLAT);
-		btnPlotoptionsIntegralStyle.addMouseListener(new MouseAdapter() {
+		btnPlotoptionsIntegralStyle.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void mouseUp(MouseEvent e) {
+			public void widgetSelected(SelectionEvent e) {
 				triggerOptionsIntegralStyleToolbox();
 			}
 		});
@@ -632,9 +628,9 @@ public class MainWindow {
 		compositeOutput.setLayout(new GridLayout(1, false));
 		
 		Button btnOutputExportExport = new Button(compositeOutput, SWT.FLAT);
-		btnOutputExportExport.addMouseListener(new MouseAdapter() {
+		btnOutputExportExport.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void mouseUp(MouseEvent e) {
+			public void widgetSelected(SelectionEvent e) {
 				triggerExport();
 			}
 		});
@@ -1099,9 +1095,9 @@ public class MainWindow {
 		btnDataColumnFunctionsAddFunction.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/add-16.png"));
 		btnDataColumnFunctionsAddFunction.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		btnDataColumnFunctionsAddFunction.setText("Add Function");
-		btnDataColumnFunctionsAddFunction.addMouseListener(new MouseAdapter() {
+		btnDataColumnFunctionsAddFunction.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void mouseUp(MouseEvent e) {
+			public void widgetSelected(SelectionEvent e) {
 				triggerDataAddFunction();
 			}
 		});
@@ -1127,9 +1123,9 @@ public class MainWindow {
 		btnDataColumnListsAddPointList.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/add-16.png"));
 		btnDataColumnListsAddPointList.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		btnDataColumnListsAddPointList.setText("Add Point List");
-		btnDataColumnListsAddPointList.addMouseListener(new MouseAdapter() {
+		btnDataColumnListsAddPointList.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void mouseUp(MouseEvent e) {
+			public void widgetSelected(SelectionEvent e) {
 				triggerDataAddPointList();
 			}
 		});
@@ -1161,9 +1157,9 @@ public class MainWindow {
 		Button btnDRFStyle1 = new Button(grpDataRowFunction1, SWT.FLAT);
 		btnDRFStyle1.setToolTipText("Change style");
 		btnDRFStyle1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/edit-16.png"));
-		btnDRFStyle1.addMouseListener(new MouseAdapter() {
+		btnDRFStyle1.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void mouseUp(MouseEvent e) {
+			public void widgetSelected(SelectionEvent e) {
 				triggerDataFunctionStyleToolbox(grpDataRowFunction1);
 			}
 		});
@@ -1190,9 +1186,9 @@ public class MainWindow {
 		btnDRFMoveUp1.setToolTipText("Move item up");
 		btnDRFMoveUp1.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
 		btnDRFMoveUp1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/up-16.png"));
-		btnDRFMoveUp1.addMouseListener(new MouseAdapter() {
+		btnDRFMoveUp1.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void mouseUp(MouseEvent e) {
+			public void widgetSelected(SelectionEvent e) {
 				triggerDataMoveUpFunction(grpDataRowFunction1);
 			}
 		});
@@ -1201,9 +1197,9 @@ public class MainWindow {
 		btnDRFMoveDown1.setToolTipText("Move item down");
 		btnDRFMoveDown1.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
 		btnDRFMoveDown1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/down-16.png"));
-		btnDRFMoveDown1.addMouseListener(new MouseAdapter() {
+		btnDRFMoveDown1.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void mouseUp(MouseEvent e) {
+			public void widgetSelected(SelectionEvent e) {
 				triggerDataMoveDownFunction(grpDataRowFunction1);
 			}
 		});
@@ -1215,9 +1211,9 @@ public class MainWindow {
 		btnDRFRemove1.setLayoutData(gd_btnDRFRemove1);
 		btnDRFRemove1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/remove-16.png"));
 		btnDRFRemove1.setText("Remove");
-		btnDRFRemove1.addMouseListener(new MouseAdapter() {
+		btnDRFRemove1.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void mouseUp(MouseEvent e) {
+			public void widgetSelected(SelectionEvent e) {
 				triggerDataRemoveFunction(grpDataRowFunction1);
 			}
 		});
@@ -1247,9 +1243,9 @@ public class MainWindow {
 		Button btnDRMStyle1 = new Button(grpDataRowMarkedpointsPointList, SWT.FLAT);
 		btnDRMStyle1.setToolTipText("Change style");
 		btnDRMStyle1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/edit-16.png"));
-		btnDRMStyle1.addMouseListener(new MouseAdapter() {
+		btnDRMStyle1.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void mouseUp(MouseEvent e) {
+			public void widgetSelected(SelectionEvent e) {
 				triggerDataPointListStyleToolbox(grpDataRowMarkedpointsPointList);
 			}
 		});
@@ -1288,18 +1284,18 @@ public class MainWindow {
 		
 		Button btnDRMlistAdd1 = new Button(compositeDRMlistControls1, SWT.NONE);
 		btnDRMlistAdd1.setText("Add...");
-		btnDRMlistAdd1.addMouseListener(new MouseAdapter() {
+		btnDRMlistAdd1.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void mouseUp(MouseEvent e) {
+			public void widgetSelected(SelectionEvent e) {
 				triggerDataPointListAddPoint(tableDRMlist1);
 			}
 		});
 		
 		Button btnDRMlistRemove1 = new Button(compositeDRMlistControls1, SWT.NONE);
 		btnDRMlistRemove1.setText("Remove");
-		btnDRMlistRemove1.addMouseListener(new MouseAdapter() {
+		btnDRMlistRemove1.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void mouseUp(MouseEvent e) {
+			public void widgetSelected(SelectionEvent e) {
 				triggerDataPointListRemovePoint(tableDRMlist1);
 			}
 		});
@@ -1316,9 +1312,9 @@ public class MainWindow {
 		Button btnDRMMoveUp1 = new Button(compositeDRMControls1, SWT.FLAT);
 		btnDRMMoveUp1.setToolTipText("Move item up");
 		btnDRMMoveUp1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/up-16.png"));
-		btnDRMMoveUp1.addMouseListener(new MouseAdapter() {
+		btnDRMMoveUp1.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void mouseUp(MouseEvent e) {
+			public void widgetSelected(SelectionEvent e) {
 				triggerDataMoveUpPointList(grpDataRowMarkedpointsPointList);
 			}
 		});
@@ -1326,9 +1322,9 @@ public class MainWindow {
 		Button btnDRMMoveDown1 = new Button(compositeDRMControls1, SWT.FLAT);
 		btnDRMMoveDown1.setToolTipText("Move item down");
 		btnDRMMoveDown1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/down-16.png"));
-		btnDRMMoveDown1.addMouseListener(new MouseAdapter() {
+		btnDRMMoveDown1.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void mouseUp(MouseEvent e) {
+			public void widgetSelected(SelectionEvent e) {
 				triggerDataMoveDownPointList(grpDataRowMarkedpointsPointList);
 			}
 		});
@@ -1340,9 +1336,9 @@ public class MainWindow {
 		btnDRMRemove1.setLayoutData(gd_btnDRMRemove1);
 		btnDRMRemove1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/remove-16.png"));
 		btnDRMRemove1.setText("Remove");
-		btnDRMRemove1.addMouseListener(new MouseAdapter() {
+		btnDRMRemove1.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void mouseUp(MouseEvent e) {
+			public void widgetSelected(SelectionEvent e) {
 				triggerDataRemovePointList(grpDataRowMarkedpointsPointList);
 			}
 		});

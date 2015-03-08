@@ -3,17 +3,12 @@ package de.tudresden.inf.gsvgplott.ui;
 import java.awt.Color;
 import java.util.Map;
 
-import javax.swing.JFrame;
-
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FontDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.SWT;
-import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -24,19 +19,11 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.RGB;
 
-import com.explodingpixels.macwidgets.HudWindow;
-
 import de.tudresden.inf.gsvgplott.data.style.palettes.ColorPalette;
 
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.layout.FormLayout;
-import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.custom.CLabel;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
@@ -122,9 +109,9 @@ public class GeneralStyleToolbox extends Dialog {
 		lblScreenFont.setText("Font");
 		
 		Button btnScreenFont = new Button(compositeScreen, SWT.NONE);
-		btnScreenFont.addMouseListener(new MouseAdapter() {
+		btnScreenFont.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void mouseUp(MouseEvent e) {
+			public void widgetSelected(SelectionEvent e) {
 				FontDialog fd = new FontDialog(shlToolbox, SWT.NONE);
 		        
 				fd.setText("Select Font");
@@ -195,9 +182,9 @@ public class GeneralStyleToolbox extends Dialog {
 		lblPrintFont.setText("Font");
 		
 		Button btnPrintFont = new Button(compositePrint, SWT.NONE);
-		btnPrintFont.addMouseListener(new MouseAdapter() {
+		btnPrintFont.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void mouseUp(MouseEvent e) {
+			public void widgetSelected(SelectionEvent e) {
 				FontDialog fd = new FontDialog(shlToolbox, SWT.NONE);
 		        
 				fd.setText("Select Font");

@@ -6,11 +6,10 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.browser.Browser;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 
 public class HelpDialog extends Dialog {
 
@@ -58,9 +57,9 @@ public class HelpDialog extends Dialog {
 		browser.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		Button btnClose = new Button(shlHelp, SWT.NONE);
-		btnClose.addMouseListener(new MouseAdapter() {
+		btnClose.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void mouseUp(MouseEvent e) {
+			public void widgetSelected(SelectionEvent e) {
 				shlHelp.close();
 			}
 		});

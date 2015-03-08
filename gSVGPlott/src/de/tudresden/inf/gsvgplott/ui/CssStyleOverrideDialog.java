@@ -7,16 +7,13 @@ import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.jface.text.TextViewer;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 
 public class CssStyleOverrideDialog extends Dialog {
 
@@ -75,9 +72,9 @@ public class CssStyleOverrideDialog extends Dialog {
 		btnOk.setText("OK");
 		
 		Button btnReset = new Button(composite, SWT.NONE);
-		btnReset.addMouseListener(new MouseAdapter() {
+		btnReset.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void mouseUp(MouseEvent e) {
+			public void widgetSelected(SelectionEvent e) {
 				styledText.setText("");
 			}
 		});

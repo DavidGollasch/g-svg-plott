@@ -1,7 +1,5 @@
 package de.tudresden.inf.gsvgplott.ui;
 
-import java.util.ArrayList;
-
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -9,8 +7,8 @@ import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 
 public class StyleManagerDialog extends Dialog {
 
@@ -62,9 +60,9 @@ public class StyleManagerDialog extends Dialog {
 		list.setBounds(10, 35, 169, 180);
 		
 		Button btnRemove = new Button(shlStyleManager, SWT.NONE);
-		btnRemove.addMouseListener(new MouseAdapter() {
+		btnRemove.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void mouseUp(MouseEvent e) {
+			public void widgetSelected(SelectionEvent e) {
 				int[] selection = list.getSelectionIndices();
 				list.remove(selection);
 				
@@ -75,9 +73,9 @@ public class StyleManagerDialog extends Dialog {
 		btnRemove.setText("Remove");
 		
 		Button btnRename = new Button(shlStyleManager, SWT.NONE);
-		btnRename.addMouseListener(new MouseAdapter() {
+		btnRename.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void mouseUp(MouseEvent e) {
+			public void widgetSelected(SelectionEvent e) {
 				//TODO
 			}
 		});
