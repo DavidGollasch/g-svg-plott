@@ -849,6 +849,43 @@ public class MainWindow {
 	}
 	
 	/**
+	 * Open tool box for point styling
+	 * @param pointlist
+	 */
+	protected void triggerDataPointListStyleToolbox(Group pointlist) {
+		PointStyleToolbox ps = new PointStyleToolbox(shlGsvgplott, 0);
+		ps.setOpeningLocation(Display.getDefault().getCursorLocation());
+		ps.open();
+	}
+	
+	/**
+	 * Open tool box for line styling
+	 * @param function
+	 */
+	protected void triggerDataFunctionStyleToolbox(Group function) {
+		LineStyleToolbox ls = new LineStyleToolbox(shlGsvgplott, 0);
+		ls.setOpeningLocation(Display.getDefault().getCursorLocation());
+		ls.open();
+		
+	}
+	
+	/**
+	 * Adds a point to the intended point list table
+	 * @param table
+	 */
+	protected void triggerDataPointListAddPoint(Table table) {
+		operateDataPointListAddPoint(table);
+	}
+	
+	/**
+	 * Removes a point from the intended point list table
+	 * @param table
+	 */
+	protected void triggerDataPointListRemovePoint(Table table) {
+		operateDataPointListRemovePoint(table);
+	}
+	
+	/**
 	 * Open tool box for General styling
 	 */
 	protected void triggerOptionsGeneralStyleToolbox() {
@@ -1124,6 +1161,12 @@ public class MainWindow {
 		Button btnDRFStyle1 = new Button(grpDataRowFunction1, SWT.FLAT);
 		btnDRFStyle1.setToolTipText("Change style");
 		btnDRFStyle1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/edit-16.png"));
+		btnDRFStyle1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseUp(MouseEvent e) {
+				triggerDataFunctionStyleToolbox(grpDataRowFunction1);
+			}
+		});
 		
 		CLabel lblDRFfunc1 = new CLabel(grpDataRowFunction1, SWT.NONE);
 		lblDRFfunc1.setSize(39, 19);
@@ -1182,7 +1225,7 @@ public class MainWindow {
 		functions.add(grpDataRowFunction1);
 		this.operateRecreateDataColumn();
 	}
-	
+
 	/**
 	 * Adds a new point list and triggers redraw
 	 */
@@ -1204,6 +1247,12 @@ public class MainWindow {
 		Button btnDRMStyle1 = new Button(grpDataRowMarkedpointsPointList, SWT.FLAT);
 		btnDRMStyle1.setToolTipText("Change style");
 		btnDRMStyle1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/edit-16.png"));
+		btnDRMStyle1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseUp(MouseEvent e) {
+				triggerDataPointListStyleToolbox(grpDataRowMarkedpointsPointList);
+			}
+		});
 		
 		Composite compositeDRMlist1 = new Composite(grpDataRowMarkedpointsPointList, SWT.NONE);
 		compositeDRMlist1.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 2, 1));
@@ -1222,11 +1271,11 @@ public class MainWindow {
 		tblclmnDRMYValue1.setWidth(75);
 		tblclmnDRMYValue1.setText("Y Value");
 		
-		TableItem tableItemDRMlist1point2 = new TableItem(tableDRMlist1, SWT.NONE);
-		tableItemDRMlist1point2.setText(new String[] {"3.5", "4.5"});
-		
-		TableItem tableItemDRMlist1point1 = new TableItem(tableDRMlist1, SWT.NONE);
-		tableItemDRMlist1point1.setText(new String[] {"1.5", "2.5"});
+//		TableItem tableItemDRMlist1point2 = new TableItem(tableDRMlist1, SWT.NONE);
+//		tableItemDRMlist1point2.setText(new String[] {"3.5", "4.5"});
+//		
+//		TableItem tableItemDRMlist1point1 = new TableItem(tableDRMlist1, SWT.NONE);
+//		tableItemDRMlist1point1.setText(new String[] {"1.5", "2.5"});
 		
 		Composite compositeDRMlistControls1 = new Composite(grpDataRowMarkedpointsPointList, SWT.NONE);
 		compositeDRMlistControls1.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 2, 1));
@@ -1239,10 +1288,21 @@ public class MainWindow {
 		
 		Button btnDRMlistAdd1 = new Button(compositeDRMlistControls1, SWT.NONE);
 		btnDRMlistAdd1.setText("Add...");
+		btnDRMlistAdd1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseUp(MouseEvent e) {
+				triggerDataPointListAddPoint(tableDRMlist1);
+			}
+		});
 		
 		Button btnDRMlistRemove1 = new Button(compositeDRMlistControls1, SWT.NONE);
-		btnDRMlistRemove1.setEnabled(false);
 		btnDRMlistRemove1.setText("Remove");
+		btnDRMlistRemove1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseUp(MouseEvent e) {
+				triggerDataPointListRemovePoint(tableDRMlist1);
+			}
+		});
 		
 		Composite compositeDRMControls1 = new Composite(grpDataRowMarkedpointsPointList, SWT.NONE);
 		compositeDRMControls1.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 4, 1));
@@ -1375,6 +1435,25 @@ public class MainWindow {
 				this.operateRecreateDataColumn();
 			}
 		}
+	}
+	
+	/**
+	 * Adds a point to the intended point list table
+	 * @param table
+	 */
+	protected void operateDataPointListAddPoint(Table table) {
+		//TODO implement adding a point
+		AddPointDialog apd = new AddPointDialog(shlGsvgplott, 0);
+		apd.open();
+	}
+	
+	/**
+	 * Removes a point from the intended point list table
+	 * @param table
+	 */
+	protected void operateDataPointListRemovePoint(Table table) {
+		int[] selection = table.getSelectionIndices();
+		table.remove(selection);
 	}
 	
 	/**

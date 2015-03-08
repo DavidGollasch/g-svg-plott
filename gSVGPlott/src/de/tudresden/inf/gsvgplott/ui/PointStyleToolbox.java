@@ -1,8 +1,7 @@
 package de.tudresden.inf.gsvgplott.ui;
 
 import java.awt.Color;
-
-import javax.swing.JFrame;
+import java.util.Map;
 
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
@@ -10,22 +9,21 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.SWT;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
+
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
 
-import com.explodingpixels.macwidgets.HudWindow;
+import de.tudresden.inf.gsvgplott.data.style.palettes.ColorPalette;
+import de.tudresden.inf.gsvgplott.data.style.palettes.PointTypePalette;
+
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.layout.FormLayout;
-import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
@@ -36,11 +34,22 @@ import org.eclipse.swt.widgets.TableItem;
 public class PointStyleToolbox extends Dialog {
 
 	protected Object result;
-	protected Shell shlTest;
-	private Table tableScreenLineStyle;
-	private Table tableScreenLineColor;
-	private Table tablePrintLineStyle;
-	private Table tablePrintLineColor;
+	protected Shell shlToolbox;
+	private Table tableScreenPointStyle;
+	private Table tableScreenPointColor;
+	private Table tablePrintPointStyle;
+	private Table tablePrintPointColor;
+	
+	/**
+	 * Location the window should open
+	 */
+	private Point openingLocation = null;
+	private CLabel lblScreenStyleSelected;
+	private CLabel lblScreenColorSelected;
+	private Button btnScreenBordered;
+	private CLabel lblPrintStyleSelected;
+	private CLabel lblPrintColorSelected;
+	private Button btnPrintBordered;
 
 	/**
 	 * Create the dialog.
@@ -58,27 +67,38 @@ public class PointStyleToolbox extends Dialog {
 	 */
 	public Object open() {
 		createContents();
-		shlTest.open();
-		shlTest.layout();
+		shlToolbox.open();
+		shlToolbox.layout();
 		Display display = getParent().getDisplay();
-		while (!shlTest.isDisposed()) {
+		if(openingLocation != null) {
+			shlToolbox.setLocation(openingLocation.x, openingLocation.y);
+		}
+		while (!shlToolbox.isDisposed()) {
 			if (!display.readAndDispatch()) {
 				display.sleep();
 			}
 		}
 		return result;
 	}
+	
+	/**
+	 * Specify the location the dialog should open
+	 * @param pt new location
+	 */
+	public void setOpeningLocation(Point pt) {
+		openingLocation = pt;
+	}
 
 	/**
 	 * Create contents of the dialog.
 	 */
 	private void createContents() {
-		shlTest = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.TOOL);
-		shlTest.setText("Point Style");
-		shlTest.setSize(209, 305);
-		shlTest.setLayout(new FillLayout(SWT.HORIZONTAL));
+		shlToolbox = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.TOOL);
+		shlToolbox.setText("Point Style");
+		shlToolbox.setSize(209, 305);
+		shlToolbox.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
-		CTabFolder tabFolder = new CTabFolder(shlTest, SWT.BORDER);
+		CTabFolder tabFolder = new CTabFolder(shlToolbox, SWT.BORDER);
 		tabFolder.setBorderVisible(false);
 		tabFolder.setSelectionBackground(Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT));
 		
@@ -92,59 +112,66 @@ public class PointStyleToolbox extends Dialog {
 		CLabel lblScreenStyle = new CLabel(compositeScreen, SWT.NONE);
 		lblScreenStyle.setText("Style");
 		
-		CLabel lblScreenStyleSelected = new CLabel(compositeScreen, SWT.NONE);
+		lblScreenStyleSelected = new CLabel(compositeScreen, SWT.NONE);
 		lblScreenStyleSelected.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblScreenStyleSelected.setText("(selected)");
 		
-		tableScreenLineStyle = new Table(compositeScreen, SWT.FULL_SELECTION);
-		GridData gd_tableScreenLineStyle = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
-		gd_tableScreenLineStyle.minimumHeight = 50;
-		tableScreenLineStyle.setLayoutData(gd_tableScreenLineStyle);
+		tableScreenPointStyle = new Table(compositeScreen, SWT.FULL_SELECTION);
+		tableScreenPointStyle.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				TableItem selectedItem = tableScreenPointStyle.getSelection()[0];
+				lblScreenStyleSelected.setText(selectedItem.getText());
+			}
+		});
+		GridData gd_tableScreenPointStyle = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
+		gd_tableScreenPointStyle.minimumHeight = 50;
+		tableScreenPointStyle.setLayoutData(gd_tableScreenPointStyle);
 		
-		TableColumn tblclmnScreenLineStyle = new TableColumn(tableScreenLineStyle, SWT.NONE);
-		tblclmnScreenLineStyle.setResizable(false);
-		tblclmnScreenLineStyle.setWidth(193);
-		tblclmnScreenLineStyle.setText("Line Style");
+		TableColumn tblclmnScreenPointStyle = new TableColumn(tableScreenPointStyle, SWT.NONE);
+		tblclmnScreenPointStyle.setResizable(false);
+		tblclmnScreenPointStyle.setWidth(193);
+		tblclmnScreenPointStyle.setText("Point Style");
 		
-		TableItem tableItemScreenStyleSolid = new TableItem(tableScreenLineStyle, SWT.NONE);
+		TableItem tableItemScreenStyleSolid = new TableItem(tableScreenPointStyle, SWT.NONE);
 		tableItemScreenStyleSolid.setImage(SWTResourceManager.getImage(PointStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
-		tableItemScreenStyleSolid.setText("Solid");
-		
-		TableItem tableItemScreenStyleDashed = new TableItem(tableScreenLineStyle, SWT.NONE);
-		tableItemScreenStyleDashed.setImage(SWTResourceManager.getImage(PointStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
-		tableItemScreenStyleDashed.setText("Dashed");
-		
-		TableItem tableItemScreenStyleDotted = new TableItem(tableScreenLineStyle, SWT.NONE);
-		tableItemScreenStyleDotted.setImage(SWTResourceManager.getImage(PointStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
-		tableItemScreenStyleDotted.setText("Dotted");
+		tableItemScreenStyleSolid.setText("Example");
 		
 		CLabel lblScreenColor = new CLabel(compositeScreen, SWT.NONE);
 		lblScreenColor.setText("Color");
 		
-		CLabel lblScreenColorSelected = new CLabel(compositeScreen, SWT.NONE);
+		lblScreenColorSelected = new CLabel(compositeScreen, SWT.NONE);
 		lblScreenColorSelected.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblScreenColorSelected.setText("(selected)");
 		
-		tableScreenLineColor = new Table(compositeScreen, SWT.FULL_SELECTION);
-		GridData gd_tableScreenLineColor = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
-		gd_tableScreenLineColor.minimumHeight = 50;
-		tableScreenLineColor.setLayoutData(gd_tableScreenLineColor);
+		tableScreenPointColor = new Table(compositeScreen, SWT.FULL_SELECTION);
+		tableScreenPointColor.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				TableItem selectedItem = tableScreenPointColor.getSelection()[0];
+				lblScreenColorSelected.setText(selectedItem.getText());
+				lblScreenColorSelected.setBackground(selectedItem.getImage());
+			}
+		});
+		GridData gd_tableScreenPointColor = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
+		gd_tableScreenPointColor.minimumHeight = 50;
+		tableScreenPointColor.setLayoutData(gd_tableScreenPointColor);
 		
-		TableColumn tblclmnScreenLineColor = new TableColumn(tableScreenLineColor, SWT.NONE);
-		tblclmnScreenLineColor.setWidth(193);
-		tblclmnScreenLineColor.setText("Line Color");
-		tblclmnScreenLineColor.setResizable(false);
+		TableColumn tblclmnScreenPointColor = new TableColumn(tableScreenPointColor, SWT.NONE);
+		tblclmnScreenPointColor.setWidth(193);
+		tblclmnScreenPointColor.setText("Line Color");
+		tblclmnScreenPointColor.setResizable(false);
 		
-		TableItem tableItemScreenColor1 = new TableItem(tableScreenLineColor, SWT.NONE);
+		TableItem tableItemScreenColor1 = new TableItem(tableScreenPointColor, SWT.NONE);
 		tableItemScreenColor1.setText("Color 1");
 		
-		TableItem tableItemScreenColor2 = new TableItem(tableScreenLineColor, 0);
+		TableItem tableItemScreenColor2 = new TableItem(tableScreenPointColor, 0);
 		tableItemScreenColor2.setText("Color 2");
 		
-		TableItem tableItemScreenColor3 = new TableItem(tableScreenLineColor, 0);
+		TableItem tableItemScreenColor3 = new TableItem(tableScreenPointColor, 0);
 		tableItemScreenColor3.setText("Color 3");
 		
-		Button btnScreenBordered = new Button(compositeScreen, SWT.CHECK);
+		btnScreenBordered = new Button(compositeScreen, SWT.CHECK);
 		btnScreenBordered.setText("Bordered");
 		new Label(compositeScreen, SWT.NONE);
 		
@@ -158,62 +185,130 @@ public class PointStyleToolbox extends Dialog {
 		CLabel lblPrintStyle = new CLabel(compositePrint, SWT.NONE);
 		lblPrintStyle.setText("Style");
 		
-		CLabel lblPrintStyleSelected = new CLabel(compositePrint, SWT.NONE);
+		lblPrintStyleSelected = new CLabel(compositePrint, SWT.NONE);
 		lblPrintStyleSelected.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblPrintStyleSelected.setText("(selected)");
 		
-		tablePrintLineStyle = new Table(compositePrint, SWT.FULL_SELECTION);
-		GridData gd_tablePrintLineStyle = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
-		gd_tablePrintLineStyle.minimumHeight = 50;
-		gd_tablePrintLineStyle.widthHint = 132;
-		tablePrintLineStyle.setLayoutData(gd_tablePrintLineStyle);
+		tablePrintPointStyle = new Table(compositePrint, SWT.FULL_SELECTION);
+		tablePrintPointStyle.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				TableItem selectedItem = tablePrintPointStyle.getSelection()[0];
+				lblPrintStyleSelected.setText(selectedItem.getText());
+			}
+		});
+		GridData gd_tablePrintPointStyle = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
+		gd_tablePrintPointStyle.minimumHeight = 50;
+		gd_tablePrintPointStyle.widthHint = 132;
+		tablePrintPointStyle.setLayoutData(gd_tablePrintPointStyle);
 		
-		TableColumn tblclmnPrintLineStyle = new TableColumn(tablePrintLineStyle, SWT.NONE);
-		tblclmnPrintLineStyle.setWidth(193);
-		tblclmnPrintLineStyle.setText("Line Style");
-		tblclmnPrintLineStyle.setResizable(false);
+		TableColumn tblclmnPrintPointStyle = new TableColumn(tablePrintPointStyle, SWT.NONE);
+		tblclmnPrintPointStyle.setWidth(193);
+		tblclmnPrintPointStyle.setText("Line Style");
+		tblclmnPrintPointStyle.setResizable(false);
 		
-		TableItem tableItem = new TableItem(tablePrintLineStyle, 0);
-		tableItem.setText("Solid");
+		TableItem tableItem = new TableItem(tablePrintPointStyle, 0);
+		tableItem.setText("Example");
 		tableItem.setImage(SWTResourceManager.getImage(PointStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
-		
-		TableItem tableItem_1 = new TableItem(tablePrintLineStyle, 0);
-		tableItem_1.setText("Dashed");
-		tableItem_1.setImage(SWTResourceManager.getImage(PointStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
-		
-		TableItem tableItem_2 = new TableItem(tablePrintLineStyle, 0);
-		tableItem_2.setText("Dotted");
-		tableItem_2.setImage(SWTResourceManager.getImage(PointStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
 		
 		CLabel lblPrintColor = new CLabel(compositePrint, SWT.NONE);
 		lblPrintColor.setText("Color");
 		
-		CLabel lblPrintColorSelected = new CLabel(compositePrint, SWT.NONE);
+		lblPrintColorSelected = new CLabel(compositePrint, SWT.NONE);
 		lblPrintColorSelected.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblPrintColorSelected.setText("(selected)");
 		
-		tablePrintLineColor = new Table(compositePrint, SWT.FULL_SELECTION);
-		GridData gd_tablePrintLineColor = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
-		gd_tablePrintLineColor.minimumHeight = 50;
-		tablePrintLineColor.setLayoutData(gd_tablePrintLineColor);
+		tablePrintPointColor = new Table(compositePrint, SWT.FULL_SELECTION);
+		tablePrintPointColor.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				TableItem selectedItem = tablePrintPointColor.getSelection()[0];
+				lblPrintColorSelected.setText(selectedItem.getText());
+				lblPrintColorSelected.setBackground(selectedItem.getImage());
+			}
+		});
+		GridData gd_tablePrintPointColor = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
+		gd_tablePrintPointColor.minimumHeight = 50;
+		tablePrintPointColor.setLayoutData(gd_tablePrintPointColor);
 		
-		TableColumn tblclmnPrintLineColor = new TableColumn(tablePrintLineColor, SWT.NONE);
-		tblclmnPrintLineColor.setWidth(193);
-		tblclmnPrintLineColor.setText("Line Color");
-		tblclmnPrintLineColor.setResizable(false);
+		TableColumn tblclmnPrintPointColor = new TableColumn(tablePrintPointColor, SWT.NONE);
+		tblclmnPrintPointColor.setWidth(193);
+		tblclmnPrintPointColor.setText("Line Color");
+		tblclmnPrintPointColor.setResizable(false);
 		
-		TableItem tableItem_13 = new TableItem(tablePrintLineColor, 0);
+		TableItem tableItem_13 = new TableItem(tablePrintPointColor, 0);
 		tableItem_13.setText("Color 1");
 		
-		TableItem tableItem_14 = new TableItem(tablePrintLineColor, 0);
+		TableItem tableItem_14 = new TableItem(tablePrintPointColor, 0);
 		tableItem_14.setText("Color 2");
 		
-		TableItem tableItem_15 = new TableItem(tablePrintLineColor, 0);
+		TableItem tableItem_15 = new TableItem(tablePrintPointColor, 0);
 		tableItem_15.setText("Color 3");
 		
-		Button btnPrintBordered = new Button(compositePrint, SWT.CHECK);
+		btnPrintBordered = new Button(compositePrint, SWT.CHECK);
 		btnPrintBordered.setText("Bordered");
 		new Label(compositePrint, SWT.NONE);
+		
+		this.fillPointTypes();
+		this.fillColors();
 
+	}
+	
+	private void fillPointTypes() {		
+		this.tableScreenPointStyle.removeAll();
+		this.tablePrintPointStyle.removeAll();
+		
+		Map<String, String> palette = PointTypePalette.getPalette();
+		for (Map.Entry<String, String> entry : palette.entrySet()) {
+			TableItem item1 = new TableItem(tableScreenPointStyle, SWT.NONE);
+			TableItem item2 = new TableItem(tablePrintPointStyle, SWT.NONE);
+			Image icon = null;
+			try {
+				icon = SWTResourceManager.getImage(PointStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/points/" + entry.getKey().toLowerCase() + ".png");
+			} catch (Exception e) {
+				// nothing happens. icon stays null
+			}
+			if(icon != null) {
+				item1.setImage(icon);
+				item2.setImage(icon);
+			}
+			
+			String name = entry.getKey().toUpperCase().substring(0, 1);
+			if(entry.getKey().length() > 1) {
+				name = name + entry.getKey().toLowerCase().substring(1);
+			}
+			item1.setText(name);
+			item2.setText(name);
+		}
+	}
+	
+	private void fillColors() {
+		this.tableScreenPointColor.removeAll();
+		this.tablePrintPointColor.removeAll();
+		
+		Map<String, Color> palette = ColorPalette.getPalette();
+		for(Map.Entry<String, Color> entry : palette.entrySet()) {
+			TableItem item1 = new TableItem(tableScreenPointColor, SWT.NONE);
+			TableItem item2 = new TableItem(tablePrintPointColor, SWT.NONE);
+			
+			Image icon = new Image(getParent().getDisplay(), 16, 16);
+			
+			GC gc = new GC(icon);
+			org.eclipse.swt.graphics.Color newcolor = new org.eclipse.swt.graphics.Color(this.getParent().getDisplay(), entry.getValue().getRed(), entry.getValue().getGreen(), entry.getValue().getBlue());
+			gc.setBackground(newcolor);
+			gc.setForeground(newcolor);
+			gc.fillRectangle(0, 0, 16, 16);
+			gc.dispose();
+			
+			item1.setImage(icon);
+			item2.setImage(icon);
+			
+			String name = entry.getKey().toUpperCase().substring(0, 1);
+			if(entry.getKey().length() > 1) {
+				name = name + entry.getKey().toLowerCase().substring(1);
+			}
+			item1.setText(name);
+			item2.setText(name);
+		}
 	}
 }

@@ -50,7 +50,7 @@ public class StoreStyleDialog extends Dialog {
 	 */
 	private void createContents() {
 		shlStoreStyle = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
-		shlStoreStyle.setSize(325, 117);
+		shlStoreStyle.setSize(415, 117);
 		shlStoreStyle.setText("Store Style");
 		shlStoreStyle.setLayout(new GridLayout(2, false));
 		

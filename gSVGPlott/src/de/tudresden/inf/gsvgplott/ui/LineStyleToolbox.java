@@ -1,6 +1,7 @@
 package de.tudresden.inf.gsvgplott.ui;
 
 import java.awt.Color;
+import java.util.Map;
 
 import javax.swing.JFrame;
 
@@ -15,9 +16,15 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 
 import com.explodingpixels.macwidgets.HudWindow;
+
+import de.tudresden.inf.gsvgplott.data.style.palettes.ColorPalette;
+import de.tudresden.inf.gsvgplott.data.style.palettes.LineTypePalette;
+import de.tudresden.inf.gsvgplott.data.style.palettes.PointTypePalette;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.layout.FormLayout;
@@ -50,6 +57,12 @@ public class LineStyleToolbox extends Dialog {
 	 * Location the window should open
 	 */
 	private Point openingLocation = null;
+	private CLabel lblScreenStyleSelected;
+	private CLabel lblScreenWidthSelected;
+	private CLabel lblScreenColorSelected;
+	private CLabel lblPrintStyleSelected;
+	private CLabel lblPrintWidthSelected;
+	private CLabel lblPrintColorSelected;
 
 	/**
 	 * Create the dialog.
@@ -112,11 +125,20 @@ public class LineStyleToolbox extends Dialog {
 		CLabel lblScreenStyle = new CLabel(compositeScreen, SWT.NONE);
 		lblScreenStyle.setText("Style");
 		
-		CLabel lblScreenStyleSelected = new CLabel(compositeScreen, SWT.NONE);
+		lblScreenStyleSelected = new CLabel(compositeScreen, SWT.NONE);
 		lblScreenStyleSelected.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblScreenStyleSelected.setText("(selected)");
 		
 		tableScreenLineStyle = new Table(compositeScreen, SWT.FULL_SELECTION);
+		tableScreenLineStyle.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				TableItem selectedItem = tableScreenLineStyle.getSelection()[0];
+				//lblScreenStyleSelected.setText(selectedItem.getText());
+				lblScreenStyleSelected.setText("");
+				lblScreenStyleSelected.setBackground(selectedItem.getImage());
+			}
+		});
 		GridData gd_tableScreenLineStyle = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
 		gd_tableScreenLineStyle.minimumHeight = 50;
 		tableScreenLineStyle.setLayoutData(gd_tableScreenLineStyle);
@@ -153,11 +175,19 @@ public class LineStyleToolbox extends Dialog {
 		CLabel lblScreenWidth = new CLabel(compositeScreen, SWT.NONE);
 		lblScreenWidth.setText("Width");
 		
-		CLabel lblScreenWidthSelected = new CLabel(compositeScreen, SWT.NONE);
+		lblScreenWidthSelected = new CLabel(compositeScreen, SWT.NONE);
 		lblScreenWidthSelected.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblScreenWidthSelected.setText("(selected)");
 		
 		tableScreenLineWidth = new Table(compositeScreen, SWT.FULL_SELECTION);
+		tableScreenLineWidth.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				TableItem selectedItem = tableScreenLineWidth.getSelection()[0];
+				lblScreenWidthSelected.setText(selectedItem.getText());
+				//lblScreenWidthSelected.setBackground(selectedItem.getImage());
+			}
+		});
 		GridData gd_tableScreenLineWidth = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
 		gd_tableScreenLineWidth.minimumHeight = 50;
 		tableScreenLineWidth.setLayoutData(gd_tableScreenLineWidth);
@@ -210,11 +240,19 @@ public class LineStyleToolbox extends Dialog {
 		CLabel lblScreenColor = new CLabel(compositeScreen, SWT.NONE);
 		lblScreenColor.setText("Color");
 		
-		CLabel lblScreenColorSelected = new CLabel(compositeScreen, SWT.NONE);
+		lblScreenColorSelected = new CLabel(compositeScreen, SWT.NONE);
 		lblScreenColorSelected.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblScreenColorSelected.setText("(selected)");
 		
 		tableScreenLineColor = new Table(compositeScreen, SWT.FULL_SELECTION);
+		tableScreenLineColor.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				TableItem selectedItem = tableScreenLineColor.getSelection()[0];
+				lblScreenColorSelected.setText(selectedItem.getText());
+				lblScreenColorSelected.setBackground(selectedItem.getImage());
+			}
+		});
 		GridData gd_tableScreenLineColor = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
 		gd_tableScreenLineColor.minimumHeight = 50;
 		tableScreenLineColor.setLayoutData(gd_tableScreenLineColor);
@@ -243,11 +281,20 @@ public class LineStyleToolbox extends Dialog {
 		CLabel lblPrintStyle = new CLabel(compositePrint, SWT.NONE);
 		lblPrintStyle.setText("Style");
 		
-		CLabel lblPrintStyleSelected = new CLabel(compositePrint, SWT.NONE);
+		lblPrintStyleSelected = new CLabel(compositePrint, SWT.NONE);
 		lblPrintStyleSelected.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblPrintStyleSelected.setText("(selected)");
 		
 		tablePrintLineStyle = new Table(compositePrint, SWT.FULL_SELECTION);
+		tablePrintLineStyle.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				TableItem selectedItem = tablePrintLineStyle.getSelection()[0];
+				//lblPrintStyleSelected.setText(selectedItem.getText());
+				lblPrintStyleSelected.setText("");
+				lblPrintStyleSelected.setBackground(selectedItem.getImage());
+			}
+		});
 		GridData gd_tablePrintLineStyle = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
 		gd_tablePrintLineStyle.minimumHeight = 50;
 		gd_tablePrintLineStyle.widthHint = 132;
@@ -273,11 +320,19 @@ public class LineStyleToolbox extends Dialog {
 		CLabel lblPrintWidth = new CLabel(compositePrint, SWT.NONE);
 		lblPrintWidth.setText("Width");
 		
-		CLabel lblPrintWidthSelected = new CLabel(compositePrint, SWT.NONE);
+		lblPrintWidthSelected = new CLabel(compositePrint, SWT.NONE);
 		lblPrintWidthSelected.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblPrintWidthSelected.setText("(selected)");
 		
 		tablePrintLineWidth = new Table(compositePrint, SWT.FULL_SELECTION);
+		tablePrintLineWidth.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				TableItem selectedItem = tablePrintLineWidth.getSelection()[0];
+				lblPrintWidthSelected.setText(selectedItem.getText());
+				//lblPrintWidthSelected.setBackground(selectedItem.getImage());
+			}
+		});
 		GridData gd_tablePrintLineWidth = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
 		gd_tablePrintLineWidth.minimumHeight = 50;
 		tablePrintLineWidth.setLayoutData(gd_tablePrintLineWidth);
@@ -330,11 +385,19 @@ public class LineStyleToolbox extends Dialog {
 		CLabel lblPrintColor = new CLabel(compositePrint, SWT.NONE);
 		lblPrintColor.setText("Color");
 		
-		CLabel lblPrintColorSelected = new CLabel(compositePrint, SWT.NONE);
+		lblPrintColorSelected = new CLabel(compositePrint, SWT.NONE);
 		lblPrintColorSelected.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblPrintColorSelected.setText("(selected)");
 		
 		tablePrintLineColor = new Table(compositePrint, SWT.FULL_SELECTION);
+		tablePrintLineColor.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				TableItem selectedItem = tablePrintLineColor.getSelection()[0];
+				lblPrintColorSelected.setText(selectedItem.getText());
+				lblPrintColorSelected.setBackground(selectedItem.getImage());
+			}
+		});
 		GridData gd_tablePrintLineColor = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
 		gd_tablePrintLineColor.minimumHeight = 50;
 		tablePrintLineColor.setLayoutData(gd_tablePrintLineColor);
@@ -352,6 +415,98 @@ public class LineStyleToolbox extends Dialog {
 		
 		TableItem tableItem_15 = new TableItem(tablePrintLineColor, 0);
 		tableItem_15.setText("Color 3");
+		
+		fillLineStyles();
+		fillLineWidths();
+		fillColors();
 
+	}
+	
+	private void fillLineStyles() {		
+		this.tableScreenLineStyle.removeAll();
+		this.tablePrintLineStyle.removeAll();
+		
+		Map<String, String> palette = LineTypePalette.getPalette();
+		for (Map.Entry<String, String> entry : palette.entrySet()) {
+			TableItem item1 = new TableItem(tableScreenLineStyle, SWT.NONE);
+			TableItem item2 = new TableItem(tablePrintLineStyle, SWT.NONE);
+			Image icon = null;
+			try {
+				if(entry.getValue().isEmpty()) {
+					icon = SWTResourceManager.getImage(PointStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/lines/" + "solid" + ".png");
+				} else {
+					icon = SWTResourceManager.getImage(PointStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/lines/" + entry.getValue().toLowerCase() + ".png");
+				}
+			} catch (Exception e) {
+				// nothing happens. icon stays null
+			}
+			if(icon != null) {
+				item1.setImage(icon);
+				item2.setImage(icon);
+			}
+			
+			String name = entry.getKey().toUpperCase().substring(0, 1);
+			if(entry.getKey().length() > 1) {
+				name = name + entry.getKey().toLowerCase().substring(1);
+			}
+			item1.setText(name);
+			item2.setText(name);
+		}
+	}
+	
+	private void fillLineWidths() {
+		this.tableScreenLineWidth.removeAll();
+		this.tablePrintLineWidth.removeAll();
+		
+		String[] widths = {"1px", "2px", "3px", "4px", "5px", "6px", "7px", "8px", "9px", "10px"};
+		for(String s : widths) {
+			TableItem item1 = new TableItem(tableScreenLineWidth, SWT.NONE);
+			TableItem item2 = new TableItem(tablePrintLineWidth, SWT.NONE);
+			
+			Image icon = null;
+			try {
+				icon = SWTResourceManager.getImage(PointStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/linewidths/" + s + ".png");
+			} catch (Exception e) {
+				// nothing happens. icon stays null
+			}
+			
+			if(icon != null) {
+				item1.setImage(icon);
+				item2.setImage(icon);
+			}
+			
+			item1.setText(s);
+			item2.setText(s);
+		}
+	}
+	
+	private void fillColors() {
+		this.tableScreenLineColor.removeAll();
+		this.tablePrintLineColor.removeAll();
+		
+		Map<String, Color> palette = ColorPalette.getPalette();
+		for(Map.Entry<String, Color> entry : palette.entrySet()) {
+			TableItem item1 = new TableItem(tableScreenLineColor, SWT.NONE);
+			TableItem item2 = new TableItem(tablePrintLineColor, SWT.NONE);
+			
+			Image icon = new Image(getParent().getDisplay(), 16, 16);
+			
+			GC gc = new GC(icon);
+			org.eclipse.swt.graphics.Color newcolor = new org.eclipse.swt.graphics.Color(this.getParent().getDisplay(), entry.getValue().getRed(), entry.getValue().getGreen(), entry.getValue().getBlue());
+			gc.setBackground(newcolor);
+			gc.setForeground(newcolor);
+			gc.fillRectangle(0, 0, 16, 16);
+			gc.dispose();
+			
+			item1.setImage(icon);
+			item2.setImage(icon);
+			
+			String name = entry.getKey().toUpperCase().substring(0, 1);
+			if(entry.getKey().length() > 1) {
+				name = name + entry.getKey().toLowerCase().substring(1);
+			}
+			item1.setText(name);
+			item2.setText(name);
+		}
 	}
 }

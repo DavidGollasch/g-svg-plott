@@ -15,11 +15,14 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.jface.text.TextViewer;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
 
 public class CssStyleOverrideDialog extends Dialog {
 
 	protected Object result;
 	protected Shell shlCssStyleOverride;
+	private StyledText styledText;
 
 	/**
 	 * Create the dialog.
@@ -60,7 +63,7 @@ public class CssStyleOverrideDialog extends Dialog {
 		CLabel lblCustomCss = new CLabel(shlCssStyleOverride, SWT.NONE);
 		lblCustomCss.setText("Custom CSS:");
 		
-		StyledText styledText = new StyledText(shlCssStyleOverride, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
+		styledText = new StyledText(shlCssStyleOverride, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
 		styledText.setFont(SWTResourceManager.getFont("Courier New", 12, SWT.BOLD));
 		styledText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		styledText.setText("This is text.");
@@ -72,6 +75,12 @@ public class CssStyleOverrideDialog extends Dialog {
 		btnOk.setText("OK");
 		
 		Button btnReset = new Button(composite, SWT.NONE);
+		btnReset.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseUp(MouseEvent e) {
+				styledText.setText("");
+			}
+		});
 		btnReset.setText("Reset");
 		
 		Button btnCancel = new Button(composite, SWT.NONE);
