@@ -91,4 +91,30 @@ public final class ColorPalette {
 		
 		return palette;
 	}
+	
+	/**
+	 * Get all instances' names of Color declared as static fields in this class
+	 * @return List with field names as ordered per class definition
+	 */
+	public static List<String> getOrderedPaletteKeys() {
+		List<String> palettekeys = new ArrayList<String>();
+
+		// identify all fields of the class and add name to the list
+		List<Field> fields = new ArrayList<Field>(
+				Arrays.asList(ColorPalette.class.getDeclaredFields()));
+		for (Field field : fields) {
+			Object fieldobj = null;
+			try {
+				fieldobj = field.get(null);
+			} catch (Exception e) {
+				continue;	//leave that iteration
+			}
+
+			if(fieldobj instanceof Color) {
+				palettekeys.add(field.getName());
+			}
+		}
+
+		return palettekeys;
+	}
 }
