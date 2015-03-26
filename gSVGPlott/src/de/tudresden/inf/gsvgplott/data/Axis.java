@@ -14,8 +14,8 @@ import de.tudresden.inf.gsvgplott.data.style.LineStyle;
  */
 public abstract class Axis {
 	protected String title;
-	protected double rangeFrom;
-	protected double rangeTo;
+	protected int rangeFrom;
+	protected int rangeTo;
 	protected List<Helpline> helplines;
 	
 	protected LineStyle axisScreenStyle;
@@ -29,7 +29,7 @@ public abstract class Axis {
 	 * @param rangeFrom
 	 * @param rangeTo
 	 */
-	public Axis(String title, double rangeFrom, double rangeTo) {
+	public Axis(String title, int rangeFrom, int rangeTo) {
 		super();
 		this.title = title;
 		this.rangeFrom = rangeFrom;
@@ -117,28 +117,28 @@ public abstract class Axis {
 	/**
 	 * @return the rangeFrom
 	 */
-	public double getRangeFrom() {
+	public int getRangeFrom() {
 		return rangeFrom;
 	}
 
 	/**
 	 * @param rangeFrom the rangeFrom to set
 	 */
-	public void setRangeFrom(double rangeFrom) {
+	public void setRangeFrom(int rangeFrom) {
 		this.rangeFrom = rangeFrom;
 	}
 
 	/**
 	 * @return the rangeTo
 	 */
-	public double getRangeTo() {
+	public int getRangeTo() {
 		return rangeTo;
 	}
 
 	/**
 	 * @param rangeTo the rangeTo to set
 	 */
-	public void setRangeTo(double rangeTo) {
+	public void setRangeTo(int rangeTo) {
 		this.rangeTo = rangeTo;
 	}
 

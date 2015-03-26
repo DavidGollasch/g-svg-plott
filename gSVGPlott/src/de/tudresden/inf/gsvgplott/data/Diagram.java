@@ -16,12 +16,13 @@ import de.tudresden.inf.gsvgplott.data.style.TextStyle;
 
 public class Diagram {
 	private String title;
-	private int size;
+	private int sizeWidth;
+	private int sizeHeight;
 	private boolean showGrid;
 	private XAxis xaxis;
 	private YAxis yaxis;
 	private List<Function> functions;
-	private List<MarkedPointList> markedPointLists;
+	private List<MarkedPointsList> markedPointLists;
 	private Integral integral;
 	
 	private LineStyle gridScreenStyle;
@@ -41,16 +42,17 @@ public class Diagram {
 	 * @param xaxis
 	 * @param yaxis
 	 */
-	public Diagram(String title, int size, boolean showGrid, XAxis xaxis,
+	public Diagram(String title, int sizeWidth, int sizeHeight, boolean showGrid, XAxis xaxis,
 			YAxis yaxis) {
 		super();
 		this.title = title;
-		this.size = size;
+		this.sizeWidth = sizeWidth;
+		this.sizeHeight = sizeHeight;
 		this.showGrid = showGrid;
 		this.xaxis = xaxis;
 		this.yaxis = yaxis;
 		this.functions = new ArrayList<Function>();
-		this.markedPointLists = new ArrayList<MarkedPointList>();
+		this.markedPointLists = new ArrayList<MarkedPointsList>();
 		this.integral = null;
 		
 		this.gridScreenStyle = null;
@@ -69,7 +71,7 @@ public class Diagram {
 	 */
 	@Override
 	public String toString() {
-		return "Diagram [title=" + title + ", size=" + size + ", showGrid="
+		return "Diagram [title=" + title + ", sizeWidth=" + sizeWidth + ", sizeHeight=" + sizeHeight + ", showGrid="
 				+ showGrid + ", xaxis=" + xaxis + ", yaxis=" + yaxis
 				+ ", functions=" + functions + ", markedPointLists="
 				+ markedPointLists + ", integral=" + integral + "]";
@@ -90,7 +92,8 @@ public class Diagram {
 				* result
 				+ ((markedPointLists == null) ? 0 : markedPointLists.hashCode());
 		result = prime * result + (showGrid ? 1231 : 1237);
-		result = prime * result + size;
+		result = prime * result + sizeWidth;
+		result = prime * result + sizeHeight;
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		result = prime * result + ((xaxis == null) ? 0 : xaxis.hashCode());
 		result = prime * result + ((yaxis == null) ? 0 : yaxis.hashCode());
@@ -126,7 +129,9 @@ public class Diagram {
 			return false;
 		if (showGrid != other.showGrid)
 			return false;
-		if (size != other.size)
+		if (sizeWidth != other.sizeWidth)
+			return false;
+		if (sizeHeight != other.sizeHeight)
 			return false;
 		if (title == null) {
 			if (other.title != null)
@@ -159,16 +164,28 @@ public class Diagram {
 		this.title = title;
 	}
 	/**
-	 * @return the size
+	 * @return the width
 	 */
-	public int getSize() {
-		return size;
+	public int getSizeWidth() {
+		return sizeWidth;
 	}
 	/**
-	 * @param size the size to set
+	 * @param sizeWidth the width to set
 	 */
-	public void setSize(int size) {
-		this.size = size;
+	public void setSizeWidth(int sizeWidth) {
+		this.sizeWidth = sizeWidth;
+	}
+	/**
+	 * @return the height
+	 */
+	public int getSizeHeight() {
+		return sizeHeight;
+	}
+	/**
+	 * @param sizeheight the height to set
+	 */
+	public void setSizeHeight(int sizeHeight) {
+		this.sizeHeight = sizeHeight;
 	}
 	/**
 	 * @return the showGrid
@@ -221,13 +238,13 @@ public class Diagram {
 	/**
 	 * @return the markedPointLists
 	 */
-	public List<MarkedPointList> getMarkedPointLists() {
+	public List<MarkedPointsList> getMarkedPointLists() {
 		return markedPointLists;
 	}
 	/**
 	 * @param markedPointLists the markedPointLists to set
 	 */
-	public void setMarkedPointLists(List<MarkedPointList> markedPointLists) {
+	public void setMarkedPointLists(List<MarkedPointsList> markedPointLists) {
 		this.markedPointLists = markedPointLists;
 	}
 	/**

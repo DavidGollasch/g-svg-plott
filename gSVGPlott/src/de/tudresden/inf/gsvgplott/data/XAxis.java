@@ -17,7 +17,7 @@ public class XAxis extends Axis {
 	 * @param rangeTo
 	 * @param piDivisioning
 	 */
-	public XAxis(String title, double rangeFrom, double rangeTo,
+	public XAxis(String title, int rangeFrom, int rangeTo,
 			boolean piDivisioning) {
 		super(title, rangeFrom, rangeTo);
 		this.piDivisioning = piDivisioning;

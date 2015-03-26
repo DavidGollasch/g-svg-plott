@@ -3,6 +3,7 @@
 	<name>gSVGPlott</name>
 	<comment></comment>
 	<projects>
+		<project>svgplot</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

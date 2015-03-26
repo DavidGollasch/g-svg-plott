@@ -15,20 +15,30 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 
+import de.tudresden.inf.gsvgplott.data.style.OverrideStyle;
+
 public class CssStyleOverrideDialog extends Dialog {
 
 	protected Object result;
 	protected Shell shlCssStyleOverride;
 	private StyledText styledText;
+	
+	/**
+	 * Data Exchange Object
+	 */
+	private OverrideStyle overrideStyle;
 
 	/**
 	 * Create the dialog.
 	 * @param parent
 	 * @param style
 	 */
-	public CssStyleOverrideDialog(Shell parent, int style) {
+	public CssStyleOverrideDialog(Shell parent, int style, OverrideStyle newOverrideStyle) {
 		super(parent, style);
 		setText("SWT Dialog");
+		
+		// set object reference
+		overrideStyle = newOverrideStyle;
 	}
 
 	/**
@@ -37,6 +47,10 @@ public class CssStyleOverrideDialog extends Dialog {
 	 */
 	public Object open() {
 		createContents();
+		
+		//initialize data
+		setInitialData();
+		
 		shlCssStyleOverride.open();
 		shlCssStyleOverride.layout();
 		Display display = getParent().getDisplay();
@@ -69,6 +83,13 @@ public class CssStyleOverrideDialog extends Dialog {
 		composite.setLayout(new RowLayout(SWT.HORIZONTAL));
 		
 		Button btnOk = new Button(composite, SWT.NONE);
+		btnOk.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				setNewData();
+				shlCssStyleOverride.close();
+			}
+		});
 		btnOk.setText("OK");
 		
 		Button btnReset = new Button(composite, SWT.NONE);
@@ -81,8 +102,28 @@ public class CssStyleOverrideDialog extends Dialog {
 		btnReset.setText("Reset");
 		
 		Button btnCancel = new Button(composite, SWT.NONE);
+		btnCancel.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				shlCssStyleOverride.close();
+			}
+		});
 		btnCancel.setText("Cancel");
 
+	}
+	
+	/**
+	 * Load override style data and set form controls accordingly
+	 */
+	private void setInitialData() {
+		styledText.setText(overrideStyle.getCssStyle());
+	}
+	
+	/**
+	 * Store newly typed css override
+	 */
+	private void setNewData() {
+		overrideStyle.setCssStyle(styledText.getText());
 	}
 
 }

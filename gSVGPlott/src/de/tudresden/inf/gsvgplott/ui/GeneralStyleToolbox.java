@@ -19,6 +19,8 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.RGB;
 
+import de.tudresden.inf.gsvgplott.data.style.AreaStyle;
+import de.tudresden.inf.gsvgplott.data.style.TextStyle;
 import de.tudresden.inf.gsvgplott.data.style.palettes.ColorPalette;
 
 import org.eclipse.swt.widgets.Composite;
@@ -46,15 +48,31 @@ public class GeneralStyleToolbox extends Dialog {
 	private CLabel lblPrintColorSelected;
 	private CLabel lblScreenFontSelected;
 	private CLabel lblScreenColorSelected;
+	
+	/**
+	 * Data Exchange Objects
+	 */
+	private TextStyle screenTextStyle, printTextStyle;
+	private AreaStyle screenAreaStyle, printAreaStyle;
 
 	/**
 	 * Create the dialog.
 	 * @param parent
 	 * @param style
 	 */
-	public GeneralStyleToolbox(Shell parent, int style) {
+	public GeneralStyleToolbox(Shell parent, int style, 
+			TextStyle newScreenTextStyle, 
+			TextStyle newPrintTextStyle, 
+			AreaStyle newScreenAreaStyle, 
+			AreaStyle newPrintAreaStyle) {
 		super(parent, SWT.BORDER | SWT.CLOSE);
 		setText("SWT Dialog");
+		
+		// set references
+		screenTextStyle = newScreenTextStyle;
+		printTextStyle = newPrintTextStyle;
+		screenAreaStyle = newScreenAreaStyle;
+		printAreaStyle = newPrintAreaStyle;
 	}
 
 	/**

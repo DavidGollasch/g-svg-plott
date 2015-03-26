@@ -21,7 +21,9 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
+import de.tudresden.inf.gsvgplott.data.style.AreaStyle;
 import de.tudresden.inf.gsvgplott.data.style.palettes.ColorPalette;
+
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 
@@ -35,18 +37,29 @@ public class AreaStyleToolbox extends Dialog {
 	 * Location the window should open
 	 */
 	private Point openingLocation = null;
+	
 	private Table tableScreenBgColor;
 	private CLabel lblScreenColorSelected;
 	private CLabel lblPrintColorSelected;
 
 	/**
+	 * Data Exchange Objects
+	 */
+	private AreaStyle screenAreaStyle;
+	private AreaStyle printAreaStyle;
+	
+	/**
 	 * Create the dialog.
 	 * @param parent
 	 * @param style
 	 */
-	public AreaStyleToolbox(Shell parent, int style) {
+	public AreaStyleToolbox(Shell parent, int style, AreaStyle newScreenAreaStyle, AreaStyle newPrintAreaStyle) {
 		super(parent, SWT.BORDER | SWT.CLOSE);
 		setText("SWT Dialog");
+		
+		// set referenced object
+		screenAreaStyle = newScreenAreaStyle;
+		printAreaStyle = newPrintAreaStyle;
 	}
 
 	/**
@@ -55,6 +68,10 @@ public class AreaStyleToolbox extends Dialog {
 	 */
 	public Object open() {
 		createContents();
+		
+		// get data from referenced object and load into form
+		setInitialStyleArea();
+		
 		shlToolbox.open();
 		shlToolbox.layout();
 		Display display = getParent().getDisplay();
@@ -101,7 +118,7 @@ public class AreaStyleToolbox extends Dialog {
 		lblScreenColor.setText("Fill Color");
 		
 		lblScreenColorSelected = new CLabel(compositeScreen, SWT.NONE);
-		lblScreenColorSelected.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		lblScreenColorSelected.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		lblScreenColorSelected.setText("(selected)");
 		
 		tableScreenBgColor = new Table(compositeScreen, SWT.FULL_SELECTION);
@@ -111,6 +128,9 @@ public class AreaStyleToolbox extends Dialog {
 				TableItem selectedItem = tableScreenBgColor.getSelection()[0];
 				lblScreenColorSelected.setText(selectedItem.getText());
 				lblScreenColorSelected.setBackground(selectedItem.getImage());
+				
+				// update data
+				setStyleScreenBackgroundColor();
 			}
 		});
 		GridData gd_tableScreenBgColor = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
@@ -142,7 +162,7 @@ public class AreaStyleToolbox extends Dialog {
 		lblPrintColor.setText("Fill Color");
 		
 		lblPrintColorSelected = new CLabel(compositePrint, SWT.NONE);
-		lblPrintColorSelected.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		lblPrintColorSelected.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		lblPrintColorSelected.setText("(selected)");
 		
 		tablePrintBgColor = new Table(compositePrint, SWT.FULL_SELECTION);
@@ -152,6 +172,9 @@ public class AreaStyleToolbox extends Dialog {
 				TableItem selectedItem = tablePrintBgColor.getSelection()[0];
 				lblPrintColorSelected.setText(selectedItem.getText());
 				lblPrintColorSelected.setBackground(selectedItem.getImage());
+				
+				// update data
+				setStylePrintBackgroundColor();
 			}
 		});
 		tablePrintBgColor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
@@ -204,5 +227,62 @@ public class AreaStyleToolbox extends Dialog {
 			item1.setText(name);
 			item2.setText(name);
 		}
+	}
+	
+	/**
+	 * Loads data from referenced object and shows that in UI
+	 */
+	private void setInitialStyleArea() {
+		// read colors
+		Color screen = screenAreaStyle.getColor();
+		Color print = printAreaStyle.getColor();
+		
+		// generate color icons
+		Image iconScreen = new Image(getParent().getDisplay(), 16, 16);
+		GC gc1 = new GC(iconScreen);
+		org.eclipse.swt.graphics.Color newcolor1 = new org.eclipse.swt.graphics.Color(this.getParent().getDisplay(), screen.getRed(), screen.getGreen(), screen.getBlue());
+		gc1.setBackground(newcolor1);
+		gc1.setForeground(newcolor1);
+		gc1.fillRectangle(0, 0, 16, 16);
+		gc1.dispose();
+		
+		Image iconPrint = new Image(getParent().getDisplay(), 16, 16);
+		GC gc2 = new GC(iconPrint);
+		org.eclipse.swt.graphics.Color newcolor2 = new org.eclipse.swt.graphics.Color(this.getParent().getDisplay(), print.getRed(), print.getGreen(), print.getBlue());
+		gc2.setBackground(newcolor2);
+		gc2.setForeground(newcolor2);
+		gc2.fillRectangle(0, 0, 16, 16);
+		gc2.dispose();
+		
+		// set color icons in form
+		lblScreenColorSelected.setText("");
+		lblScreenColorSelected.setBackground(iconScreen);
+		
+		lblPrintColorSelected.setText("");
+		lblPrintColorSelected.setBackground(iconPrint);
+	}
+	
+	/**
+	 * Update exchange object: screen background color
+	 */
+	private void setStyleScreenBackgroundColor() {
+		// read color from form
+		org.eclipse.swt.graphics.Color c = lblScreenColorSelected.getBackground();
+		
+		// parse and set new data
+		Color targetColor = new Color(c.getRed(), c.getGreen(), c.getBlue());
+		screenAreaStyle.setColor(targetColor);
+	}
+	
+	/**
+	 * Update exchange object: print background color
+	 */
+	private void setStylePrintBackgroundColor() {
+		// read color from form
+		org.eclipse.swt.graphics.Color c = lblPrintColorSelected.getBackground();
+		
+		// parse and set new data
+		Color targetColor = new Color(c.getRed(), c.getGreen(), c.getBlue());
+		printAreaStyle.setColor(targetColor);
 	}
 }

@@ -9,7 +9,7 @@ package de.tudresden.inf.gsvgplott.data;
  */
 public class YAxis extends Axis {
 
-	public YAxis(String title, double rangeFrom, double rangeTo) {
+	public YAxis(String title, int rangeFrom, int rangeTo) {
 		super(title, rangeFrom, rangeTo);
 	}
 

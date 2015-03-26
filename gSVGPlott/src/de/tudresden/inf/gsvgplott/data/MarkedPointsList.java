@@ -12,7 +12,7 @@ import de.tudresden.inf.gsvgplott.data.style.PointStyle;
  * @author David Gollasch
  *
  */
-public class MarkedPointList {
+public class MarkedPointsList {
 	private String title;
 	private List<Point> points;
 	
@@ -22,7 +22,7 @@ public class MarkedPointList {
 	/**
 	 * @param title
 	 */
-	public MarkedPointList(String title) {
+	public MarkedPointsList(String title) {
 		super();
 		this.title = title;
 		this.points = new ArrayList<Point>();
@@ -36,7 +36,7 @@ public class MarkedPointList {
 	 */
 	@Override
 	public String toString() {
-		return "MarkedPointList [title=" + title + ", points=" + points + "]";
+		return "MarkedPointsList [title=" + title + ", points=" + points + "]";
 	}
 	
 	/* (non-Javadoc)
@@ -62,7 +62,7 @@ public class MarkedPointList {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		MarkedPointList other = (MarkedPointList) obj;
+		MarkedPointsList other = (MarkedPointsList) obj;
 		if (points == null) {
 			if (other.points != null)
 				return false;
