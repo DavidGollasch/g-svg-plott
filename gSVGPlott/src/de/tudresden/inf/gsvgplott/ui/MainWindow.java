@@ -8,6 +8,7 @@ package de.tudresden.inf.gsvgplott.ui;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +48,7 @@ import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Spinner;
@@ -63,6 +65,9 @@ import tud.tangram.svgplot.SvgPlot;
 import tud.tangram.svgplot.coordinatesystem.Range;
 import tud.tangram.svgplot.xml.HtmlDocument;
 import tud.tangram.svgplot.xml.SvgDocument;
+
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.ModifyEvent;
 
 public class MainWindow {
 	
@@ -233,6 +238,12 @@ public class MainWindow {
 		lblPoGeneralTitle.setText("Title:");
 		
 		txtPoGeneralTitle = new Text(grpPlotoptionsGeneralRow, SWT.BORDER);
+		txtPoGeneralTitle.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent arg0) {
+				triggerOptionsGeneralTitleChanged();
+			}
+		});
+		
 		txtPoGeneralTitle.setToolTipText("Enter title of diagram");
 		txtPoGeneralTitle.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
 		
@@ -250,6 +261,11 @@ public class MainWindow {
 		lblPoGeneralSize.setText("Size:");
 		
 		spinnerPoGeneralWidth = new Spinner(grpPlotoptionsGeneralRow, SWT.BORDER);
+		spinnerPoGeneralWidth.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent arg0) {
+				triggerOptionsGeneralSizeWidthChanged();
+			}
+		});
 		spinnerPoGeneralWidth.setToolTipText("Width in Millimeters");
 		spinnerPoGeneralWidth.setIncrement(10);
 		spinnerPoGeneralWidth.setMaximum(99999);
@@ -260,6 +276,11 @@ public class MainWindow {
 		lblPoGeneralSizeMm.setText("mm   x");
 		
 		spinnerPoGeneralHeight = new Spinner(grpPlotoptionsGeneralRow, SWT.BORDER);
+		spinnerPoGeneralHeight.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent arg0) {
+				triggerOptionsGeneralSizeHeightChanged();
+			}
+		});
 		spinnerPoGeneralHeight.setToolTipText("Height in Millimeters");
 		spinnerPoGeneralHeight.setMaximum(99999);
 		spinnerPoGeneralHeight.setMinimum(0);
@@ -274,6 +295,12 @@ public class MainWindow {
 		lblPoGeneralGrid.setText("Grid:");
 		
 		btnPoGeneralShowGrid = new Button(grpPlotoptionsGeneralRow, SWT.CHECK);
+		btnPoGeneralShowGrid.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				triggerOptionsGeneralShowGridChanged();
+			}
+		});
 		btnPoGeneralShowGrid.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 5, 1));
 		btnPoGeneralShowGrid.setText("Show Grid");
 		
@@ -286,6 +313,11 @@ public class MainWindow {
 		lblPoXaxisTitle.setText("Title:");
 		
 		txtPoXaxisTitle = new Text(grpPlotoptionsXAxisRow, SWT.BORDER);
+		txtPoXaxisTitle.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent arg0) {
+				triggerOptionsXaxisTitleChanged();
+			}
+		});
 		txtPoXaxisTitle.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		txtPoXaxisTitle.setToolTipText("Set x axis title");
 		
@@ -303,6 +335,11 @@ public class MainWindow {
 		lblPoXaxisRange.setText("Range:");
 		
 		spinnerPoXaxisRangeFrom = new Spinner(grpPlotoptionsXAxisRow, SWT.BORDER);
+		spinnerPoXaxisRangeFrom.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent arg0) {
+				triggerOptionsXaxisRangeFromChanged();
+			}
+		});
 		spinnerPoXaxisRangeFrom.setMaximum(99999);
 		spinnerPoXaxisRangeFrom.setMinimum(-99999);
 		
@@ -310,6 +347,11 @@ public class MainWindow {
 		lblPoXaxisRangeTo.setText("to");
 		
 		spinnerPoXaxisRangeTo = new Spinner(grpPlotoptionsXAxisRow, SWT.BORDER);
+		spinnerPoXaxisRangeTo.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent arg0) {
+				triggerOptionsXaxisRangeToChanged();
+			}
+		});
 		spinnerPoXaxisRangeTo.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
 		spinnerPoXaxisRangeTo.setMaximum(99999);
 		spinnerPoXaxisRangeTo.setMinimum(-99999);
@@ -318,6 +360,12 @@ public class MainWindow {
 		lblPoXaxisDivisioning.setText("Divisioning:");
 		
 		btnPoXaxisPiDivisioning = new Button(grpPlotoptionsXAxisRow, SWT.CHECK);
+		btnPoXaxisPiDivisioning.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				triggerOptionsXaxisPiDivisioningChanged();
+			}
+		});
 		btnPoXaxisPiDivisioning.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 4, 1));
 		btnPoXaxisPiDivisioning.setText("Pi Divisioning");
 		
@@ -325,6 +373,11 @@ public class MainWindow {
 		lblPoXaxisHelplines.setText("Helplines:");
 		
 		txtPoXaxisHelplines = new Text(grpPlotoptionsXAxisRow, SWT.BORDER);
+		txtPoXaxisHelplines.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent arg0) {
+				triggerOptionsXaxisHelplinesChanged();
+			}
+		});
 		txtPoXaxisHelplines.setToolTipText("Enter y axis intersection points to define x axis helplines");
 		txtPoXaxisHelplines.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		
@@ -347,6 +400,11 @@ public class MainWindow {
 		lblPoYaxisTitle.setText("Title:");
 		
 		txtPoYaxisTitle = new Text(grpPlotoptionsYAxisRow, SWT.BORDER);
+		txtPoYaxisTitle.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent arg0) {
+				triggerOptionsYaxisTitleChanged();
+			}
+		});
 		txtPoYaxisTitle.setToolTipText("Enter y axis title");
 		txtPoYaxisTitle.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		
@@ -364,6 +422,11 @@ public class MainWindow {
 		lblPoYaxisRange.setText("Range:");
 		
 		spinnerPoYaxisRangeFrom = new Spinner(grpPlotoptionsYAxisRow, SWT.BORDER);
+		spinnerPoYaxisRangeFrom.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent arg0) {
+				triggerOptionsYaxisRangeFromChanged();
+			}
+		});
 		spinnerPoYaxisRangeFrom.setMaximum(99999);
 		spinnerPoYaxisRangeFrom.setMinimum(-99999);
 		
@@ -371,6 +434,11 @@ public class MainWindow {
 		lblPoYaxisTo.setText("to");
 		
 		spinnerPoYaxisRangeTo = new Spinner(grpPlotoptionsYAxisRow, SWT.BORDER);
+		spinnerPoYaxisRangeTo.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent arg0) {
+				triggerOptionsYaxisRangeToChanged();
+			}
+		});
 		spinnerPoYaxisRangeTo.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
 		spinnerPoYaxisRangeTo.setMaximum(99999);
 		spinnerPoYaxisRangeTo.setMinimum(-99999);
@@ -379,6 +447,11 @@ public class MainWindow {
 		lblPoYaxisHelplines.setText("Helplines:");
 		
 		txtPoYaxisHelplines = new Text(grpPlotoptionsYAxisRow, SWT.BORDER);
+		txtPoYaxisHelplines.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent arg0) {
+				triggerOptionsYaxisHelplinesChanged();
+			}
+		});
 		txtPoYaxisHelplines.setToolTipText("Enter x axis intersection points to define y axis helplines");
 		txtPoYaxisHelplines.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		
@@ -401,6 +474,11 @@ public class MainWindow {
 		lblPoIntegralTitle.setText("Title:");
 		
 		txtPoIntegralTitle = new Text(grpPlotoptionsIntegralAreaRow, SWT.BORDER);
+		txtPoIntegralTitle.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent arg0) {
+				triggerOptionsIntegralTitleChanged();
+			}
+		});
 		txtPoIntegralTitle.setToolTipText("Enter integral title");
 		txtPoIntegralTitle.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		
@@ -418,6 +496,11 @@ public class MainWindow {
 		lblPoIntegralRange.setText("Range:");
 		
 		spinnerPoIntegralRangeFrom = new Spinner(grpPlotoptionsIntegralAreaRow, SWT.BORDER);
+		spinnerPoIntegralRangeFrom.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent arg0) {
+				triggerOptionsIntegralRangeFromChanged();
+			}
+		});
 		spinnerPoIntegralRangeFrom.setIncrement(1000);
 		spinnerPoIntegralRangeFrom.setDigits(3);
 		spinnerPoIntegralRangeFrom.setMaximum(99999);
@@ -427,6 +510,11 @@ public class MainWindow {
 		lblPoIntegralRangeTo.setText("to");
 		
 		spinnerPoIntegralRangeTo = new Spinner(grpPlotoptionsIntegralAreaRow, SWT.BORDER);
+		spinnerPoIntegralRangeTo.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent arg0) {
+				triggerOptionsIntegralRangeToChanged();
+			}
+		});
 		spinnerPoIntegralRangeTo.setIncrement(1000);
 		spinnerPoIntegralRangeTo.setDigits(3);
 		spinnerPoIntegralRangeTo.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
@@ -437,6 +525,11 @@ public class MainWindow {
 		lblPoIntegralBordering.setText("Bordering:");
 		
 		comboPoIntegralBorderingFrom = new Combo(grpPlotoptionsIntegralAreaRow, SWT.READ_ONLY);
+		comboPoIntegralBorderingFrom.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent arg0) {
+				triggerOptionsIntegralBroderingFromChanged();
+			}
+		});
 		comboPoIntegralBorderingFrom.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		comboPoIntegralBorderingFrom.setItems(new String[] {});
 		
@@ -444,6 +537,11 @@ public class MainWindow {
 		lblPoIntegralAnd.setText("&&");
 		
 		comboPoIntegralBorderingTo = new Combo(grpPlotoptionsIntegralAreaRow, SWT.READ_ONLY);
+		comboPoIntegralBorderingTo.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent arg0) {
+				triggerOptionsIntegralBorderingToChanged();
+			}
+		});
 		comboPoIntegralBorderingTo.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
 		comboPoIntegralBorderingTo.setItems(new String[] {"x axis"});
 		comboPoIntegralBorderingTo.select(0);
@@ -868,6 +966,183 @@ public class MainWindow {
 	}
 
 	/**
+	 * Update diagram integral
+	 */
+	protected void triggerOptionsIntegralBorderingToChanged() {
+		operateOptionsIntegralChanged();
+		
+	}
+
+	/**
+	 * Update diagram integral
+	 */
+	protected void triggerOptionsIntegralBroderingFromChanged() {
+		operateOptionsIntegralChanged();
+		
+	}
+
+	/**
+	 * Update diagram integral
+	 */
+	protected void triggerOptionsIntegralRangeToChanged() {
+		operateOptionsIntegralChanged();
+		
+	}
+
+	/**
+	 * Update diagram integral
+	 */
+	protected void triggerOptionsIntegralRangeFromChanged() {
+		operateOptionsIntegralChanged();
+		
+	}
+
+	/**
+	 * Update diagram integral
+	 */
+	protected void triggerOptionsIntegralTitleChanged() {
+		operateOptionsIntegralChanged();
+	}
+
+	/**
+	 * Update diagram y axis helplines
+	 */
+	protected void triggerOptionsYaxisHelplinesChanged() {
+		// parse input
+		String input = this.txtPoYaxisHelplines.getText();
+		String[] values = input.split(" ");
+		List<String> listValues = new ArrayList<String>();
+		listValues.addAll(Arrays.asList(values));
+	
+		// add helplines
+		ArrayList<Helpline> helplines = new ArrayList<Helpline>();
+		for (String s : listValues) {
+			try {
+				double n = Double.parseDouble(s);
+				Helpline h = new Helpline(n);
+				helplines.add(h);
+			} catch (Exception e) {
+				// If parsing was not successful, stop here
+			}
+		}
+		diagram.getYaxis().setHelplines(helplines);
+		
+	}
+
+	/**
+	 * Update diagram y axis range to
+	 */
+	protected void triggerOptionsYaxisRangeToChanged() {
+		diagram.getYaxis().setRangeTo(this.spinnerPoYaxisRangeTo.getSelection());
+		
+	}
+
+	/**
+	 * Update diagram y axis range from
+	 */
+	protected void triggerOptionsYaxisRangeFromChanged() {
+		diagram.getYaxis().setRangeFrom(this.spinnerPoYaxisRangeFrom.getSelection());
+		
+	}
+
+	/**
+	 * Update diagram y axis title
+	 */
+	protected void triggerOptionsYaxisTitleChanged() {
+		diagram.getYaxis().setTitle(this.txtPoYaxisTitle.getText());
+		
+	}
+
+	/**
+	 * Update diagram x axis helplines
+	 */
+	protected void triggerOptionsXaxisHelplinesChanged() {
+		//parse input
+		String input = this.txtPoXaxisHelplines.getText();
+		String[] values = input.split(" ");
+		List<String> listValues = new ArrayList<String>();
+		listValues.addAll(Arrays.asList(values));
+		
+		//add helplines
+		ArrayList<Helpline> helplines = new ArrayList<Helpline>();
+		for(String s : listValues) {
+			try {
+				double n = Double.parseDouble(s);
+				Helpline h = new Helpline(n);
+				helplines.add(h);
+			} catch (Exception e) {
+				// If parsing was not successful, stop here
+			}
+		}
+		diagram.getXaxis().setHelplines(helplines);
+		
+	}
+
+	/**
+	 * Update diagram x axis pi divisioning
+	 */
+	protected void triggerOptionsXaxisPiDivisioningChanged() {
+		diagram.getXaxis().setPiDivisioning(this.btnPoXaxisPiDivisioning.getSelection());
+		
+	}
+
+	/**
+	 * Update diagram x axis range to
+	 */
+	protected void triggerOptionsXaxisRangeToChanged() {
+		diagram.getXaxis().setRangeTo(this.spinnerPoXaxisRangeTo.getSelection());
+		
+	}
+
+	/**
+	 * Update diagram x axis range from
+	 */
+	protected void triggerOptionsXaxisRangeFromChanged() {
+		diagram.getXaxis().setRangeFrom(this.spinnerPoXaxisRangeFrom.getSelection());
+		
+	}
+
+	/**
+	 * Update diagram x axis title
+	 */
+	protected void triggerOptionsXaxisTitleChanged() {
+		diagram.getXaxis().setTitle(this.txtPoXaxisTitle.getText());
+		
+	}
+
+	/**
+	 * Update diagram show grid option
+	 */
+	protected void triggerOptionsGeneralShowGridChanged() {
+		diagram.setShowGrid(this.btnPoGeneralShowGrid.getSelection());
+		
+	}
+
+	/**
+	 * Update diagram size (height)
+	 */
+	protected void triggerOptionsGeneralSizeHeightChanged() {
+		diagram.setSizeHeight(this.spinnerPoGeneralHeight.getSelection());
+		
+	}
+
+	/**
+	 * Update diagram size (width)
+	 */
+	protected void triggerOptionsGeneralSizeWidthChanged() {
+		diagram.setSizeWidth(this.spinnerPoGeneralWidth.getSelection());
+		
+	}
+
+	/**
+	 * Update diagram title
+	 */
+	protected void triggerOptionsGeneralTitleChanged() {
+		diagram.setTitle(this.txtPoGeneralTitle.getText());
+		
+	}
+
+	/**
 	 * Export project
 	 */
 	protected void triggerExport() {
@@ -1081,6 +1356,18 @@ public class MainWindow {
 		
 		Text txtDRFTitle1 = new Text(grpDataRowFunction1, SWT.BORDER);
 		txtDRFTitle1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		txtDRFTitle1.addModifyListener(new ModifyListener() {
+			
+			@Override
+			public void modifyText(ModifyEvent arg0) {
+				Function f = functionMap.get(grpDataRowFunction1);
+				if(f == null)
+					return;
+				
+				String title = ((Text)arg0.getSource()).getText();
+				f.setTitle(title);
+			}
+		});
 		
 		Button btnDRFStyle1 = new Button(grpDataRowFunction1, SWT.FLAT);
 		btnDRFStyle1.setToolTipText("Change style");
@@ -1099,7 +1386,19 @@ public class MainWindow {
 		Text txtDRFfunc1 = new Text(grpDataRowFunction1, SWT.BORDER);
 		txtDRFfunc1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		txtDRFfunc1.setSize(194, 19);
-		new Label(grpDataRowFunction1, SWT.NONE);
+		txtDRFfunc1.addModifyListener(new ModifyListener() {
+			
+			@Override
+			public void modifyText(ModifyEvent arg0) {
+				Function f = functionMap.get(grpDataRowFunction1);
+				if(f == null)
+					return;
+				
+				String func = ((Text)arg0.getSource()).getText();
+				f.setFunction(func);
+				
+			}
+		});
 		
 		Composite compositeDRFControls1 = new Composite(grpDataRowFunction1, SWT.NONE);
 		GridLayout gl_compositeDRFControls1 = new GridLayout(3, false);
@@ -1178,6 +1477,17 @@ public class MainWindow {
 		
 		Text txtDRMtitle1 = new Text(grpDataRowMarkedpointsPointList, SWT.BORDER);
 		txtDRMtitle1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		txtDRMtitle1.addModifyListener(new ModifyListener() {
+			
+			@Override
+			public void modifyText(ModifyEvent arg0) {
+				MarkedPointsList list = pointlistMap.get(grpDataRowMarkedpointsPointList);
+				if(list != null) {
+					list.setTitle(txtDRMtitle1.getText());
+				}
+				
+			}
+		});
 		
 		Button btnDRMStyle1 = new Button(grpDataRowMarkedpointsPointList, SWT.FLAT);
 		btnDRMStyle1.setToolTipText("Change style");
@@ -1193,7 +1503,7 @@ public class MainWindow {
 		compositeDRMlist1.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 2, 1));
 		compositeDRMlist1.setLayout(null);
 		
-		Table tableDRMlist1 = new Table(compositeDRMlist1, SWT.BORDER | SWT.CHECK | SWT.FULL_SELECTION | SWT.MULTI);
+		Table tableDRMlist1 = new Table(compositeDRMlist1, SWT.BORDER | SWT.FULL_SELECTION | SWT.MULTI);
 		tableDRMlist1.setBounds(0, 0, 185, 64);
 		tableDRMlist1.setLinesVisible(true);
 		tableDRMlist1.setHeaderVisible(true);
@@ -1411,8 +1721,29 @@ public class MainWindow {
 	 */
 	protected void operateDataPointListAddPoint(Table table) {
 		//TODO: implement adding a point, bind to actual data
-		AddPointDialog apd = new AddPointDialog(shlGsvgplott, 0, new de.tudresden.inf.gsvgplott.data.Point(0.0, 0.0));
+		AddPointDialog apd = new AddPointDialog(shlGsvgplott, 0);
 		apd.open();
+		de.tudresden.inf.gsvgplott.data.Point p = apd.getPoint();
+		
+		if(p != null) {
+			Group grp = (Group)(table.getParent().getParent());
+			MarkedPointsList list = pointlistMap.get(grp);
+			
+			for(de.tudresden.inf.gsvgplott.data.Point i : list.getPoints()) {
+				if(i.getX() == p.getX() && i.getY() == p.getY()) {
+					MessageBox b = new MessageBox(shlGsvgplott);
+					b.setText("Information");
+					b.setMessage("This point is already in the list.");
+					b.open();
+					return;
+				}
+			}
+			
+			list.getPoints().add(p);
+			
+			TableItem item = new TableItem(table, SWT.NONE);
+			item.setText(new String[] {Double.toString(p.getX()), Double.toString(p.getY())});
+		} 
 	}
 	
 	/**
@@ -1421,9 +1752,72 @@ public class MainWindow {
 	 */
 	protected void operateDataPointListRemovePoint(Table table) {
 		int[] selection = table.getSelectionIndices();
+		
+		TableItem[] items = table.getSelection();
+		List<TableItem> list = new ArrayList<TableItem>();
+		list.addAll(Arrays.asList(items));
+		
+		for(TableItem i : list) {
+			double ix = Double.parseDouble(i.getText(0));
+			double iy = Double.parseDouble(i.getText(1));
+			
+			Group grp = (Group)(table.getParent().getParent());
+			MarkedPointsList pl = pointlistMap.get(grp);
+			
+			List<de.tudresden.inf.gsvgplott.data.Point> delete = new ArrayList<de.tudresden.inf.gsvgplott.data.Point>();
+			for(de.tudresden.inf.gsvgplott.data.Point p : pl.getPoints()) {
+				if(p.getX() == ix && p.getY() == iy) {
+					delete.add(p);
+				}
+			}
+			pl.getPoints().removeAll(delete);
+		}
+		
 		table.remove(selection);
 	}
 	
+	/**
+	 * Sets or resets the integral based on the current integral options
+	 */
+	protected void operateOptionsIntegralChanged() {
+		// avoid null pointer exceptions on application startup
+		if(spinnerPoIntegralRangeFrom == null || spinnerPoIntegralRangeTo == null)
+			return;
+		
+		//if ranges are equal, remove integral, else add one
+		if(spinnerPoIntegralRangeFrom.getSelection() == spinnerPoIntegralRangeTo.getSelection()) {
+			diagram.setIntegral(null);
+			return;
+		}
+		
+		String title = this.txtPoIntegralTitle.getText();
+		double rangeFrom = (double)spinnerPoIntegralRangeFrom.getSelection() / Math.pow(10, spinnerPoIntegralRangeFrom.getDigits());
+		double rangeTo = (double)spinnerPoIntegralRangeTo.getSelection() / Math.pow(10, spinnerPoIntegralRangeTo.getDigits());
+		
+		Function border1 = null;
+		for(Group grp : this.functions) {
+			if(grp.getText().equals(comboPoIntegralBorderingFrom.getText())) {
+				border1 = functionMap.get(grp);
+			}
+		}
+		if(border1 == null) {
+			//function cannot be found but has to be set in order to create an integral!
+			diagram.setIntegral(null);
+			return;
+		}
+		
+		Function border2 = null;
+		for(Group grp : this.functions) {
+			if(grp.getText().equals(comboPoIntegralBorderingTo.getText())) {
+				border2 = functionMap.get(grp);
+			}
+		}
+		// if border2 is still null, the x axis will be used. This is an intended case!
+		
+		Integral i = new Integral(title, rangeFrom, rangeTo, border1, border2);
+		diagram.setIntegral(i);
+	}
+
 	/**
 	 * This method invokes the creation of preview diagrams out of the current Diagram instance
 	 */
@@ -1639,10 +2033,10 @@ public class MainWindow {
 		}
 		plotter.setFunctions(functions);
 		//plotter.setIntegral(null);
-		plotter.setPi(diagram.getXaxis().isPiDivisioning());
+		//plotter.setPi(diagram.getXaxis().isPiDivisioning());
 		//plotter.setPoints(null);
 			
-		plotter.setSize(
+		/*plotter.setSize(
 				new tud.tangram.svgplot.coordinatesystem.Point(
 						(double)diagram.getSizeWidth(), 
 						(double)diagram.getSizeHeight()));
@@ -1658,7 +2052,7 @@ public class MainWindow {
 				(double)diagram.getYaxis().getRangeFrom(),
 				(double)diagram.getYaxis().getRangeTo(),
 				diagram.getYaxis().getTitle());
-		plotter.setyRange(yrange);
+		plotter.setyRange(yrange);*/
 		
 		try {
 			plotter.create();

@@ -34,12 +34,12 @@ public class AddPointDialog extends Dialog {
 	 * @param parent
 	 * @param style
 	 */
-	public AddPointDialog(Shell parent, int style, Point newPoint) {
+	public AddPointDialog(Shell parent, int style) {
 		super(parent, style);
 		setText("SWT Dialog");
 		
 		//set object reference
-		point = newPoint;
+		point = null;
 	}
 
 	/**
@@ -92,8 +92,10 @@ public class AddPointDialog extends Dialog {
 		btnOK.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				setDataPoint();
-				shlAddPoint.close();
+				boolean res = setDataPoint();
+				if(res == true) {
+					shlAddPoint.close();
+				}
 			}
 		});
 		GridData gd_btnOK = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
@@ -119,7 +121,7 @@ public class AddPointDialog extends Dialog {
 	/**
 	 * Sets the referred point object to the entered values (input boxes)
 	 */
-	private void setDataPoint() {
+	private boolean setDataPoint() {
 		double x, y;
 		try {
 			x = Double.parseDouble(txtX.getText());
@@ -129,16 +131,24 @@ public class AddPointDialog extends Dialog {
 			MessageBox b = new MessageBox(shlAddPoint);
 			b.setMessage("Error while parsing input: Ensure that neither x, nor y is emptly.");
 			b.open();
-			return;
+			return false;
 		} catch (NumberFormatException e) {
 			// at least one string is not parsable
 			MessageBox b = new MessageBox(shlAddPoint);
 			b.setMessage("Error while parsing input: Ensure that x and y are floating point numbers.");
 			b.open();
-			return;
+			return false;
 		}
 		
+		if(point == null) {
+			point = new Point(0,0);
+		}
 		point.setX(x);
 		point.setY(y);
+		return true;
+	}
+	
+	public Point getPoint() {
+		return point;
 	}
 }
