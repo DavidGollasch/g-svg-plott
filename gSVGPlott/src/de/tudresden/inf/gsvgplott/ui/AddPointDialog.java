@@ -16,6 +16,7 @@ import de.tudresden.inf.gsvgplott.data.Point;
 
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.widgets.Control;
 
 public class AddPointDialog extends Dialog {
 
@@ -115,6 +116,10 @@ public class AddPointDialog extends Dialog {
 		gd_btnCancel.widthHint = 70;
 		btnCancel.setLayoutData(gd_btnCancel);
 		btnCancel.setText("Cancel");
+		composite.setTabList(new Control[]{btnOK, btnCancel});
+		shlAddPoint.setTabList(new Control[]{lblInsertAName, lblX, txtX, lblY, txtY, composite});
+		
+		shlAddPoint.setDefaultButton(btnOK);
 
 	}
 	

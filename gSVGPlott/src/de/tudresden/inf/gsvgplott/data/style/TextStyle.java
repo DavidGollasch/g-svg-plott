@@ -15,7 +15,6 @@ public class TextStyle {
 	private Color color;
 	private boolean isBold;
 	private boolean isItalic;
-	private boolean isUnderlined;
 	
 	/**
 	 * @param font
@@ -23,17 +22,15 @@ public class TextStyle {
 	 * @param color
 	 * @param isBold
 	 * @param isItalic
-	 * @param isUnderlined
 	 */
 	public TextStyle(String font, int size, Color color, boolean isBold,
-			boolean isItalic, boolean isUnderlined) {
+			boolean isItalic) {
 		super();
 		this.font = font;
 		this.size = size;
 		this.color = color;
 		this.isBold = isBold;
 		this.isItalic = isItalic;
-		this.isUnderlined = isUnderlined;
 	}
 	
 	/* (non-Javadoc)
@@ -43,7 +40,7 @@ public class TextStyle {
 	public String toString() {
 		return "TextStyle [font=" + font + ", size=" + size + ", color="
 				+ color + ", isBold=" + isBold + ", isItalic=" + isItalic
-				+ ", isUnderlined=" + isUnderlined + "]";
+				+ "]";
 	}
 
 	/* (non-Javadoc)
@@ -57,7 +54,6 @@ public class TextStyle {
 		result = prime * result + ((font == null) ? 0 : font.hashCode());
 		result = prime * result + (isBold ? 1231 : 1237);
 		result = prime * result + (isItalic ? 1231 : 1237);
-		result = prime * result + (isUnderlined ? 1231 : 1237);
 		result = prime * result + size;
 		return result;
 	}
@@ -87,8 +83,6 @@ public class TextStyle {
 		if (isBold != other.isBold)
 			return false;
 		if (isItalic != other.isItalic)
-			return false;
-		if (isUnderlined != other.isUnderlined)
 			return false;
 		if (size != other.size)
 			return false;
@@ -154,17 +148,5 @@ public class TextStyle {
 	 */
 	public void setItalic(boolean isItalic) {
 		this.isItalic = isItalic;
-	}
-	/**
-	 * @return the isUnderlined
-	 */
-	public boolean isUnderlined() {
-		return isUnderlined;
-	}
-	/**
-	 * @param isUnderlined the isUnderlined to set
-	 */
-	public void setUnderlined(boolean isUnderlined) {
-		this.isUnderlined = isUnderlined;
 	}
 }

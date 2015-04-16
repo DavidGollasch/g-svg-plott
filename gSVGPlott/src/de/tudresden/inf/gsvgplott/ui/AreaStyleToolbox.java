@@ -1,6 +1,7 @@
 package de.tudresden.inf.gsvgplott.ui;
 
 import java.awt.Color;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.swt.widgets.Dialog;
@@ -10,6 +11,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.custom.CLabel;
@@ -53,13 +55,13 @@ public class AreaStyleToolbox extends Dialog {
 	 * @param parent
 	 * @param style
 	 */
-	public AreaStyleToolbox(Shell parent, int style, AreaStyle newScreenAreaStyle, AreaStyle newPrintAreaStyle) {
+	public AreaStyleToolbox(Shell parent, int style, AreaStyle oldScreenAreaStyle, AreaStyle oldPrintAreaStyle) {
 		super(parent, SWT.BORDER | SWT.CLOSE);
 		setText("SWT Dialog");
 		
 		// set referenced object
-		screenAreaStyle = newScreenAreaStyle;
-		printAreaStyle = newPrintAreaStyle;
+		screenAreaStyle = oldScreenAreaStyle;
+		printAreaStyle = oldPrintAreaStyle;
 	}
 
 	/**
@@ -68,9 +70,6 @@ public class AreaStyleToolbox extends Dialog {
 	 */
 	public Object open() {
 		createContents();
-		
-		// get data from referenced object and load into form
-		setInitialStyleArea();
 		
 		shlToolbox.open();
 		shlToolbox.layout();
@@ -129,8 +128,8 @@ public class AreaStyleToolbox extends Dialog {
 				lblScreenColorSelected.setText(selectedItem.getText());
 				lblScreenColorSelected.setBackground(selectedItem.getImage());
 				
-				// update data
-				setStyleScreenBackgroundColor();
+				Color newColor = new Color(selectedItem.getImage().getImageData().getPixel(1, 1));
+				screenAreaStyle.setColor(newColor);
 			}
 		});
 		GridData gd_tableScreenBgColor = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
@@ -173,8 +172,8 @@ public class AreaStyleToolbox extends Dialog {
 				lblPrintColorSelected.setText(selectedItem.getText());
 				lblPrintColorSelected.setBackground(selectedItem.getImage());
 				
-				// update data
-				setStylePrintBackgroundColor();
+				Color newColor = new Color(selectedItem.getImage().getImageData().getPixel(1, 1));
+				printAreaStyle.setColor(newColor);
 			}
 		});
 		tablePrintBgColor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
@@ -194,6 +193,7 @@ public class AreaStyleToolbox extends Dialog {
 		tableItem_2.setText("Color 3");
 		
 		fillColors();
+		initiateStyle();
 
 	}
 	
@@ -232,7 +232,7 @@ public class AreaStyleToolbox extends Dialog {
 	/**
 	 * Loads data from referenced object and shows that in UI
 	 */
-	private void setInitialStyleArea() {
+	private void initiateStyle() {
 		// read colors
 		Color screen = screenAreaStyle.getColor();
 		Color print = printAreaStyle.getColor();
@@ -245,6 +245,7 @@ public class AreaStyleToolbox extends Dialog {
 		gc1.setForeground(newcolor1);
 		gc1.fillRectangle(0, 0, 16, 16);
 		gc1.dispose();
+		iconScreen.setBackground(newcolor1);
 		
 		Image iconPrint = new Image(getParent().getDisplay(), 16, 16);
 		GC gc2 = new GC(iconPrint);
@@ -253,6 +254,7 @@ public class AreaStyleToolbox extends Dialog {
 		gc2.setForeground(newcolor2);
 		gc2.fillRectangle(0, 0, 16, 16);
 		gc2.dispose();
+		iconPrint.setBackground(newcolor2);
 		
 		// set color icons in form
 		lblScreenColorSelected.setText("");
@@ -263,26 +265,15 @@ public class AreaStyleToolbox extends Dialog {
 	}
 	
 	/**
-	 * Update exchange object: screen background color
+	 * Returns Area Styles with keys "screen" and "print"
+	 * @return
 	 */
-	private void setStyleScreenBackgroundColor() {
-		// read color from form
-		org.eclipse.swt.graphics.Color c = lblScreenColorSelected.getBackground();
-		
-		// parse and set new data
-		Color targetColor = new Color(c.getRed(), c.getGreen(), c.getBlue());
-		screenAreaStyle.setColor(targetColor);
+	public Map<String, AreaStyle> getNewStyles() {
+		Map<String, AreaStyle> result = new HashMap<String, AreaStyle>();
+		result.put("screen", screenAreaStyle);
+		result.put("print", printAreaStyle);
+		return result;
 	}
 	
-	/**
-	 * Update exchange object: print background color
-	 */
-	private void setStylePrintBackgroundColor() {
-		// read color from form
-		org.eclipse.swt.graphics.Color c = lblPrintColorSelected.getBackground();
-		
-		// parse and set new data
-		Color targetColor = new Color(c.getRed(), c.getGreen(), c.getBlue());
-		printAreaStyle.setColor(targetColor);
-	}
+	
 }

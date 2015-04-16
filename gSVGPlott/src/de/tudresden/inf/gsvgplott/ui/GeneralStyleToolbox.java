@@ -1,6 +1,7 @@
 package de.tudresden.inf.gsvgplott.ui;
 
 import java.awt.Color;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.swt.widgets.Dialog;
@@ -61,18 +62,18 @@ public class GeneralStyleToolbox extends Dialog {
 	 * @param style
 	 */
 	public GeneralStyleToolbox(Shell parent, int style, 
-			TextStyle newScreenTextStyle, 
-			TextStyle newPrintTextStyle, 
-			AreaStyle newScreenAreaStyle, 
-			AreaStyle newPrintAreaStyle) {
+			TextStyle oldScreenTextStyle, 
+			TextStyle oldPrintTextStyle, 
+			AreaStyle oldScreenAreaStyle, 
+			AreaStyle oldPrintAreaStyle) {
 		super(parent, SWT.BORDER | SWT.CLOSE);
 		setText("SWT Dialog");
 		
 		// set references
-		screenTextStyle = newScreenTextStyle;
-		printTextStyle = newPrintTextStyle;
-		screenAreaStyle = newScreenAreaStyle;
-		printAreaStyle = newPrintAreaStyle;
+		screenTextStyle = oldScreenTextStyle;
+		printTextStyle = oldPrintTextStyle;
+		screenAreaStyle = oldScreenAreaStyle;
+		printAreaStyle = oldPrintAreaStyle;
 	}
 
 	/**
@@ -133,11 +134,12 @@ public class GeneralStyleToolbox extends Dialog {
 				FontDialog fd = new FontDialog(shlToolbox, SWT.NONE);
 		        
 				fd.setText("Select Font");
-		        fd.setRGB(new RGB(0, 0, 255));
+		        fd.setRGB(lblScreenFontSelected.getForeground().getRGB());
 		        
-		        FontData defaultFont = new FontData("Courier", 10, SWT.BOLD);
-		        FontData[] defaultFonts = {defaultFont};
-		        fd.setFontList(defaultFonts);
+		        Font currentF = lblScreenFontSelected.getFont();
+		        FontData[] currentFd = currentF.getFontData();
+		        
+		        fd.setFontList(currentFd);
 		        
 		        FontData newFont = fd.open();
 		        if (newFont == null)
@@ -146,6 +148,24 @@ public class GeneralStyleToolbox extends Dialog {
 		        lblScreenFontSelected.setFont(new Font(getParent().getDisplay(), newFont));
 		        lblScreenFontSelected.setForeground(new org.eclipse.swt.graphics.Color(getParent().getDisplay(), fd.getRGB()));
 		        lblScreenFontSelected.setText(newFont.getName() + ", " + newFont.getHeight());
+		        
+		        //translate data to exchange objects
+		        screenTextStyle.setFont(newFont.getName());
+		        screenTextStyle.setSize(newFont.getHeight());
+		        if(newFont.getStyle() == SWT.NORMAL) {
+		        	screenTextStyle.setBold(false);
+		        	screenTextStyle.setItalic(false);
+		        } else if (newFont.getStyle() == SWT.BOLD) {
+		        	screenTextStyle.setBold(true);
+		        	screenTextStyle.setItalic(false);
+		        } else if (newFont.getStyle() == SWT.ITALIC) {
+		        	screenTextStyle.setBold(false);
+		        	screenTextStyle.setItalic(true);
+		        } else if (newFont.getStyle() == (SWT.BOLD | SWT.ITALIC)) {
+		        	screenTextStyle.setBold(true);
+		        	screenTextStyle.setItalic(true);
+		        }
+		        screenTextStyle.setColor(new Color(fd.getRGB().red, fd.getRGB().green, fd.getRGB().blue));
 			}
 		});
 		btnScreenFont.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -169,6 +189,9 @@ public class GeneralStyleToolbox extends Dialog {
 				TableItem selectedItem = tableScreenBgColor.getSelection()[0];
 				lblScreenColorSelected.setText(selectedItem.getText());
 				lblScreenColorSelected.setBackground(selectedItem.getImage());
+				
+				Color newColor = new Color(selectedItem.getImage().getImageData().getPixel(1, 1));
+				screenAreaStyle.setColor(newColor);
 			}
 		});
 		GridData gd_tableScreenBgColor = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
@@ -206,11 +229,12 @@ public class GeneralStyleToolbox extends Dialog {
 				FontDialog fd = new FontDialog(shlToolbox, SWT.NONE);
 		        
 				fd.setText("Select Font");
-		        fd.setRGB(new RGB(0, 0, 255));
+		        fd.setRGB(lblPrintFontSelected.getForeground().getRGB());
 		        
-		        FontData defaultFont = new FontData("Courier", 10, SWT.BOLD);
-		        FontData[] defaultFonts = {defaultFont};
-		        fd.setFontList(defaultFonts);
+		        Font currentF = lblPrintFontSelected.getFont();
+		        FontData[] currentFd = currentF.getFontData();
+		        
+		        fd.setFontList(currentFd);
 		        
 		        FontData newFont = fd.open();
 		        if (newFont == null)
@@ -219,6 +243,24 @@ public class GeneralStyleToolbox extends Dialog {
 		        lblPrintFontSelected.setFont(new Font(getParent().getDisplay(), newFont));
 		        lblPrintFontSelected.setForeground(new org.eclipse.swt.graphics.Color(getParent().getDisplay(), fd.getRGB()));
 		        lblPrintFontSelected.setText(newFont.getName() + ", " + newFont.getHeight());
+		        
+		        //translate data to exchange objects
+		        printTextStyle.setFont(newFont.getName());
+		        printTextStyle.setSize(newFont.getHeight());
+		        if(newFont.getStyle() == SWT.NORMAL) {
+		        	printTextStyle.setBold(false);
+		        	printTextStyle.setItalic(false);
+		        } else if (newFont.getStyle() == SWT.BOLD) {
+		        	printTextStyle.setBold(true);
+		        	printTextStyle.setItalic(false);
+		        } else if (newFont.getStyle() == SWT.ITALIC) {
+		        	printTextStyle.setBold(false);
+		        	printTextStyle.setItalic(true);
+		        } else if (newFont.getStyle() == (SWT.BOLD | SWT.ITALIC)) {
+		        	printTextStyle.setBold(true);
+		        	printTextStyle.setItalic(true);
+		        }
+		        printTextStyle.setColor(new Color(fd.getRGB().red, fd.getRGB().green, fd.getRGB().blue));
 			}
 		});
 		btnPrintFont.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -242,6 +284,9 @@ public class GeneralStyleToolbox extends Dialog {
 				TableItem selectedItem = tablePrintBgColor.getSelection()[0];
 				lblPrintColorSelected.setText(selectedItem.getText());
 				lblPrintColorSelected.setBackground(selectedItem.getImage());
+				
+				Color newColor = new Color(selectedItem.getImage().getImageData().getPixel(1, 1));
+				printAreaStyle.setColor(newColor);
 			}
 		});
 		tablePrintBgColor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
@@ -261,6 +306,7 @@ public class GeneralStyleToolbox extends Dialog {
 		tableItem_2.setText("Color 3");
 		
 		fillColors();
+		initiateStyle();
 
 	}
 	
@@ -294,5 +340,118 @@ public class GeneralStyleToolbox extends Dialog {
 			item1.setText(name);
 			item2.setText(name);
 		}
+	}
+	
+	private void initiateStyle() {
+		
+		FontData screenFd = new FontData();
+		screenFd.setName(screenTextStyle.getFont());
+		screenFd.setHeight(screenTextStyle.getSize());
+		if(!screenTextStyle.isBold() && !screenTextStyle.isItalic()) {
+			//normal
+			screenFd.setStyle(SWT.NONE);
+		} else if(screenTextStyle.isBold() && !screenTextStyle.isItalic()) {
+			//bold
+			screenFd.setStyle(SWT.BOLD);
+		} else if(!screenTextStyle.isBold() && screenTextStyle.isItalic()) {
+			//italic
+			screenFd.setStyle(SWT.ITALIC);
+		} else if(screenTextStyle.isBold() && screenTextStyle.isItalic()) {
+			//bold+italic
+			screenFd.setStyle(SWT.BOLD | SWT.ITALIC);
+		}
+		
+		Font screenF = new Font(getParent().getDisplay(), screenFd);
+		this.lblScreenFontSelected.setFont(screenF);
+		this.lblScreenFontSelected.setForeground(new org.eclipse.swt.graphics.Color(
+				getParent().getDisplay(), 
+				screenTextStyle.getColor().getRed(), 
+				screenTextStyle.getColor().getGreen(), 
+				screenTextStyle.getColor().getBlue()));
+		this.lblScreenFontSelected.setText(screenFd.getName() + ", " + screenFd.getHeight());
+		
+		
+		
+		FontData printFd = new FontData();
+		printFd.setName(printTextStyle.getFont());
+		printFd.setHeight(printTextStyle.getSize());
+		if(!printTextStyle.isBold() && !printTextStyle.isItalic()) {
+			//normal
+			printFd.setStyle(SWT.NORMAL);
+		} else if(printTextStyle.isBold() && !printTextStyle.isItalic()) {
+			//bold
+			printFd.setStyle(SWT.BOLD);
+		} else if(!printTextStyle.isBold() && printTextStyle.isItalic()) {
+			//italic
+			printFd.setStyle(SWT.ITALIC);
+		} else if(printTextStyle.isBold() && printTextStyle.isItalic()) {
+			//bold+italic
+			printFd.setStyle(SWT.BOLD | SWT.ITALIC);
+		}
+		
+		Font printF = new Font(getParent().getDisplay(), printFd);
+		this.lblPrintFontSelected.setFont(printF);
+		this.lblPrintFontSelected.setForeground(new org.eclipse.swt.graphics.Color(
+				getParent().getDisplay(), 
+				printTextStyle.getColor().getRed(), 
+				printTextStyle.getColor().getGreen(), 
+				printTextStyle.getColor().getBlue()));
+		this.lblPrintFontSelected.setText(printFd.getName() + ", " + printFd.getHeight());
+		
+		
+		
+		Color screenC = screenAreaStyle.getColor();
+		Image screenIcon = new Image(getParent().getDisplay(), 16, 16);
+		GC screenGc = new GC(screenIcon);
+		org.eclipse.swt.graphics.Color screenNewcolor = new org.eclipse.swt.graphics.Color(this.getParent().getDisplay(), screenC.getRed(), screenC.getGreen(), screenC.getBlue());
+		screenGc.setBackground(screenNewcolor);
+		screenGc.setForeground(screenNewcolor);
+		screenGc.fillRectangle(0, 0, 16, 16);
+		screenGc.dispose();
+		this.lblScreenColorSelected.setBackground(screenIcon);
+		
+		
+		
+		Color printC = printAreaStyle.getColor();
+		Image printIcon = new Image(getParent().getDisplay(), 16, 16);
+		GC printGc = new GC(printIcon);
+		org.eclipse.swt.graphics.Color printNewcolor = new org.eclipse.swt.graphics.Color(this.getParent().getDisplay(), printC.getRed(), printC.getGreen(), printC.getBlue());
+		printGc.setBackground(printNewcolor);
+		printGc.setForeground(printNewcolor);
+		printGc.fillRectangle(0, 0, 16, 16);
+		printGc.dispose();
+		this.lblPrintColorSelected.setBackground(printIcon);
+	}
+	
+	/**
+	 * Returns a two-folded map with the following structure:
+	 * <ul>
+	 * 	<li>Key <code>text</code> > Map with text styling </li>
+	 * 	<ul>
+	 * 		<li>Key <code>screen</code> > Screen text style</li>
+	 * 		<li>Key <code>print</code> > Print text style</li>
+	 * 	</ul>
+	 * 	<li>Key <code>area</code> > Map with area styling</li>
+	 * 	<ul>
+	 * 		<li>Key <code>screen</code> > Screen area style</li>
+	 * 		<li>Key <code>print</code> > Print area style</li>
+	 * 	</ul>
+	 * </ul>
+	 * @return
+	 */
+	public Map<String,Map<String,Object>> getNewStyles() {
+		Map<String,Object> text = new HashMap<String, Object>();
+		text.put("screen", screenTextStyle);
+		text.put("print", printTextStyle);
+		
+		Map<String,Object> area = new HashMap<String, Object>();
+		area.put("screen", screenAreaStyle);
+		area.put("print", printAreaStyle);
+		
+		Map<String,Map<String,Object>> result = new HashMap<String, Map<String,Object>>();
+		result.put("text", text);
+		result.put("area", area);
+		
+		return result;
 	}
 }

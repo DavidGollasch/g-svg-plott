@@ -1,7 +1,7 @@
 /**
  * 
  */
-package de.tudresden.inf.gsvgplott.ui;
+package de.tudresden.inf.gsvgplott.ui.util;
 
 /**
  * @author David Gollasch

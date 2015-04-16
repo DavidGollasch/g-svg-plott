@@ -1,6 +1,7 @@
 package de.tudresden.inf.gsvgplott.ui;
 
 import java.awt.Color;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.swt.widgets.Dialog;
@@ -16,6 +17,8 @@ import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 
+import de.tudresden.inf.gsvgplott.data.style.LineStyle;
+import de.tudresden.inf.gsvgplott.data.style.PointStyle;
 import de.tudresden.inf.gsvgplott.data.style.palettes.ColorPalette;
 import de.tudresden.inf.gsvgplott.data.style.palettes.PointTypePalette;
 
@@ -30,6 +33,8 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Spinner;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.ModifyEvent;
 
 public class PointStyleToolbox extends Dialog {
 
@@ -50,15 +55,25 @@ public class PointStyleToolbox extends Dialog {
 	private CLabel lblPrintStyleSelected;
 	private CLabel lblPrintColorSelected;
 	private Button btnPrintBordered;
+	
+	/**
+	 * Data Exchange Objects
+	 */
+	private PointStyle screenPointStyle, printPointStyle;
+	private Spinner spinnerScreenSize;
+	private Spinner spinnerPrintSize;
 
 	/**
 	 * Create the dialog.
 	 * @param parent
 	 * @param style
 	 */
-	public PointStyleToolbox(Shell parent, int style) {
+	public PointStyleToolbox(Shell parent, int style, PointStyle oldScreenPointStyle, PointStyle oldPrintPointStyle) {
 		super(parent, SWT.BORDER | SWT.CLOSE);
 		setText("SWT Dialog");
+		
+		screenPointStyle = oldScreenPointStyle;
+		printPointStyle = oldPrintPointStyle;
 	}
 
 	/**
@@ -122,6 +137,9 @@ public class PointStyleToolbox extends Dialog {
 			public void widgetSelected(SelectionEvent e) {
 				TableItem selectedItem = tableScreenPointStyle.getSelection()[0];
 				lblScreenStyleSelected.setText(selectedItem.getText());
+				
+				String newValue = PointTypePalette.getPalette().get(selectedItem.getText().toUpperCase());
+				screenPointStyle.setStyle(newValue);
 			}
 		});
 		GridData gd_tableScreenPointStyle = new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1);
@@ -151,6 +169,9 @@ public class PointStyleToolbox extends Dialog {
 				TableItem selectedItem = tableScreenPointColor.getSelection()[0];
 				lblScreenColorSelected.setText(selectedItem.getText());
 				lblScreenColorSelected.setBackground(selectedItem.getImage());
+				
+				Color newColor = new Color(selectedItem.getImage().getImageData().getPixel(1, 1));
+				screenPointStyle.setColor(newColor);
 			}
 		});
 		GridData gd_tableScreenPointColor = new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1);
@@ -172,12 +193,23 @@ public class PointStyleToolbox extends Dialog {
 		tableItemScreenColor3.setText("Color 3");
 		
 		btnScreenBordered = new Button(compositeScreen, SWT.CHECK);
+		btnScreenBordered.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				screenPointStyle.setShowBorder(btnScreenBordered.getSelection());
+			}
+		});
 		btnScreenBordered.setText("Bordered");
 		
 		CLabel lblScreenSize = new CLabel(compositeScreen, SWT.NONE);
 		lblScreenSize.setText("Size:");
 		
-		Spinner spinnerScreenSize = new Spinner(compositeScreen, SWT.BORDER);
+		spinnerScreenSize = new Spinner(compositeScreen, SWT.BORDER);
+		spinnerScreenSize.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent arg0) {
+				screenPointStyle.setSize(spinnerScreenSize.getSelection());
+			}
+		});
 		spinnerScreenSize.setMaximum(999);
 		spinnerScreenSize.setMinimum(1);
 		spinnerScreenSize.setSelection(15);
@@ -205,6 +237,9 @@ public class PointStyleToolbox extends Dialog {
 			public void widgetSelected(SelectionEvent e) {
 				TableItem selectedItem = tablePrintPointStyle.getSelection()[0];
 				lblPrintStyleSelected.setText(selectedItem.getText());
+				
+				String newValue = PointTypePalette.getPalette().get(selectedItem.getText().toUpperCase());
+				printPointStyle.setStyle(newValue);
 			}
 		});
 		GridData gd_tablePrintPointStyle = new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1);
@@ -235,6 +270,9 @@ public class PointStyleToolbox extends Dialog {
 				TableItem selectedItem = tablePrintPointColor.getSelection()[0];
 				lblPrintColorSelected.setText(selectedItem.getText());
 				lblPrintColorSelected.setBackground(selectedItem.getImage());
+				
+				Color newColor = new Color(selectedItem.getImage().getImageData().getPixel(1, 1));
+				printPointStyle.setColor(newColor);
 			}
 		});
 		GridData gd_tablePrintPointColor = new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1);
@@ -256,12 +294,23 @@ public class PointStyleToolbox extends Dialog {
 		tableItem_15.setText("Color 3");
 		
 		btnPrintBordered = new Button(compositePrint, SWT.CHECK);
+		btnPrintBordered.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				printPointStyle.setShowBorder(btnPrintBordered.getSelection());
+			}
+		});
 		btnPrintBordered.setText("Bordered");
 		
 		CLabel lblPrintSize = new CLabel(compositePrint, SWT.NONE);
 		lblPrintSize.setText("Size:");
 		
-		Spinner spinnerPrintSize = new Spinner(compositePrint, SWT.BORDER);
+		spinnerPrintSize = new Spinner(compositePrint, SWT.BORDER);
+		spinnerPrintSize.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent arg0) {
+				printPointStyle.setSize(spinnerPrintSize.getSelection());
+			}
+		});
 		spinnerPrintSize.setMaximum(999);
 		spinnerPrintSize.setMinimum(1);
 		spinnerPrintSize.setSelection(15);
@@ -269,8 +318,9 @@ public class PointStyleToolbox extends Dialog {
 		CLabel lblPrintPx = new CLabel(compositePrint, SWT.NONE);
 		lblPrintPx.setText("px");
 		
-		this.fillPointTypes();
-		this.fillColors();
+		fillPointTypes();
+		fillColors();
+		initiateStyle();
 
 	}
 	
@@ -334,5 +384,58 @@ public class PointStyleToolbox extends Dialog {
 			item1.setText(name);
 			item2.setText(name);
 		}
+	}
+	
+	private void initiateStyle() {
+		String sStyle = screenPointStyle.getStyle();
+		lblScreenStyleSelected.setText(sStyle);
+		
+		Color sColor = screenPointStyle.getColor();
+		Color screenC = sColor;
+		Image screenIcon = new Image(getParent().getDisplay(), 16, 16);
+		GC screenGc = new GC(screenIcon);
+		org.eclipse.swt.graphics.Color screenNewcolor = new org.eclipse.swt.graphics.Color(this.getParent().getDisplay(), screenC.getRed(), screenC.getGreen(), screenC.getBlue());
+		screenGc.setBackground(screenNewcolor);
+		screenGc.setForeground(screenNewcolor);
+		screenGc.fillRectangle(0, 0, 16, 16);
+		screenGc.dispose();
+		this.lblScreenColorSelected.setBackground(screenIcon);
+		
+		int sSize = screenPointStyle.getSize();
+		spinnerScreenSize.setSelection(sSize);
+		
+		boolean sBordering = screenPointStyle.isShowBorder();
+		btnScreenBordered.setSelection(sBordering);
+		
+		String pStyle = printPointStyle.getStyle();
+		lblPrintStyleSelected.setText(pStyle);
+		
+		Color pColor = printPointStyle.getColor();
+		Color printC = pColor;
+		Image printIcon = new Image(getParent().getDisplay(), 16, 16);
+		GC printGc = new GC(printIcon);
+		org.eclipse.swt.graphics.Color printNewcolor = new org.eclipse.swt.graphics.Color(this.getParent().getDisplay(), printC.getRed(), printC.getGreen(), printC.getBlue());
+		printGc.setBackground(printNewcolor);
+		printGc.setForeground(printNewcolor);
+		printGc.fillRectangle(0, 0, 16, 16);
+		printGc.dispose();
+		this.lblPrintColorSelected.setBackground(printIcon);
+		
+		int pSize = printPointStyle.getSize();
+		spinnerPrintSize.setSelection(pSize);
+		
+		boolean pBordering = printPointStyle.isShowBorder();
+		btnPrintBordered.setSelection(pBordering);
+	}
+	
+	/**
+	 * Returns Point Styles with keys "screen" and "print"
+	 * @return
+	 */
+	public Map<String, PointStyle> getNewStyles() {
+		Map<String, PointStyle> result = new HashMap<String, PointStyle>();
+		result.put("screen", screenPointStyle);
+		result.put("print", printPointStyle);
+		return result;
 	}
 }

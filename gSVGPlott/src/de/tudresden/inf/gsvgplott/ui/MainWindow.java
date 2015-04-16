@@ -6,6 +6,7 @@ package de.tudresden.inf.gsvgplott.ui;
  *
  */
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -29,9 +31,13 @@ import de.tudresden.inf.gsvgplott.data.MarkedPointsList;
 import de.tudresden.inf.gsvgplott.data.XAxis;
 import de.tudresden.inf.gsvgplott.data.YAxis;
 import de.tudresden.inf.gsvgplott.data.style.AreaStyle;
+import de.tudresden.inf.gsvgplott.data.style.DefaultStyles;
+import de.tudresden.inf.gsvgplott.data.style.LineStyle;
 import de.tudresden.inf.gsvgplott.data.style.OverrideStyle;
+import de.tudresden.inf.gsvgplott.data.style.PointStyle;
 import de.tudresden.inf.gsvgplott.data.style.TextStyle;
 import de.tudresden.inf.gsvgplott.data.style.palettes.ColorPalette;
+import de.tudresden.inf.gsvgplott.ui.util.RenderMode;
 
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.layout.FillLayout;
@@ -62,6 +68,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.w3c.dom.DOMException;
 
 import tud.tangram.svgplot.SvgPlot;
+import tud.tangram.svgplot.coordinatesystem.PointListList;
 import tud.tangram.svgplot.coordinatesystem.Range;
 import tud.tangram.svgplot.xml.HtmlDocument;
 import tud.tangram.svgplot.xml.SvgDocument;
@@ -79,19 +86,6 @@ public class MainWindow {
 	 * The diagram object holds all data to be processed
 	 */
 	private Diagram diagram;
-	
-	/**
-	 * Output object: SVG Graph Document
-	 */
-	private SvgDocument exportDoc, previewScreenDoc, previewPrintDoc;
-	/**
-	 * Output object: Description
-	 */
-	private HtmlDocument exportDesc, previewScreenDesc, previewPrintDesc;
-	/**
-	 * Output object: Legend
-	 */
-	private SvgDocument exportLegend, previewScreenLegend, previewPrintLegend;
 	
 	/**
 	 * List of all functions as Group widgets
@@ -133,6 +127,12 @@ public class MainWindow {
 	private Combo comboPoIntegralBorderingFrom;
 	private Combo comboPoIntegralBorderingTo;
 	private Spinner spinnerPoGeneralHeight;
+	private Browser browserPreviewScreenViewGraph;
+	private Browser browserPreviewScreenViewLegend;
+	private Browser browserPreviewScreenViewDescription;
+	private Browser browserPreviewPrintViewGraph;
+	private Browser browserPreviewPrintViewLegend;
+	private Browser browserPreviewPrintViewDescription;
 
 	/**
 	 * Launch the application.
@@ -581,7 +581,7 @@ public class MainWindow {
 		tbtmPreviewScreenViewGraph.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
 		tbtmPreviewScreenViewGraph.setText("Graph");
 		
-		Browser browserPreviewScreenViewGraph = new Browser(tabFolderPreviewScreenView, SWT.NONE);
+		browserPreviewScreenViewGraph = new Browser(tabFolderPreviewScreenView, SWT.NONE);
 		browserPreviewScreenViewGraph.setText("<html>\n<body>\n<p style='font-family: sans-serif; font-size: 0.7em; color: gray;'>The graph's screen view preview goes here.</p>\n</body>\n</html>");
 		tbtmPreviewScreenViewGraph.setControl(browserPreviewScreenViewGraph);
 		
@@ -589,7 +589,7 @@ public class MainWindow {
 		tbtmPreviewScreenViewLegend.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/legend-16.png"));
 		tbtmPreviewScreenViewLegend.setText("Legend");
 		
-		Browser browserPreviewScreenViewLegend = new Browser(tabFolderPreviewScreenView, SWT.NONE);
+		browserPreviewScreenViewLegend = new Browser(tabFolderPreviewScreenView, SWT.NONE);
 		browserPreviewScreenViewLegend.setText("<html>\n<body>\n<p style='font-family: sans-serif; font-size: 0.7em; color: gray;'>The legend's screen view preview goes here.</p>\n</body>\n</html>");
 		tbtmPreviewScreenViewLegend.setControl(browserPreviewScreenViewLegend);
 		
@@ -597,7 +597,7 @@ public class MainWindow {
 		tbtmPreviewScreenViewDescription.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/list-16.png"));
 		tbtmPreviewScreenViewDescription.setText("Description");
 		
-		Browser browserPreviewScreenViewDescription = new Browser(tabFolderPreviewScreenView, SWT.NONE);
+		browserPreviewScreenViewDescription = new Browser(tabFolderPreviewScreenView, SWT.NONE);
 		browserPreviewScreenViewDescription.setText("<html>\n<body>\n<p style='font-family: sans-serif; font-size: 0.7em; color: gray;'>The description's screen view preview goes here.</p>\n</body>\n</html>");
 		tbtmPreviewScreenViewDescription.setControl(browserPreviewScreenViewDescription);
 		
@@ -614,7 +614,7 @@ public class MainWindow {
 		tbtmPreviewPrintViewGraph.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
 		tbtmPreviewPrintViewGraph.setText("Graph");
 		
-		Browser browserPreviewPrintViewGraph = new Browser(tabFolderPreviewPrintView, SWT.NONE);
+		browserPreviewPrintViewGraph = new Browser(tabFolderPreviewPrintView, SWT.NONE);
 		browserPreviewPrintViewGraph.setText("<html>\n<body>\n<p style='font-family: sans-serif; font-size: 0.7em; color: gray;'>The graph's print view preview goes here.</p>\n</body>\n</html>");
 		tbtmPreviewPrintViewGraph.setControl(browserPreviewPrintViewGraph);
 		
@@ -622,7 +622,7 @@ public class MainWindow {
 		tbtmPreviewPrintViewLegend.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/legend-16.png"));
 		tbtmPreviewPrintViewLegend.setText("Legend");
 		
-		Browser browserPreviewPrintViewLegend = new Browser(tabFolderPreviewPrintView, SWT.NONE);
+		browserPreviewPrintViewLegend = new Browser(tabFolderPreviewPrintView, SWT.NONE);
 		browserPreviewPrintViewLegend.setText("<html>\n<body>\n<p style='font-family: sans-serif; font-size: 0.7em; color: gray;'>The legend's print view preview goes here.</p>\n</body>\n</html>");
 		tbtmPreviewPrintViewLegend.setControl(browserPreviewPrintViewLegend);
 		
@@ -630,7 +630,7 @@ public class MainWindow {
 		tbtmPreviewPrintViewDescription.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/list-16.png"));
 		tbtmPreviewPrintViewDescription.setText("Description");
 		
-		Browser browserPreviewPrintViewDescription = new Browser(tabFolderPreviewPrintView, SWT.NONE);
+		browserPreviewPrintViewDescription = new Browser(tabFolderPreviewPrintView, SWT.NONE);
 		browserPreviewPrintViewDescription.setText("<html>\n<body>\n<p style='font-family: sans-serif; font-size: 0.7em; color: gray;'>The description's print view preview goes here.</p>\n</body>\n</html>");
 		tbtmPreviewPrintViewDescription.setControl(browserPreviewPrintViewDescription);
 		
@@ -871,9 +871,23 @@ public class MainWindow {
 	 * @param pointlist
 	 */
 	protected void triggerDataPointListStyleToolbox(Group pointlist) {
-		PointStyleToolbox ps = new PointStyleToolbox(shlGsvgplott, 0);
+		MarkedPointsList p = pointlistMap.get(pointlist);
+		PointStyle scrPS = p.getPointScreenStyle();
+		if(scrPS == null) {
+			scrPS = DefaultStyles.getDefaultScreenMarkedPointsListPointStyle();
+		}
+		PointStyle prtPS = p.getPointPrintStyle();
+		if(prtPS == null) {
+			prtPS = DefaultStyles.getDefaultPrintMarkedPointsListPointStyle();
+		}
+		
+		PointStyleToolbox ps = new PointStyleToolbox(shlGsvgplott, 0, scrPS, prtPS);
 		ps.setOpeningLocation(Display.getDefault().getCursorLocation());
 		ps.open();
+		
+		Map<String, PointStyle> result = ps.getNewStyles();
+		p.setPointScreenStyle(result.get("screen"));
+		p.setPointPrintStyle(result.get("print"));
 	}
 	
 	/**
@@ -881,9 +895,23 @@ public class MainWindow {
 	 * @param function
 	 */
 	protected void triggerDataFunctionStyleToolbox(Group function) {
-		LineStyleToolbox ls = new LineStyleToolbox(shlGsvgplott, 0);
+		Function f = functionMap.get(function);
+		LineStyle scrLS = f.getFunctionScreenStyle();
+		if(scrLS == null) {
+			scrLS = DefaultStyles.getDefaultScreenFunctionLineStyle();
+		}
+		LineStyle prtLS = f.getFunctionPrintStyle();
+		if(prtLS == null) {
+			prtLS = DefaultStyles.getDefaultPrintFunctionLineStyle();
+		}
+		
+		LineStyleToolbox ls = new LineStyleToolbox(shlGsvgplott, 0, scrLS, prtLS);
 		ls.setOpeningLocation(Display.getDefault().getCursorLocation());
 		ls.open();
+		
+		Map<String, LineStyle> result = ls.getNewStyles();
+		f.setFunctionScreenStyle(result.get("screen"));
+		f.setFunctionPrintStyle(result.get("print"));
 		
 	}
 	
@@ -907,24 +935,60 @@ public class MainWindow {
 	 * Open tool box for General styling
 	 */
 	protected void triggerOptionsGeneralStyleToolbox() {
-		//TODO: bind to actual data
-		TextStyle screenTS = new TextStyle("Courier", 15, ColorPalette.APPLE, true, false, false);
-		TextStyle printTS = new TextStyle("Courier", 15, ColorPalette.BLUEBERRY, true, false, false);
-		AreaStyle screenAS = new AreaStyle(ColorPalette.CITRUS);
-		AreaStyle printAS = new AreaStyle(ColorPalette.ALUMINIUM);
+		AreaStyle scrAS = diagram.getBackgroundScreenStyle();
+		if(scrAS == null) {
+			scrAS = DefaultStyles.getDefaultScreenGeneralAreaStyle();
+		}
+		AreaStyle prtAS = diagram.getBackgroundPrintStyle();
+		if(prtAS == null) {
+			prtAS = DefaultStyles.getDefaultPrintGeneralAreaStyle();
+		}
+		TextStyle scrTS = diagram.getTextScreenStyle();
+		if(scrTS == null) {
+			scrTS = DefaultStyles.getDefaultScreenGeneralTextStyle();
+		}
+		TextStyle prtTS = diagram.getTextPrintStyle();
+		if(prtTS == null) {
+			prtTS = DefaultStyles.getDefaultPrintGeneralTextStyle();
+		}
 		
-		GeneralStyleToolbox gt = new GeneralStyleToolbox(shlGsvgplott, 0, screenTS, printTS, screenAS, printAS);
+		GeneralStyleToolbox gt = new GeneralStyleToolbox(shlGsvgplott, 0, scrTS, prtTS, scrAS, prtAS);
 		gt.setOpeningLocation(Display.getDefault().getCursorLocation());
 		gt.open();
+		
+		Map<String, Map<String, Object>> result = gt.getNewStyles();
+		scrAS = (AreaStyle)(result.get("area").get("screen"));
+		prtAS = (AreaStyle)(result.get("area").get("print"));
+		scrTS = (TextStyle)(result.get("text").get("screen"));
+		prtTS = (TextStyle)(result.get("text").get("print"));
+		diagram.setBackgroundScreenStyle(scrAS);
+		diagram.setBackgroundPrintStyle(prtAS);
+		diagram.setTextScreenStyle(scrTS);
+		diagram.setTextPrintStyle(prtTS);
 	}
 	
 	/**
 	 * Open tool box for X Axis styling
 	 */
 	protected void triggerOptionsXaxisStyleToolbox() {
-		LineStyleToolbox lt = new LineStyleToolbox(shlGsvgplott, 0);
+		LineStyle scrLS = diagram.getXaxis().getAxisScreenStyle();
+		if(scrLS == null) {
+			scrLS = DefaultStyles.getDefaultScreenXaxisLineStyle();
+		}
+		LineStyle prtLS = diagram.getXaxis().getAxisPrintStyle();
+		if(prtLS == null) {
+			prtLS = DefaultStyles.getDefaultPrintXaxisLineStyle();
+		}
+		
+		LineStyleToolbox lt = new LineStyleToolbox(shlGsvgplott, 0, scrLS, prtLS);
 		lt.setOpeningLocation(Display.getDefault().getCursorLocation());
 		lt.open();
+		
+		Map<String, LineStyle> result = lt.getNewStyles();
+		scrLS = result.get("screen");
+		prtLS = result.get("print");
+		diagram.getXaxis().setAxisScreenStyle(scrLS);
+		diagram.getXaxis().setAxisPrintStyle(prtLS);
 		
 	}
 	
@@ -932,37 +996,102 @@ public class MainWindow {
 	 * Open tool box for X Axis Helpline styling
 	 */
 	protected void triggerOptionsXaxisHelplineStyleToolbox() {
-		LineStyleToolbox lt = new LineStyleToolbox(shlGsvgplott, 0);
+		LineStyle scrLS = diagram.getXaxis().getHelplineScreenStyle();
+		if(scrLS == null) {
+			scrLS = DefaultStyles.getDefaultScreenXaxisHelplinesLineStyle();
+		}
+		LineStyle prtLS = diagram.getXaxis().getHelplinePrintStyle();
+		if(prtLS == null) {
+			prtLS = DefaultStyles.getDefaultPrintXaxisHelplinesLineStyle();
+		}
+		
+		LineStyleToolbox lt = new LineStyleToolbox(shlGsvgplott, 0, scrLS, prtLS);
 		lt.setOpeningLocation(Display.getDefault().getCursorLocation());
 		lt.open();
+		
+		Map<String, LineStyle> result = lt.getNewStyles();
+		scrLS = result.get("screen");
+		prtLS = result.get("print");
+		diagram.getXaxis().setHelplineScreenStyle(scrLS);
+		diagram.getXaxis().setHelplinePrintStyle(prtLS);
 	}
 	
 	/**
 	 * Open tool box for Y Axis styling
 	 */
 	protected void triggerOptionsYaxisStyleToolbox() {
-		LineStyleToolbox lt = new LineStyleToolbox(shlGsvgplott, 0);
+		LineStyle scrLS = diagram.getYaxis().getAxisScreenStyle();
+		if(scrLS == null) {
+			scrLS = DefaultStyles.getDefaultScreenYaxisLineStyle();
+		}
+		LineStyle prtLS = diagram.getYaxis().getAxisPrintStyle();
+		if(prtLS == null) {
+			prtLS = DefaultStyles.getDefaultPrintYaxisLineStyle();
+		}
+		
+		LineStyleToolbox lt = new LineStyleToolbox(shlGsvgplott, 0, scrLS, prtLS);
 		lt.setOpeningLocation(Display.getDefault().getCursorLocation());
 		lt.open();
+		
+		Map<String, LineStyle> result = lt.getNewStyles();
+		scrLS = result.get("screen");
+		prtLS = result.get("print");
+		diagram.getYaxis().setAxisScreenStyle(scrLS);
+		diagram.getYaxis().setAxisPrintStyle(prtLS);
 	}
 	
 	/**
 	 * Open tool box for Y Axis Helpline styling
 	 */
 	protected void triggerOptionsYaxisHelplineStyleToolbox() {
-		LineStyleToolbox lt = new LineStyleToolbox(shlGsvgplott, 0);
+		LineStyle scrLS = diagram.getYaxis().getHelplineScreenStyle();
+		if(scrLS == null) {
+			scrLS = DefaultStyles.getDefaultScreenYaxisHelplinesLineStyle();
+		}
+		LineStyle prtLS = diagram.getYaxis().getHelplinePrintStyle();
+		if(prtLS == null) {
+			prtLS = DefaultStyles.getDefaultPrintYaxisHelplinesLineStyle();
+		}
+		
+		LineStyleToolbox lt = new LineStyleToolbox(shlGsvgplott, 0, scrLS, prtLS);
 		lt.setOpeningLocation(Display.getDefault().getCursorLocation());
 		lt.open();
+		
+		Map<String, LineStyle> result = lt.getNewStyles();
+		scrLS = result.get("screen");
+		prtLS = result.get("print");
+		diagram.getYaxis().setHelplineScreenStyle(scrLS);
+		diagram.getYaxis().setHelplinePrintStyle(prtLS);
 	}
 	
 	/**
 	 * Open tool box for Integral styling
 	 */
 	protected void triggerOptionsIntegralStyleToolbox() {
-		//TODO: bind to actual data
-		AreaStyleToolbox at = new AreaStyleToolbox(shlGsvgplott, 0, new AreaStyle(ColorPalette.APPLE), new AreaStyle(ColorPalette.BLUEBERRY));
+		AreaStyle scrAS = null;
+		AreaStyle prtAS = null;
+		if(diagram.getIntegral() != null) {
+			scrAS = diagram.getIntegral().getAreaScreenStyle();
+			prtAS = diagram.getIntegral().getAreaPrintStyle();
+		}
+		if(scrAS == null) {
+			scrAS = DefaultStyles.getDefaultScreenIntegralAreaStyle();
+		}
+		if(prtAS == null) {
+			prtAS = DefaultStyles.getDefaultPrintIntegralAreaStyle();
+		}
+		
+		AreaStyleToolbox at = new AreaStyleToolbox(shlGsvgplott, 0, scrAS, prtAS);
 		at.setOpeningLocation(Display.getDefault().getCursorLocation());
 		at.open();
+		
+		if(diagram.getIntegral() != null) {
+			Map<String, AreaStyle> result = at.getNewStyles();
+			scrAS = result.get("screen");
+			prtAS = result.get("print");
+			diagram.getIntegral().setAreaScreenStyle(scrAS);
+			diagram.getIntegral().setAreaPrintStyle(prtAS);
+		}
 	}
 
 	/**
@@ -1156,7 +1285,7 @@ public class MainWindow {
 		//TODO: export file
         System.out.println(selected);*/
 		
-		this.operateFireSVGPlott(previewScreenDoc, previewScreenDesc, previewScreenLegend, RenderMode.UNISCREEN);
+		operateGeneratePreview();
 		
 	}
 
@@ -1164,7 +1293,7 @@ public class MainWindow {
 	 * Create new file
 	 */
 	protected void triggerMenuNew() {
-		//TODO: new file
+		operateResetDiagram();
 	}
 	
 	/**
@@ -1227,16 +1356,56 @@ public class MainWindow {
 	 * Reset Style
 	 */
 	protected void triggerMenuResetStyle() {
-		//TODO: Reset Style
+		diagram.setBackgroundScreenStyle(null);
+		diagram.setBackgroundPrintStyle(null);
+		diagram.setTextScreenStyle(null);
+		diagram.setTextPrintStyle(null);
+		
+		diagram.setOverrideStyle(null);
+		
+		diagram.getXaxis().setAxisScreenStyle(null);
+		diagram.getXaxis().setAxisPrintStyle(null);
+		diagram.getXaxis().setHelplineScreenStyle(null);
+		diagram.getXaxis().setHelplinePrintStyle(null);
+		
+		diagram.getYaxis().setAxisScreenStyle(null);
+		diagram.getYaxis().setAxisPrintStyle(null);
+		diagram.getYaxis().setHelplineScreenStyle(null);
+		diagram.getYaxis().setHelplinePrintStyle(null);
+		
+		if(diagram.getIntegral() != null) {
+			diagram.getIntegral().setAreaScreenStyle(null);
+			diagram.getIntegral().setAreaPrintStyle(null);
+		}
+		
+		for(Function f : diagram.getFunctions()) {
+			f.setFunctionScreenStyle(null);
+			f.setFunctionPrintStyle(null);
+		}
+		
+		for(MarkedPointsList l : diagram.getMarkedPointLists()) {
+			l.setPointScreenStyle(null);
+			l.setPointPrintStyle(null);
+		}
 	}
 	
 	/**
 	 * Open CSS Style Override Dialog
 	 */
 	protected void triggerMenuCssStyleOverride() {
-		//TODO: bind to actual data
-		CssStyleOverrideDialog cd = new CssStyleOverrideDialog(shlGsvgplott, 0, new OverrideStyle(""));
+		CssStyleOverrideDialog cd;
+		if(diagram.getOverrideStyle() != null) {
+			cd = new CssStyleOverrideDialog(shlGsvgplott, 0, diagram.getOverrideStyle());
+		} else {
+			cd = new CssStyleOverrideDialog(shlGsvgplott, 0, new OverrideStyle(""));
+		}
 		cd.open();
+		OverrideStyle result = cd.getNewOverrideStyle();
+		if (result.getCssStyle().isEmpty()) {
+			diagram.setOverrideStyle(null);
+		} else {
+			diagram.setOverrideStyle(result);
+		}
 	}
 	
 	/**
@@ -1283,7 +1452,6 @@ public class MainWindow {
 		
 		Label lblSepDataRowFunctions = new Label(compositeDataColumn, SWT.SEPARATOR | SWT.HORIZONTAL | SWT.SHADOW_NONE);
 		lblSepDataRowFunctions.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		lblSepDataRowFunctions.setText("sep");
 		
 		
 		// b) variable area (functions)
@@ -1720,7 +1888,6 @@ public class MainWindow {
 	 * @param table
 	 */
 	protected void operateDataPointListAddPoint(Table table) {
-		//TODO: implement adding a point, bind to actual data
 		AddPointDialog apd = new AddPointDialog(shlGsvgplott, 0);
 		apd.open();
 		de.tudresden.inf.gsvgplott.data.Point p = apd.getPoint();
@@ -1822,7 +1989,16 @@ public class MainWindow {
 	 * This method invokes the creation of preview diagrams out of the current Diagram instance
 	 */
 	protected void operateGeneratePreview() {
-		//TODO: to be implemented
+		Map<String, String> previewScreen = operateFireSVGPlott(RenderMode.UNISCREEN, true);
+		Map<String, String> previewPrint = operateFireSVGPlott(RenderMode.UNIPRINT, true);
+		
+		this.browserPreviewScreenViewGraph.setText(previewScreen.get("document"));
+		this.browserPreviewScreenViewDescription.setText(previewScreen.get("description"));
+		this.browserPreviewScreenViewLegend.setText(previewScreen.get("legend"));
+		
+		this.browserPreviewPrintViewGraph.setText(previewPrint.get("document"));
+		this.browserPreviewPrintViewDescription.setText(previewPrint.get("description"));
+		this.browserPreviewPrintViewLegend.setText(previewPrint.get("legend"));
 	}
 	
 	/**
@@ -2005,7 +2181,7 @@ public class MainWindow {
 	 * @param legend Legend document to write to
 	 * @param mode Select style rendering mode for output
 	 */
-	protected void operateFireSVGPlott(SvgDocument doc, HtmlDocument desc, SvgDocument legend, RenderMode mode) {
+	protected Map<String, String> operateFireSVGPlott(RenderMode mode, boolean surpressWarnings) {
 		SvgPlot plotter = new SvgPlot(); 
 		
 		// Set all variables
@@ -2032,38 +2208,76 @@ public class MainWindow {
 			functions.add(func);
 		}
 		plotter.setFunctions(functions);
-		//plotter.setIntegral(null);
-		//plotter.setPi(diagram.getXaxis().isPiDivisioning());
+		
 		//plotter.setPoints(null);
-			
-		/*plotter.setSize(
+		PointListList pl = new PointListList();
+		
+		plotter.setTitle(diagram.getTitle());
+		
+		plotter.setSize(
 				new tud.tangram.svgplot.coordinatesystem.Point(
 						(double)diagram.getSizeWidth(), 
 						(double)diagram.getSizeHeight()));
-		plotter.setTitle(diagram.getTitle());
-		//plotter.setxLines(null);
+		
+		//plotter.setIntegral(null);
+		
 		Range xrange = new Range(
 				(double)diagram.getXaxis().getRangeFrom(), 
 				(double)diagram.getXaxis().getRangeTo(), 
 				diagram.getXaxis().getTitle());
 		plotter.setxRange(xrange);
-		//plotter.setyLines(null);
+		
+		plotter.setPi(diagram.getXaxis().isPiDivisioning());
+		
+		//plotter.setxLines(null);
+		
 		Range yrange = new Range(
 				(double)diagram.getYaxis().getRangeFrom(),
 				(double)diagram.getYaxis().getRangeTo(),
 				diagram.getYaxis().getTitle());
-		plotter.setyRange(yrange);*/
+		plotter.setyRange(yrange);
+		
+		//plotter.setyLines(null);
 		
 		try {
 			plotter.create();
 		} catch (DOMException | ParserConfigurationException | IOException
 				| InterruptedException e) {
-			return; // iff there was an error
+			return null; // iff there was an error
+		} catch (NullPointerException e) {
+			if(!surpressWarnings) {
+				MessageBox b = new MessageBox(shlGsvgplott);
+				b.setText("Gnuplot not available");
+				b.setMessage("The plotter encountered a problem. Propably the required Gnuplot is not installed properly.");
+				b.open();
+			}
+			return null; // iff gnuplott is unavailable
 		}
 		
 		// return all artifacts
-		doc = plotter.getDoc();
-		desc = plotter.getDesc();
-		legend = plotter.getLegend();
+		SvgDocument doc = plotter.getDoc();
+		HtmlDocument desc = plotter.getDesc();
+		SvgDocument legend = plotter.getLegend();
+		
+		ByteArrayOutputStream baosDoc = new ByteArrayOutputStream();
+		ByteArrayOutputStream baosDesc = new ByteArrayOutputStream();
+		ByteArrayOutputStream baosLegend = new ByteArrayOutputStream();
+		try {
+			doc.writeTo(baosDoc);
+			desc.writeTo(baosDesc);
+			legend.writeTo(baosLegend);
+		} catch (TransformerException e) {
+			e.printStackTrace();
+		}
+		
+		String strDoc = new String(baosDoc.toByteArray(),  java.nio.charset.StandardCharsets.UTF_8);
+		String strDesc = new String(baosDesc.toByteArray(),  java.nio.charset.StandardCharsets.UTF_8);
+		String strLegend = new String(baosLegend.toByteArray(),  java.nio.charset.StandardCharsets.UTF_8);
+		
+		Map<String, String> resultset = new HashMap<String, String>();
+		resultset.put("document", strDoc);
+		resultset.put("description", strDesc);
+		resultset.put("legend", strLegend);
+		return resultset;
 	}
 }

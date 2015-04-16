@@ -27,18 +27,21 @@ public class CssStyleOverrideDialog extends Dialog {
 	 * Data Exchange Object
 	 */
 	private OverrideStyle overrideStyle;
+	private Button btnOk;
+	private Button btnReset;
+	private Button btnCancel;
 
 	/**
 	 * Create the dialog.
 	 * @param parent
 	 * @param style
 	 */
-	public CssStyleOverrideDialog(Shell parent, int style, OverrideStyle newOverrideStyle) {
+	public CssStyleOverrideDialog(Shell parent, int style, OverrideStyle oldOverrideStyle) {
 		super(parent, style);
 		setText("SWT Dialog");
 		
 		// set object reference
-		overrideStyle = newOverrideStyle;
+		overrideStyle = oldOverrideStyle;
 	}
 
 	/**
@@ -82,7 +85,7 @@ public class CssStyleOverrideDialog extends Dialog {
 		Composite composite = new Composite(shlCssStyleOverride, SWT.NONE);
 		composite.setLayout(new RowLayout(SWT.HORIZONTAL));
 		
-		Button btnOk = new Button(composite, SWT.NONE);
+		btnOk = new Button(composite, SWT.NONE);
 		btnOk.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -92,7 +95,7 @@ public class CssStyleOverrideDialog extends Dialog {
 		});
 		btnOk.setText("OK");
 		
-		Button btnReset = new Button(composite, SWT.NONE);
+		btnReset = new Button(composite, SWT.NONE);
 		btnReset.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -101,7 +104,7 @@ public class CssStyleOverrideDialog extends Dialog {
 		});
 		btnReset.setText("Reset");
 		
-		Button btnCancel = new Button(composite, SWT.NONE);
+		btnCancel = new Button(composite, SWT.NONE);
 		btnCancel.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -109,6 +112,8 @@ public class CssStyleOverrideDialog extends Dialog {
 			}
 		});
 		btnCancel.setText("Cancel");
+		
+		shlCssStyleOverride.setDefaultButton(btnOk);
 
 	}
 	
@@ -124,6 +129,14 @@ public class CssStyleOverrideDialog extends Dialog {
 	 */
 	private void setNewData() {
 		overrideStyle.setCssStyle(styledText.getText());
+	}
+	
+	/**
+	 * For getting the new current css override styling
+	 * @return
+	 */
+	public OverrideStyle getNewOverrideStyle() {
+		return overrideStyle;
 	}
 
 }
