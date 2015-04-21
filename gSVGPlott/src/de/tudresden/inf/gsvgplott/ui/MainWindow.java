@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -65,11 +66,14 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.w3c.dom.DOMException;
 
 import tud.tangram.svgplot.SvgPlot;
 import tud.tangram.svgplot.coordinatesystem.PointListList;
+import tud.tangram.svgplot.coordinatesystem.PointListList.PointList;
 import tud.tangram.svgplot.coordinatesystem.Range;
+import tud.tangram.svgplot.plotting.IntegralPlotSettings;
 import tud.tangram.svgplot.xml.HtmlDocument;
 import tud.tangram.svgplot.xml.SvgDocument;
 
@@ -891,6 +895,38 @@ public class MainWindow {
 	}
 	
 	/**
+	 * Open tool box for general/common point styling
+	 */
+	protected void triggerDataPointListCommonStyleToolbox() {
+		if(diagram.getMarkedPointLists().isEmpty()) {
+			triggerDataAddPointList();
+		}
+		
+		MarkedPointsList p = pointlistMap.get(pointlists.get(0));
+		PointStyle scrPS = p.getPointScreenStyle();
+		if(scrPS == null) {
+			scrPS = DefaultStyles.getDefaultScreenMarkedPointsListPointStyle();
+		}
+		PointStyle prtPS = p.getPointPrintStyle();
+		if(prtPS == null) {
+			prtPS = DefaultStyles.getDefaultPrintMarkedPointsListPointStyle();
+		}
+		
+		PointStyleToolbox ps = new PointStyleToolbox(shlGsvgplott, 0, scrPS, prtPS);
+		ps.setOpeningLocation(Display.getDefault().getCursorLocation());
+		ps.open();
+		
+		Map<String, PointStyle> result = ps.getNewStyles();
+		//p.setPointScreenStyle(result.get("screen")); DON'T SET THIS SPECIFICALLY BUT FOR EACH
+		//p.setPointPrintStyle(result.get("print"));
+		for(Entry<Group, MarkedPointsList> e : pointlistMap.entrySet()) {
+			MarkedPointsList l = e.getValue();
+			l.setPointScreenStyle(result.get("screen"));
+			l.setPointPrintStyle(result.get("print"));
+		}
+	}
+	
+	/**
 	 * Open tool box for line styling
 	 * @param function
 	 */
@@ -1450,7 +1486,7 @@ public class MainWindow {
 		lblDataRowFunctions.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		lblDataRowFunctions.setText("Functions");
 		
-		Label lblSepDataRowFunctions = new Label(compositeDataColumn, SWT.SEPARATOR | SWT.HORIZONTAL | SWT.SHADOW_NONE);
+		Label lblSepDataRowFunctions = new Label(compositeDataColumn, SWT.SEPARATOR | SWT.HORIZONTAL);
 		lblSepDataRowFunctions.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		
@@ -1499,6 +1535,18 @@ public class MainWindow {
 			public void widgetSelected(SelectionEvent e) {
 				triggerDataAddPointList();
 			}
+		});
+		
+		Button btnDataColumnPointListStyle = new Button(compositeDataColumn, SWT.FLAT);
+		btnDataColumnPointListStyle.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		btnDataColumnPointListStyle.setToolTipText("Change style");
+		btnDataColumnPointListStyle.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/edit-16.png"));
+		btnDataColumnPointListStyle.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				triggerDataPointListCommonStyleToolbox();
+			}
+			
 		});
 		
 		// update the view (resize and reposition all elements correctly)
@@ -1657,7 +1705,7 @@ public class MainWindow {
 			}
 		});
 		
-		Button btnDRMStyle1 = new Button(grpDataRowMarkedpointsPointList, SWT.FLAT);
+		/*Button btnDRMStyle1 = new Button(grpDataRowMarkedpointsPointList, SWT.FLAT);
 		btnDRMStyle1.setToolTipText("Change style");
 		btnDRMStyle1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/edit-16.png"));
 		btnDRMStyle1.addSelectionListener(new SelectionAdapter() {
@@ -1665,7 +1713,7 @@ public class MainWindow {
 			public void widgetSelected(SelectionEvent e) {
 				triggerDataPointListStyleToolbox(grpDataRowMarkedpointsPointList);
 			}
-		});
+		});*/
 		
 		Composite compositeDRMlist1 = new Composite(grpDataRowMarkedpointsPointList, SWT.NONE);
 		compositeDRMlist1.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 2, 1));
@@ -2209,8 +2257,20 @@ public class MainWindow {
 		}
 		plotter.setFunctions(functions);
 		
-		//plotter.setPoints(null);
 		PointListList pl = new PointListList();
+		for(MarkedPointsList l : diagram.getMarkedPointLists()) {
+			List<de.tudresden.inf.gsvgplott.data.Point> points = l.getPoints();
+			
+			PointList list = pl.new PointList();
+			list.name = l.getTitle();
+			for(de.tudresden.inf.gsvgplott.data.Point p : points) {
+				tud.tangram.svgplot.coordinatesystem.Point tp = 
+						new tud.tangram.svgplot.coordinatesystem.Point(p.getX(), p.getY());
+				list.add(tp);
+			}
+			pl.add(list);
+		}
+		plotter.setPoints(pl);
 		
 		plotter.setTitle(diagram.getTitle());
 		
@@ -2219,7 +2279,26 @@ public class MainWindow {
 						(double)diagram.getSizeWidth(), 
 						(double)diagram.getSizeHeight()));
 		
-		//plotter.setIntegral(null);
+		//FIXME: Function selection may be faulty
+		if(diagram.getIntegral() != null) {
+			Function f1 = diagram.getIntegral().getBorder1();
+			int first = 0;
+			if(f1 != null) {
+				first = diagram.getFunctions().indexOf(f1);
+			}
+			Function f2 = diagram.getIntegral().getBorder2();
+			int second = first;
+			if(f2 != null) {
+				second = diagram.getFunctions().indexOf(f2);
+			}
+			plotter.setIntegral(new IntegralPlotSettings(
+					first, 
+					second, 
+					diagram.getIntegral().getTitle(), 
+					new Range(
+							diagram.getIntegral().getRangeFrom(), 
+							diagram.getIntegral().getRangeTo())));
+		}
 		
 		Range xrange = new Range(
 				(double)diagram.getXaxis().getRangeFrom(), 
@@ -2229,7 +2308,14 @@ public class MainWindow {
 		
 		plotter.setPi(diagram.getXaxis().isPiDivisioning());
 		
-		//plotter.setxLines(null);
+		String strHx = "";
+		List<Helpline> hx = diagram.getXaxis().getHelplines();
+		for(Helpline h : hx) {
+			strHx += String.valueOf(h.getIntersection()) + " ";
+		}
+		if(!strHx.isEmpty()) {
+			plotter.setxLines(strHx);
+		}
 		
 		Range yrange = new Range(
 				(double)diagram.getYaxis().getRangeFrom(),
@@ -2237,7 +2323,14 @@ public class MainWindow {
 				diagram.getYaxis().getTitle());
 		plotter.setyRange(yrange);
 		
-		//plotter.setyLines(null);
+		String strHy = "";
+		List<Helpline> hy = diagram.getYaxis().getHelplines();
+		for(Helpline h : hy) {
+			strHy += String.valueOf(h.getIntersection()) + " ";
+		}
+		if(!strHy.isEmpty()) {
+			plotter.setyLines(strHy);
+		}
 		
 		try {
 			plotter.create();

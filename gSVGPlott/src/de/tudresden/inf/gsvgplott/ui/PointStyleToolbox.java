@@ -321,6 +321,15 @@ public class PointStyleToolbox extends Dialog {
 		fillPointTypes();
 		fillColors();
 		initiateStyle();
+		
+		// make some controls invisible
+		Shell invisibleShell = new Shell();
+		lblScreenStyle.setParent(invisibleShell);
+		lblScreenStyleSelected.setParent(invisibleShell);
+		tableScreenPointStyle.setParent(invisibleShell);
+		lblPrintStyle.setParent(invisibleShell);
+		lblPrintStyleSelected.setParent(invisibleShell);
+		tablePrintPointStyle.setParent(invisibleShell);
 
 	}
 	
