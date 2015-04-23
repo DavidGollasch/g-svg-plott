@@ -16,8 +16,8 @@ import java.util.Map;
  */
 public final class LineTypePalette {
 	public static final String SOLID = new String("");
-	public static final String DOTTED = new String("5,5");
-	public static final String DASHED = new String("10,10");
+	public static final String DOTTED = new String("1,3");
+	public static final String DASHED = new String("5,5");
 //	public static final String LONGDASHED = new String("20,10");
 //	public static final String DASHDOTTED = new String("10,5,5,5");
 //	public static final String DASHDOUBLEDOTTED = new String("20,10,5,5,5,10");

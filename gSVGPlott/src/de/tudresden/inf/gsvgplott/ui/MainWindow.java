@@ -39,6 +39,7 @@ import de.tudresden.inf.gsvgplott.data.style.PointStyle;
 import de.tudresden.inf.gsvgplott.data.style.TextStyle;
 import de.tudresden.inf.gsvgplott.data.style.palettes.ColorPalette;
 import de.tudresden.inf.gsvgplott.ui.util.RenderMode;
+import de.tudresden.inf.gsvgplott.ui.util.SvgPlotHelper;
 
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.layout.FillLayout;
@@ -190,6 +191,16 @@ public class MainWindow {
 		// initialize data object and prepare view
 		this.operateResetDiagram();
 		
+		Runnable previewtimer = new Runnable() {
+			
+			@Override
+			public void run() {
+				operateGeneratePreview();
+				display.timerExec(3000, this);
+			}
+		};
+		display.timerExec(3000, previewtimer);
+		
 		shlGsvgplott.open();
 		shlGsvgplott.layout();
 		while (!shlGsvgplott.isDisposed()) {
@@ -204,6 +215,7 @@ public class MainWindow {
 	 */
 	protected void createContents() {
 		shlGsvgplott = new Shell();
+		shlGsvgplott.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/gSVGPlottIcon.png"));
 		shlGsvgplott.setSize(new Point(1131, 650));
 		shlGsvgplott.setMinimumSize(new Point(500, 400));
 		shlGsvgplott.setText(MainWindow.APP_NAME);
@@ -2040,13 +2052,22 @@ public class MainWindow {
 		Map<String, String> previewScreen = operateFireSVGPlott(RenderMode.UNISCREEN, true);
 		Map<String, String> previewPrint = operateFireSVGPlott(RenderMode.UNIPRINT, true);
 		
-		this.browserPreviewScreenViewGraph.setText(previewScreen.get("document"));
-		this.browserPreviewScreenViewDescription.setText(previewScreen.get("description"));
-		this.browserPreviewScreenViewLegend.setText(previewScreen.get("legend"));
+		if(!browserPreviewScreenViewGraph.getText().equals(previewScreen.get("document")))
+			this.browserPreviewScreenViewGraph.setText(previewScreen.get("document"));
+		if(!browserPreviewScreenViewDescription.getText().equals(previewScreen.get("description")))
+			this.browserPreviewScreenViewDescription.setText(previewScreen.get("description"));
+		if(!browserPreviewScreenViewLegend.getText().equals(previewScreen.get("legend")))
+			this.browserPreviewScreenViewLegend.setText(previewScreen.get("legend"));
 		
-		this.browserPreviewPrintViewGraph.setText(previewPrint.get("document"));
-		this.browserPreviewPrintViewDescription.setText(previewPrint.get("description"));
-		this.browserPreviewPrintViewLegend.setText(previewPrint.get("legend"));
+		if(!browserPreviewPrintViewGraph.getText().equals(previewPrint.get("document")))
+			this.browserPreviewPrintViewGraph.setText(previewPrint.get("document"));
+		if(!browserPreviewPrintViewDescription.getText().equals(previewPrint.get("description")))
+			this.browserPreviewPrintViewDescription.setText(previewPrint.get("description"));
+		if(!browserPreviewPrintViewLegend.getText().equals(previewPrint.get("legend")))
+			this.browserPreviewPrintViewLegend.setText(previewPrint.get("legend"));
+		
+		//for testing purposes only:
+		//System.out.println(previewPrint.get("document"));
 	}
 	
 	/**
@@ -2235,13 +2256,33 @@ public class MainWindow {
 		// Set all variables
 		
 		//TODO: generate CSS for SVGPlott
-		String css = "";
+		String css = SvgPlotHelper.generateCss(diagram);
+		
+		String modifierM = "svg";
+		Map<String, String> modifierV = new HashMap<String, String>();
+		modifierV.put("-ms-transform-origin","0 0");
+		modifierV.put("-moz-transform-origin","0 0");
+		modifierV.put("-webkit-transform-origin","0 0");
+		modifierV.put("-o-transform-origin","0 0");
+		modifierV.put("transform-origin","0 0");
+		modifierV.put("-ms-transform","scale(0.5)");
+		modifierV.put("-moz-transform","scale(0.5)");
+		modifierV.put("-webkit-transform","scale(0.5)");
+		modifierV.put("-o-transform","scale(0.5)");
+		modifierV.put("transform","scale(0.5)");
+		String mofivierMV = SvgPlotHelper.formatBlock(modifierM, modifierV);
 		switch (mode) {
 		case DEFAULT:
+			// do nothing special here
 			break;
 		case UNIPRINT:
+			// create preview for print view
+			css = css.replace("@media print", "@media screen");
+			css = mofivierMV + css;
 			break;
 		case UNISCREEN:
+			// create preview for screen view
+			css = mofivierMV + css;
 			break;
 		default:
 			break;
