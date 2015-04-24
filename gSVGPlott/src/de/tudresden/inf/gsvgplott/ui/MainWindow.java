@@ -738,15 +738,6 @@ public class MainWindow {
 		Menu menu_1 = new Menu(mntmExtrasStyle);
 		mntmExtrasStyle.setMenu(menu_1);
 		
-		MenuItem mntmExtrasStyleStyleManager = new MenuItem(menu_1, SWT.NONE);
-		mntmExtrasStyleStyleManager.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				triggerMenuStyleManager();
-			}
-		});
-		mntmExtrasStyleStyleManager.setText("Style Manager...");
-		
 		MenuItem mntmExtrasStyleStoreStyle = new MenuItem(menu_1, SWT.NONE);
 		mntmExtrasStyleStoreStyle.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -755,6 +746,15 @@ public class MainWindow {
 			}
 		});
 		mntmExtrasStyleStoreStyle.setText("Store Style");
+		
+		MenuItem mntmExtrasStyleLoadStyle = new MenuItem(menu_1, SWT.NONE);
+		mntmExtrasStyleLoadStyle.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				triggerMenuLoadStyle();
+			}
+		});
+		mntmExtrasStyleLoadStyle.setText("Load Style");
 		
 		MenuItem mntmExtrasStyleResetAll = new MenuItem(menu_1, SWT.NONE);
 		mntmExtrasStyleResetAll.addSelectionListener(new SelectionAdapter() {
@@ -1450,21 +1450,61 @@ public class MainWindow {
 	}
 	
 	/**
-	 * Open Style Manager
-	 */
-	protected void triggerMenuStyleManager() {
-		StyleManagerDialog sd = new StyleManagerDialog(shlGsvgplott, 0);
-		sd.open();
-	}
-	
-	/**
 	 * Store current style
 	 */
 	protected void triggerMenuStoreStyle() {
-		StoreStyleDialog sd = new StoreStyleDialog(shlGsvgplott, 0);
-		sd.open();
+		/*StoreStyleDialog sd = new StoreStyleDialog(shlGsvgplott, 0);
+		sd.open();*/
+		
+		FileDialog fd = new FileDialog(shlGsvgplott, SWT.SAVE);
+        fd.setText("Store Style");
+        //fd.setFilterPath("C:/");
+        String[] filterExt = { "*.gss", "*.xml", "*.*" };
+        fd.setFilterExtensions(filterExt);
+        String selected = fd.open();
+        
+		if(selected == null || selected.isEmpty())
+			return;
+		
+		try {
+			PersistanceHelper.storeStyleToFile(diagram, selected);
+		} catch (Exception e) {
+			MessageBox b = new MessageBox(shlGsvgplott);
+			b.setText("Saving Error");
+			b.setMessage("The style cannot be stored correctly.");
+			b.open();
+		}
 	}
 	
+	/**
+	 * Load Style
+	 */
+	protected void triggerMenuLoadStyle() {
+		/*StyleManagerDialog sd = new StyleManagerDialog(shlGsvgplott, 0);
+		sd.open();*/
+		
+		FileDialog fd = new FileDialog(shlGsvgplott, SWT.OPEN);
+        fd.setText("Load Style");
+        //fd.setFilterPath("C:/");
+        String[] filterExt = { "*.gss", "*.xml", "*.*" };
+        fd.setFilterExtensions(filterExt);
+        String selected = fd.open();
+        
+        if(selected == null || selected.isEmpty()) {
+        	return;
+        }
+        
+        try {
+			Diagram opened = PersistanceHelper.loadStyleFromFile(selected);
+			PersistanceHelper.applyStyleToDiagram(diagram, opened);
+		} catch (Exception e) {
+			MessageBox b = new MessageBox(shlGsvgplott);
+			b.setText("Opening Error");
+			b.setMessage("The selected file cannot be opened as a style setting.");
+			b.open();
+		}
+	}
+
 	/**
 	 * Reset Style
 	 */
@@ -1473,6 +1513,8 @@ public class MainWindow {
 		diagram.setBackgroundPrintStyle(null);
 		diagram.setTextScreenStyle(null);
 		diagram.setTextPrintStyle(null);
+		diagram.setGridScreenStyle(null);
+		diagram.setGridPrintStyle(null);
 		
 		diagram.setOverrideStyle(null);
 		
