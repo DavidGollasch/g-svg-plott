@@ -7,7 +7,9 @@ package de.tudresden.inf.gsvgplott.ui;
  */
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -191,6 +193,7 @@ public class MainWindow {
 		// initialize data object and prepare view
 		this.operateResetDiagram();
 		
+		// timer to update preview regularly
 		Runnable previewtimer = new Runnable() {
 			
 			@Override
@@ -1323,17 +1326,44 @@ public class MainWindow {
 	 * Export project
 	 */
 	protected void triggerExport() {
-		/*FileDialog fd = new FileDialog(shlGsvgplott, SWT.SAVE);
+		FileDialog fd = new FileDialog(shlGsvgplott, SWT.SAVE);
         fd.setText("Export");
         //fd.setFilterPath("C:/");
-        String[] filterExt = { "*.svg", "*.xml", "*.*" };
+        String[] filterExt = { "*.*" };
         fd.setFilterExtensions(filterExt);
         String selected = fd.open();
         
-		//TODO: export file
-        System.out.println(selected);*/
+        if(selected == null || selected.isEmpty())
+        	return;
+        
+        String graph, legend, description;
+        Map<String, String> output = operateFireSVGPlott(RenderMode.DEFAULT, false);
+        graph = output.get("document");
+        legend = output.get("legend");
+        description = output.get("description");
+        
+		try {
+			PrintWriter outGraph = new PrintWriter(selected + "_graph.svg");
+			PrintWriter outLegend = new PrintWriter(selected + "_legend.svg");
+			PrintWriter outDescription = new PrintWriter(selected + "_description.htm");
+			
+			outGraph.println(graph);
+			outLegend.println(legend);
+			outDescription.println(description);
+			
+			outGraph.flush();
+			outGraph.close();
+			outLegend.flush();
+			outLegend.close();
+			outDescription.flush();
+			outDescription.close();
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 		
-		operateGeneratePreview();
+        //System.out.println(selected);
+		//operateGeneratePreview();
 		
 	}
 
@@ -2320,7 +2350,7 @@ public class MainWindow {
 						(double)diagram.getSizeWidth(), 
 						(double)diagram.getSizeHeight()));
 		
-		//FIXME: Function selection may be faulty
+		//FIXME: Function selection might by faulty
 		if(diagram.getIntegral() != null) {
 			Function f1 = diagram.getIntegral().getBorder1();
 			int first = 0;

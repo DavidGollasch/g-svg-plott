@@ -8,7 +8,6 @@ package de.tudresden.inf.gsvgplott.ui.util;
  *
  */
 public enum RenderMode {
-
 	DEFAULT,
 	UNISCREEN,
 	UNIPRINT
