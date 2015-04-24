@@ -9,7 +9,13 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.io.Reader;
 import java.util.List;
+
+import com.thoughtworks.xstream.XStream;
 
 import de.tudresden.inf.gsvgplott.data.Diagram;
 import de.tudresden.inf.gsvgplott.data.Function;
@@ -26,9 +32,17 @@ public class PersistanceHelper {
 	 * @param filename
 	 */
 	public static void storeDiagramToFile(Diagram diagram, String filename) throws Exception {
-		XMLEncoder encoder = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(filename)));
+		/*XMLEncoder encoder = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(filename)));
 		encoder.writeObject(diagram);
-		encoder.close();
+		encoder.close();*/
+		
+		XStream stream = new XStream();
+		String xml = stream.toXML(diagram);
+		
+		PrintWriter writer = new PrintWriter(filename);
+		writer.println(xml);
+		writer.flush();
+		writer.close();
 	}
 	
 	/**
@@ -37,13 +51,20 @@ public class PersistanceHelper {
 	 * @param filename
 	 * @return
 	 */
-	public static boolean storeStyleToFile(Diagram style, String filename) throws Exception {
+	public static void storeStyleToFile(Diagram style, String filename) throws Exception {
 		//consider removing data here later on
 		
-		XMLEncoder encoder = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(filename)));
+		/*XMLEncoder encoder = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(filename)));
 		encoder.writeObject(style);
-		encoder.close();
-		return true;
+		encoder.close();*/
+		
+		XStream stream = new XStream();
+		String xml = stream.toXML(style);
+		
+		PrintWriter writer = new PrintWriter(filename);
+		writer.println(xml);
+		writer.flush();
+		writer.close();
 	}
 	
 	/**
@@ -53,17 +74,25 @@ public class PersistanceHelper {
 	 * @throws Exception
 	 */
 	public static Diagram loadDiagramFromFile(String filename) throws Exception {
-		XMLDecoder decoder = new XMLDecoder(new BufferedInputStream(new FileInputStream(filename)));
+		/*XMLDecoder decoder = new XMLDecoder(new BufferedInputStream(new FileInputStream(filename)));
 	    Diagram o = (Diagram)decoder.readObject();
 	    decoder.close();
-	    return o;
+	    return o;*/
+		
+		XStream stream = new XStream();
+		Diagram o = (Diagram)stream.fromXML(new FileInputStream(filename));
+		return o;
 	}
 	
 	public static Diagram loadStyleFromFile(String filename) throws Exception {
-		XMLDecoder decoder = new XMLDecoder(new BufferedInputStream(new FileInputStream(filename)));
+		/*XMLDecoder decoder = new XMLDecoder(new BufferedInputStream(new FileInputStream(filename)));
 	    Diagram o = (Diagram)decoder.readObject();
 	    decoder.close();
-	    return o;
+	    return o;*/
+	    
+	    XStream stream = new XStream();
+		Diagram o = (Diagram)stream.fromXML(new FileInputStream(filename));
+		return o;
 	}
 	
 	/**

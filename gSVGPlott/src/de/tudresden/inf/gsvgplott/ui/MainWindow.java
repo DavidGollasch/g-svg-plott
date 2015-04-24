@@ -40,6 +40,7 @@ import de.tudresden.inf.gsvgplott.data.style.OverrideStyle;
 import de.tudresden.inf.gsvgplott.data.style.PointStyle;
 import de.tudresden.inf.gsvgplott.data.style.TextStyle;
 import de.tudresden.inf.gsvgplott.data.style.palettes.ColorPalette;
+import de.tudresden.inf.gsvgplott.ui.util.PersistanceHelper;
 import de.tudresden.inf.gsvgplott.ui.util.RenderMode;
 import de.tudresden.inf.gsvgplott.ui.util.SvgPlotHelper;
 
@@ -93,6 +94,7 @@ public class MainWindow {
 	 * The diagram object holds all data to be processed
 	 */
 	private Diagram diagram;
+	private String filename;
 	
 	/**
 	 * List of all functions as Group widgets
@@ -1371,6 +1373,7 @@ public class MainWindow {
 	 * Create new file
 	 */
 	protected void triggerMenuNew() {
+		filename = "";
 		operateResetDiagram();
 	}
 	
@@ -1385,18 +1388,39 @@ public class MainWindow {
         fd.setFilterExtensions(filterExt);
         String selected = fd.open();
         
-        //TODO: actually open the file, parse data, update view and diagram object
-        System.out.println(selected);
+        if(selected == null || selected.isEmpty()) {
+        	return;
+        }
+        
+        try {
+			Diagram opened = PersistanceHelper.loadDiagramFromFile(selected);
+			diagram = opened;
+			operateUpdateByDiagramObject(diagram);
+			filename = selected;
+		} catch (Exception e) {
+			MessageBox b = new MessageBox(shlGsvgplott);
+			b.setText("Opening Error");
+			b.setMessage("The selected file cannot be opened as a diagram.");
+			b.open();
+		}
 	}
 	
 	/**
 	 * Save file
 	 */
 	protected void triggerMenuSave() {
-        
-		//TODO: save file if file name already known
+		if(filename == null || filename.isEmpty()) {
+			triggerMenuSaveAs();
+		}
 		
-		triggerMenuSaveAs();
+		try {
+			PersistanceHelper.storeDiagramToFile(diagram, filename);
+		} catch (Exception e) {
+			MessageBox b = new MessageBox(shlGsvgplott);
+			b.setText("Saving Error");
+			b.setMessage("The diagram cannot be stored correctly.");
+			b.open();
+		}
 	}
 	
 	/**
@@ -1410,8 +1434,19 @@ public class MainWindow {
         fd.setFilterExtensions(filterExt);
         String selected = fd.open();
         
-		//TODO: save file as
-        System.out.println(selected);
+		if(selected == null || selected.isEmpty())
+			return;
+		
+		try {
+			PersistanceHelper.storeDiagramToFile(diagram, selected);
+			filename = selected;
+		} catch (Exception e) {
+			MessageBox b = new MessageBox(shlGsvgplott);
+			b.setText("Saving Error");
+			b.setMessage("The diagram cannot be stored correctly.");
+			b.open();
+		}
+		
 	}
 	
 	/**
