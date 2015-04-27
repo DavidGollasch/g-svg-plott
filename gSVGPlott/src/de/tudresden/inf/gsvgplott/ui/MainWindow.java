@@ -21,7 +21,6 @@ import java.util.Map.Entry;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
-import org.eclipse.jface.window.ApplicationWindow;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.graphics.Point;
@@ -41,11 +40,13 @@ import de.tudresden.inf.gsvgplott.data.style.LineStyle;
 import de.tudresden.inf.gsvgplott.data.style.OverrideStyle;
 import de.tudresden.inf.gsvgplott.data.style.PointStyle;
 import de.tudresden.inf.gsvgplott.data.style.TextStyle;
-import de.tudresden.inf.gsvgplott.data.style.palettes.ColorPalette;
 import de.tudresden.inf.gsvgplott.ui.util.PersistanceHelper;
 import de.tudresden.inf.gsvgplott.ui.util.RenderMode;
 import de.tudresden.inf.gsvgplott.ui.util.SvgPlotHelper;
 
+import org.eclipse.swt.accessibility.AccessibleAdapter;
+import org.eclipse.swt.accessibility.AccessibleEvent;
+import org.eclipse.swt.accessibility.AccessibleListener;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridLayout;
@@ -72,7 +73,6 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.w3c.dom.DOMException;
 
 import tud.tangram.svgplot.SvgPlot;
@@ -274,6 +274,11 @@ public class MainWindow {
 				triggerOptionsGeneralTitleChanged();
 			}
 		});
+		txtPoGeneralTitle.getAccessible().addAccessibleListener(new AccessibleAdapter() {
+			public void getName(AccessibleEvent e) {
+				e.result = DICT.getString("MainWindow.txtPoGeneralTitle.access");
+			}
+		});
 		
 		txtPoGeneralTitle.setToolTipText(DICT.getString("MainWindow.txtPoGeneralTitle.toolTipText")); //$NON-NLS-1$
 		txtPoGeneralTitle.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
@@ -283,6 +288,11 @@ public class MainWindow {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				triggerOptionsGeneralStyleToolbox();
+			}
+		});
+		btnPlotoptionsGeneralStyle.getAccessible().addAccessibleListener(new AccessibleAdapter() {
+			public void getName(AccessibleEvent e) {
+				e.result = DICT.getString("MainWindow.btnPlotoptionsGeneralStyle.access");
 			}
 		});
 		btnPlotoptionsGeneralStyle.setToolTipText(DICT.getString("MainWindow.btnPlotoptionsGeneralStyle.toolTipText")); //$NON-NLS-1$
@@ -295,6 +305,11 @@ public class MainWindow {
 		spinnerPoGeneralWidth.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent arg0) {
 				triggerOptionsGeneralSizeWidthChanged();
+			}
+		});
+		spinnerPoGeneralWidth.getAccessible().addAccessibleListener(new AccessibleAdapter() {
+			public void getName(AccessibleEvent e) {
+				e.result = DICT.getString("MainWindow.spinnerPoGeneralWidth.access");
 			}
 		});
 		spinnerPoGeneralWidth.setToolTipText(DICT.getString("MainWindow.spinnerPoGeneralWidth.toolTipText")); //$NON-NLS-1$
@@ -310,6 +325,11 @@ public class MainWindow {
 		spinnerPoGeneralHeight.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent arg0) {
 				triggerOptionsGeneralSizeHeightChanged();
+			}
+		});
+		spinnerPoGeneralHeight.getAccessible().addAccessibleListener(new AccessibleAdapter() {
+			public void getName(AccessibleEvent e) {
+				e.result = DICT.getString("MainWindow.spinnerPoGeneralHeight.access");
 			}
 		});
 		spinnerPoGeneralHeight.setToolTipText(DICT.getString("MainWindow.spinnerPoGeneralHeight.toolTipText")); //$NON-NLS-1$
@@ -349,6 +369,11 @@ public class MainWindow {
 				triggerOptionsXaxisTitleChanged();
 			}
 		});
+		txtPoXaxisTitle.getAccessible().addAccessibleListener(new AccessibleAdapter() {
+			public void getName(AccessibleEvent e) {
+				e.result = DICT.getString("MainWindow.txtPoXaxisTitle.access");
+			}
+		});
 		txtPoXaxisTitle.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		txtPoXaxisTitle.setToolTipText(DICT.getString("MainWindow.txtPoXaxisTitle.toolTipText")); //$NON-NLS-1$
 		
@@ -357,6 +382,11 @@ public class MainWindow {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				triggerOptionsXaxisStyleToolbox();
+			}
+		});
+		btnPlotoptionsXAxisStyle.getAccessible().addAccessibleListener(new AccessibleAdapter() {
+			public void getName(AccessibleEvent e) {
+				e.result = DICT.getString("MainWindow.btnPlotoptionsXAxisStyle.access");
 			}
 		});
 		btnPlotoptionsXAxisStyle.setToolTipText(DICT.getString("MainWindow.btnPlotoptionsXAxisStyle.toolTipText")); //$NON-NLS-1$
@@ -371,6 +401,11 @@ public class MainWindow {
 				triggerOptionsXaxisRangeFromChanged();
 			}
 		});
+		spinnerPoXaxisRangeFrom.getAccessible().addAccessibleListener(new AccessibleAdapter() {
+			public void getName(AccessibleEvent e) {
+				e.result = DICT.getString("MainWindow.spinnerPoXaxisRangeFrom.access");
+			}
+		});
 		spinnerPoXaxisRangeFrom.setMaximum(99999);
 		spinnerPoXaxisRangeFrom.setMinimum(-99999);
 		
@@ -381,6 +416,11 @@ public class MainWindow {
 		spinnerPoXaxisRangeTo.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent arg0) {
 				triggerOptionsXaxisRangeToChanged();
+			}
+		});
+		spinnerPoXaxisRangeTo.getAccessible().addAccessibleListener(new AccessibleAdapter() {
+			public void getName(AccessibleEvent e) {
+				e.result = DICT.getString("MainWindow.spinnerPoXaxisRangeTo.access");
 			}
 		});
 		spinnerPoXaxisRangeTo.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
@@ -409,6 +449,11 @@ public class MainWindow {
 				triggerOptionsXaxisHelplinesChanged();
 			}
 		});
+		txtPoXaxisHelplines.getAccessible().addAccessibleListener(new AccessibleAdapter() {
+			public void getName(AccessibleEvent e) {
+				e.result = DICT.getString("MainWindow.txtPoXaxisHelplines.access");
+			}
+		});
 		txtPoXaxisHelplines.setToolTipText(DICT.getString("MainWindow.txtPoXaxisHelplines.toolTipText")); //$NON-NLS-1$
 		txtPoXaxisHelplines.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		
@@ -417,6 +462,11 @@ public class MainWindow {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				triggerOptionsXaxisHelplineStyleToolbox();
+			}
+		});
+		btnPlotoptionsXAxisHelplineStyle.getAccessible().addAccessibleListener(new AccessibleAdapter() {
+			public void getName(AccessibleEvent e) {
+				e.result = DICT.getString("MainWindow.btnPlotoptionsXAxisHelplineStyle.access");
 			}
 		});
 		btnPlotoptionsXAxisHelplineStyle.setToolTipText(DICT.getString("MainWindow.btnPlotoptionsXAxisHelplineStyle.toolTipText")); //$NON-NLS-1$
@@ -436,6 +486,11 @@ public class MainWindow {
 				triggerOptionsYaxisTitleChanged();
 			}
 		});
+		txtPoYaxisTitle.getAccessible().addAccessibleListener(new AccessibleAdapter() {
+			public void getName(AccessibleEvent e) {
+				e.result = DICT.getString("MainWindow.txtPoYaxisTitle.access");
+			}
+		});
 		txtPoYaxisTitle.setToolTipText(DICT.getString("MainWindow.txtPoYaxisTitle.toolTipText")); //$NON-NLS-1$
 		txtPoYaxisTitle.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		
@@ -444,6 +499,11 @@ public class MainWindow {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				triggerOptionsYaxisStyleToolbox();
+			}
+		});
+		btnPlotoptionsYAxisStyle.getAccessible().addAccessibleListener(new AccessibleAdapter() {
+			public void getName(AccessibleEvent e) {
+				e.result = DICT.getString("MainWindow.btnPlotoptionsYAxisStyle.access");
 			}
 		});
 		btnPlotoptionsYAxisStyle.setToolTipText(DICT.getString("MainWindow.btnPlotoptionsYAxisStyle.toolTipText")); //$NON-NLS-1$
@@ -458,6 +518,11 @@ public class MainWindow {
 				triggerOptionsYaxisRangeFromChanged();
 			}
 		});
+		spinnerPoYaxisRangeFrom.getAccessible().addAccessibleListener(new AccessibleAdapter() {
+			public void getName(AccessibleEvent e) {
+				e.result = DICT.getString("MainWindow.spinnerPoYaxisRangeFrom.access");
+			}
+		});
 		spinnerPoYaxisRangeFrom.setMaximum(99999);
 		spinnerPoYaxisRangeFrom.setMinimum(-99999);
 		
@@ -468,6 +533,11 @@ public class MainWindow {
 		spinnerPoYaxisRangeTo.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent arg0) {
 				triggerOptionsYaxisRangeToChanged();
+			}
+		});
+		spinnerPoYaxisRangeTo.getAccessible().addAccessibleListener(new AccessibleAdapter() {
+			public void getName(AccessibleEvent e) {
+				e.result = DICT.getString("MainWindow.spinnerPoYaxisRangeTo.access");
 			}
 		});
 		spinnerPoYaxisRangeTo.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
@@ -483,6 +553,11 @@ public class MainWindow {
 				triggerOptionsYaxisHelplinesChanged();
 			}
 		});
+		txtPoYaxisHelplines.getAccessible().addAccessibleListener(new AccessibleAdapter() {
+			public void getName(AccessibleEvent e) {
+				e.result = DICT.getString("MainWindow.txtPoYaxisHelplines.access");
+			}
+		});
 		txtPoYaxisHelplines.setToolTipText(DICT.getString("MainWindow.txtPoYaxisHelplines.toolTipText")); //$NON-NLS-1$
 		txtPoYaxisHelplines.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		
@@ -491,6 +566,11 @@ public class MainWindow {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				triggerOptionsYaxisHelplineStyleToolbox();
+			}
+		});
+		btnPlotoptionsYAxisHelplineStyle.getAccessible().addAccessibleListener(new AccessibleAdapter() {
+			public void getName(AccessibleEvent e) {
+				e.result = DICT.getString("MainWindow.btnPlotoptionsYAxisHelplineStyle.access");
 			}
 		});
 		btnPlotoptionsYAxisHelplineStyle.setToolTipText(DICT.getString("MainWindow.btnPlotoptionsYAxisHelplineStyle.toolTipText")); //$NON-NLS-1$
@@ -510,6 +590,11 @@ public class MainWindow {
 				triggerOptionsIntegralTitleChanged();
 			}
 		});
+		txtPoIntegralTitle.getAccessible().addAccessibleListener(new AccessibleAdapter() {
+			public void getName(AccessibleEvent e) {
+				e.result = DICT.getString("MainWindow.txtPoIntegralTitle.access");
+			}
+		});
 		txtPoIntegralTitle.setToolTipText(DICT.getString("MainWindow.txtPoIntegralTitle.toolTipText")); //$NON-NLS-1$
 		txtPoIntegralTitle.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		
@@ -518,6 +603,11 @@ public class MainWindow {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				triggerOptionsIntegralStyleToolbox();
+			}
+		});
+		btnPlotoptionsIntegralStyle.getAccessible().addAccessibleListener(new AccessibleAdapter() {
+			public void getName(AccessibleEvent e) {
+				e.result = DICT.getString("MainWindow.btnPlotoptionsIntegralStyle.access");
 			}
 		});
 		btnPlotoptionsIntegralStyle.setToolTipText(DICT.getString("MainWindow.btnPlotoptionsIntegralStyle.toolTipText")); //$NON-NLS-1$
@@ -532,6 +622,11 @@ public class MainWindow {
 				triggerOptionsIntegralRangeFromChanged();
 			}
 		});
+		spinnerPoIntegralRangeFrom.getAccessible().addAccessibleListener(new AccessibleAdapter() {
+			public void getName(AccessibleEvent e) {
+				e.result = DICT.getString("MainWindow.spinnerPoIntegralRangeFrom.access");
+			}
+		});
 		spinnerPoIntegralRangeFrom.setIncrement(1000);
 		spinnerPoIntegralRangeFrom.setDigits(3);
 		spinnerPoIntegralRangeFrom.setMaximum(99999);
@@ -544,6 +639,11 @@ public class MainWindow {
 		spinnerPoIntegralRangeTo.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent arg0) {
 				triggerOptionsIntegralRangeToChanged();
+			}
+		});
+		spinnerPoIntegralRangeTo.getAccessible().addAccessibleListener(new AccessibleAdapter() {
+			public void getName(AccessibleEvent e) {
+				e.result = DICT.getString("MainWondow.spinnerPoIntegralRangeTo.access");
 			}
 		});
 		spinnerPoIntegralRangeTo.setIncrement(1000);
@@ -561,6 +661,11 @@ public class MainWindow {
 				triggerOptionsIntegralBroderingFromChanged();
 			}
 		});
+		comboPoIntegralBorderingFrom.getAccessible().addAccessibleListener(new AccessibleAdapter() {
+			public void getName(AccessibleEvent e) {
+				e.result = DICT.getString("MainWindow.comboPoIntegralBorderingFrom.access");
+			}
+		});
 		comboPoIntegralBorderingFrom.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		comboPoIntegralBorderingFrom.setItems(new String[] {});
 		
@@ -571,6 +676,11 @@ public class MainWindow {
 		comboPoIntegralBorderingTo.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent arg0) {
 				triggerOptionsIntegralBorderingToChanged();
+			}
+		});
+		comboPoIntegralBorderingTo.getAccessible().addAccessibleListener(new AccessibleAdapter() {
+			public void getName(AccessibleEvent e) {
+				e.result = DICT.getString("MainWondow.comboPoIntegralBorderingTo.access");
 			}
 		});
 		comboPoIntegralBorderingTo.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
@@ -683,7 +793,7 @@ public class MainWindow {
 		
 		scrolledCompositePreviewoutputColumn.setContent(compositePreviewOutputColumn);
 		scrolledCompositePreviewoutputColumn.setMinSize(compositePreviewOutputColumn.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-		sashTopLevelColumns.setWeights(new int[] {2, 2, 3});
+		sashTopLevelColumns.setWeights(new int[] {9, 10, 12});
 		
 		Menu menu = new Menu(shlGsvgplott, SWT.BAR);
 		shlGsvgplott.setMenuBar(menu);
@@ -1646,6 +1756,11 @@ public class MainWindow {
 			}
 			
 		});
+		btnDataColumnPointListStyle.getAccessible().addAccessibleListener(new AccessibleAdapter() {
+			public void getName(AccessibleEvent e) {
+				e.result = DICT.getString("MainWindow.btnDataColumnPointListStyle.access");
+			}
+		});
 		
 		// update the view (resize and reposition all elements correctly)
 		this.compositeDataColumn.layout();
@@ -1682,6 +1797,11 @@ public class MainWindow {
 				f.setTitle(title);
 			}
 		});
+		txtDRFTitle1.getAccessible().addAccessibleListener(new AccessibleAdapter() {
+			public void getName(AccessibleEvent e) {
+				e.result = DICT.getString("MainWindow.txtDRFTitle1.access") + " (" + name + ")";
+			}
+		});
 		
 		Button btnDRFStyle1 = new Button(grpDataRowFunction1, SWT.FLAT);
 		btnDRFStyle1.setToolTipText(DICT.getString("MainWindow.btnDRFStyle1.toolTipText"));
@@ -1690,6 +1810,11 @@ public class MainWindow {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				triggerDataFunctionStyleToolbox(grpDataRowFunction1);
+			}
+		});
+		btnDRFStyle1.getAccessible().addAccessibleListener(new AccessibleAdapter() {
+			public void getName(AccessibleEvent e) {
+				e.result = DICT.getString("MainWindow.btnDRFStyle1.access") + " (" + name + ")";
 			}
 		});
 		
@@ -1713,6 +1838,11 @@ public class MainWindow {
 				
 			}
 		});
+		txtDRFfunc1.getAccessible().addAccessibleListener(new AccessibleAdapter() {
+			public void getName(AccessibleEvent e) {
+				e.result = DICT.getString("MainWindow.txtDRFfunc1.access") + " (" + name + ")";
+			}
+		});
 		
 		Composite compositeDRFControls1 = new Composite(grpDataRowFunction1, SWT.NONE);
 		GridLayout gl_compositeDRFControls1 = new GridLayout(3, false);
@@ -1733,6 +1863,11 @@ public class MainWindow {
 				triggerDataMoveUpFunction(grpDataRowFunction1);
 			}
 		});
+		btnDRFMoveUp1.getAccessible().addAccessibleListener(new AccessibleAdapter() {
+			public void getName(AccessibleEvent e) {
+				e.result = DICT.getString("MainWindow.btnDRFMoveUp1.access") + " (" + name + ")";
+			}
+		});
 		
 		Button btnDRFMoveDown1 = new Button(compositeDRFControls1, SWT.FLAT);
 		btnDRFMoveDown1.setToolTipText(DICT.getString("MainWindow.btnDRFMoveDown1.toolTipText"));
@@ -1742,6 +1877,11 @@ public class MainWindow {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				triggerDataMoveDownFunction(grpDataRowFunction1);
+			}
+		});
+		btnDRFMoveDown1.getAccessible().addAccessibleListener(new AccessibleAdapter() {
+			public void getName(AccessibleEvent e) {
+				e.result = DICT.getString("MainWindow.btnDRFMoveDown1.access") + " (" + name + ")";
 			}
 		});
 		
@@ -1756,6 +1896,11 @@ public class MainWindow {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				triggerDataRemoveFunction(grpDataRowFunction1);
+			}
+		});
+		btnDRFRemove1.getAccessible().addAccessibleListener(new AccessibleAdapter() {
+			public void getName(AccessibleEvent e) {
+				e.result = DICT.getString("MainWindow.btnDRFRemove1.access") + " (" + name + ")";
 			}
 		});
 		
@@ -1802,6 +1947,11 @@ public class MainWindow {
 				
 			}
 		});
+		txtDRMtitle1.getAccessible().addAccessibleListener(new AccessibleAdapter() {
+			public void getName(AccessibleEvent e) {
+				e.result = DICT.getString("MainWindow.txtDRMtitle1.access") + " (" + name + ")";
+			}
+		});
 		
 		/*Button btnDRMStyle1 = new Button(grpDataRowMarkedpointsPointList, SWT.FLAT);
 		btnDRMStyle1.setToolTipText("Change style");
@@ -1821,6 +1971,11 @@ public class MainWindow {
 		tableDRMlist1.setBounds(0, 0, 185, 64);
 		tableDRMlist1.setLinesVisible(true);
 		tableDRMlist1.setHeaderVisible(true);
+		tableDRMlist1.getAccessible().addAccessibleListener(new AccessibleAdapter() {
+			public void getName(AccessibleEvent e) {
+				e.result = DICT.getString("MainWindow.tableDRMlist1.access") + " (" + name + ")";
+			}
+		});
 		
 		TableColumn tblclmnDRMXValue1 = new TableColumn(tableDRMlist1, SWT.NONE);
 		tblclmnDRMXValue1.setWidth(75);
@@ -1853,6 +2008,11 @@ public class MainWindow {
 				triggerDataPointListAddPoint(tableDRMlist1);
 			}
 		});
+		btnDRMlistAdd1.getAccessible().addAccessibleListener(new AccessibleAdapter() {
+			public void getName(AccessibleEvent e) {
+				e.result = DICT.getString("MainWindow.btnDRMlistAdd1.access") + " (" + name + ")";
+			}
+		});
 		
 		Button btnDRMlistRemove1 = new Button(compositeDRMlistControls1, SWT.NONE);
 		btnDRMlistRemove1.setText(DICT.getString("MainWindow.btnDRMlistRemove1.text"));
@@ -1860,6 +2020,11 @@ public class MainWindow {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				triggerDataPointListRemovePoint(tableDRMlist1);
+			}
+		});
+		btnDRMlistRemove1.getAccessible().addAccessibleListener(new AccessibleAdapter() {
+			public void getName(AccessibleEvent e) {
+				e.result = DICT.getString("MainWindow.btnDRMlistRemove1.access") + " (" + name + ")";
 			}
 		});
 		
@@ -1881,6 +2046,11 @@ public class MainWindow {
 				triggerDataMoveUpPointList(grpDataRowMarkedpointsPointList);
 			}
 		});
+		btnDRMMoveUp1.getAccessible().addAccessibleListener(new AccessibleAdapter() {
+			public void getName(AccessibleEvent e) {
+				e.result = DICT.getString("MainWindow.btnDRMMoveUp1.access") + " (" + name + ")";
+			}
+		});
 		
 		Button btnDRMMoveDown1 = new Button(compositeDRMControls1, SWT.FLAT);
 		btnDRMMoveDown1.setToolTipText(DICT.getString("MainWindow.btnDRMMoveDown1.toolTipText"));
@@ -1889,6 +2059,11 @@ public class MainWindow {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				triggerDataMoveDownPointList(grpDataRowMarkedpointsPointList);
+			}
+		});
+		btnDRMMoveDown1.getAccessible().addAccessibleListener(new AccessibleAdapter() {
+			public void getName(AccessibleEvent e) {
+				e.result = DICT.getString("MainWindow.btnDRMMoveDown1.access") + " (" + name + ")";
 			}
 		});
 		
@@ -1903,6 +2078,11 @@ public class MainWindow {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				triggerDataRemovePointList(grpDataRowMarkedpointsPointList);
+			}
+		});
+		btnDRMRemove1.getAccessible().addAccessibleListener(new AccessibleAdapter() {
+			public void getName(AccessibleEvent e) {
+				e.result = DICT.getString("MainWindow.btnDRMRemove1.access") + " (" + name + ")";
 			}
 		});
 		
@@ -2329,6 +2509,10 @@ public class MainWindow {
 		
 	}
 	
+	protected void operateSetAccessabilityTexts() {
+		
+	}
+	
 	/**
 	 * Fire up the SVG Plotting
 	 * @param doc Graph document to write to
@@ -2341,7 +2525,6 @@ public class MainWindow {
 		
 		// Set all variables
 		
-		//TODO: generate CSS for SVGPlott
 		String css = SvgPlotHelper.generateCss(diagram);
 		
 		String modifierM = "svg";
@@ -2500,4 +2683,6 @@ public class MainWindow {
 		resultset.put("legend", strLegend);
 		return resultset;
 	}
+	
+	
 }
