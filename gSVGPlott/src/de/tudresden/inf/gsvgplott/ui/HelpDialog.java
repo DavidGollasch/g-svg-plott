@@ -10,6 +10,11 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.wb.swt.SWTResourceManager;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.net.URL;
 import java.util.ResourceBundle;
 
 public class HelpDialog extends Dialog {
@@ -55,7 +60,8 @@ public class HelpDialog extends Dialog {
 		shlHelp.setLayout(new GridLayout(1, false));
 		
 		Browser browser = new Browser(shlHelp, SWT.NONE);
-		browser.setUrl(DICT.getString("HelpDialog.browser.url")); //$NON-NLS-1$
+		URL url = HelpDialog.class.getResource("/de/tudresden/inf/gsvgplott/docs/Help_de.htm");
+		browser.setUrl(url.toString());
 		browser.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		Button btnClose = new Button(shlHelp, SWT.NONE);

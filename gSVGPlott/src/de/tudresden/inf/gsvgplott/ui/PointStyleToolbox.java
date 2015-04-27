@@ -218,7 +218,7 @@ public class PointStyleToolbox extends Dialog {
 		
 		CLabel lblScreenPx = new CLabel(compositeScreen, SWT.NONE);
 		lblScreenPx.setText(DICT.getString("PointStyleToolbox.lblScreenPx.text")); //$NON-NLS-1$
-		
+
 		CTabItem tbtmPrint = new CTabItem(tabFolder, SWT.NONE);
 		tbtmPrint.setText(DICT.getString("PointStyleToolbox.tbtmPrint.text")); //$NON-NLS-1$
 		
@@ -332,6 +332,12 @@ public class PointStyleToolbox extends Dialog {
 		lblPrintStyle.setParent(invisibleShell);
 		lblPrintStyleSelected.setParent(invisibleShell);
 		tablePrintPointStyle.setParent(invisibleShell);
+		lblScreenSize.setParent(invisibleShell);
+		lblScreenPx.setParent(invisibleShell);
+		spinnerScreenSize.setParent(invisibleShell);
+		lblPrintSize.setParent(invisibleShell);
+		lblPrintPx.setParent(invisibleShell);
+		spinnerPrintSize.setParent(invisibleShell);
 
 	}
 	
