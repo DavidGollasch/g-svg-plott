@@ -17,8 +17,10 @@ import de.tudresden.inf.gsvgplott.data.Point;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Control;
+import java.util.ResourceBundle;
 
 public class AddPointDialog extends Dialog {
+	private ResourceBundle DICT = ResourceBundle.getBundle("de.tudresden.inf.gsvgplott.ui.util.messages"); //$NON-NLS-1$
 
 	protected Object result;
 	protected Shell shlAddPoint;
@@ -37,7 +39,7 @@ public class AddPointDialog extends Dialog {
 	 */
 	public AddPointDialog(Shell parent, int style) {
 		super(parent, style);
-		setText("SWT Dialog");
+		setText(DICT.getString("AddPointDialog.this.text")); //$NON-NLS-1$
 		
 		//set object reference
 		point = null;
@@ -65,22 +67,22 @@ public class AddPointDialog extends Dialog {
 	 */
 	private void createContents() {
 		shlAddPoint = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
-		shlAddPoint.setSize(274, 117);
-		shlAddPoint.setText("Add Point");
+		shlAddPoint.setSize(344, 117);
+		shlAddPoint.setText(DICT.getString("AddPointDialog.shlAddPoint.text")); //$NON-NLS-1$
 		shlAddPoint.setLayout(new GridLayout(4, false));
 		
 		CLabel lblInsertAName = new CLabel(shlAddPoint, SWT.NONE);
 		lblInsertAName.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 4, 1));
-		lblInsertAName.setText("Insert point coordinates and click OK.");
+		lblInsertAName.setText(DICT.getString("AddPointDialog.lblInsertAName.text")); //$NON-NLS-1$
 		
 		CLabel lblX = new CLabel(shlAddPoint, SWT.NONE);
-		lblX.setText("X:");
+		lblX.setText(DICT.getString("AddPointDialog.lblX.text")); //$NON-NLS-1$
 		
 		txtX = new Text(shlAddPoint, SWT.BORDER);
 		txtX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		CLabel lblY = new CLabel(shlAddPoint, SWT.NONE);
-		lblY.setText("Y:");
+		lblY.setText(DICT.getString("AddPointDialog.lblY.text")); //$NON-NLS-1$
 		
 		txtY = new Text(shlAddPoint, SWT.BORDER);
 		txtY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -102,7 +104,7 @@ public class AddPointDialog extends Dialog {
 		GridData gd_btnOK = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_btnOK.widthHint = 70;
 		btnOK.setLayoutData(gd_btnOK);
-		btnOK.setText("OK");
+		btnOK.setText(DICT.getString("AddPointDialog.btnOK.text")); //$NON-NLS-1$
 		
 		Button btnCancel = new Button(composite, SWT.NONE);
 		btnCancel.addSelectionListener(new SelectionAdapter() {
@@ -113,9 +115,9 @@ public class AddPointDialog extends Dialog {
 			}
 		});
 		GridData gd_btnCancel = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_btnCancel.widthHint = 70;
+		gd_btnCancel.widthHint = 111;
 		btnCancel.setLayoutData(gd_btnCancel);
-		btnCancel.setText("Cancel");
+		btnCancel.setText(DICT.getString("AddPointDialog.btnCancel.text")); //$NON-NLS-1$
 		composite.setTabList(new Control[]{btnOK, btnCancel});
 		shlAddPoint.setTabList(new Control[]{lblInsertAName, lblX, txtX, lblY, txtY, composite});
 		

@@ -33,8 +33,10 @@ import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
+import java.util.ResourceBundle;
 
 public class GeneralStyleToolbox extends Dialog {
+	private ResourceBundle DICT = ResourceBundle.getBundle("de.tudresden.inf.gsvgplott.ui.util.messages"); //$NON-NLS-1$
 
 	protected Object result;
 	protected Shell shlToolbox;
@@ -67,7 +69,7 @@ public class GeneralStyleToolbox extends Dialog {
 			AreaStyle oldScreenAreaStyle, 
 			AreaStyle oldPrintAreaStyle) {
 		super(parent, SWT.BORDER | SWT.CLOSE);
-		setText("SWT Dialog");
+		setText(DICT.getString("GeneralStyleToolbox.this.text")); //$NON-NLS-1$
 		
 		// set references
 		screenTextStyle = oldScreenTextStyle;
@@ -109,7 +111,7 @@ public class GeneralStyleToolbox extends Dialog {
 	 */
 	private void createContents() {
 		shlToolbox = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.TOOL);
-		shlToolbox.setText("General Style");
+		shlToolbox.setText(DICT.getString("GeneralStyleToolbox.shlToolbox.text")); //$NON-NLS-1$
 		shlToolbox.setSize(209, 255);
 		shlToolbox.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
@@ -118,14 +120,14 @@ public class GeneralStyleToolbox extends Dialog {
 		tabFolder.setSelectionBackground(Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT));
 		
 		CTabItem tbtmScreen = new CTabItem(tabFolder, SWT.NONE);
-		tbtmScreen.setText("Screen");
+		tbtmScreen.setText(DICT.getString("GeneralStyleToolbox.tbtmScreen.text")); //$NON-NLS-1$
 		
 		Composite compositeScreen = new Composite(tabFolder, SWT.NONE);
 		tbtmScreen.setControl(compositeScreen);
 		compositeScreen.setLayout(new GridLayout(2, false));
 		
 		CLabel lblScreenFont = new CLabel(compositeScreen, SWT.NONE);
-		lblScreenFont.setText("Font");
+		lblScreenFont.setText(DICT.getString("GeneralStyleToolbox.lblScreenFont.text")); //$NON-NLS-1$
 		
 		Button btnScreenFont = new Button(compositeScreen, SWT.NONE);
 		btnScreenFont.addSelectionListener(new SelectionAdapter() {
@@ -169,18 +171,18 @@ public class GeneralStyleToolbox extends Dialog {
 			}
 		});
 		btnScreenFont.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		btnScreenFont.setText("...");
+		btnScreenFont.setText(DICT.getString("GeneralStyleToolbox.btnScreenFont.text")); //$NON-NLS-1$
 		
 		lblScreenFontSelected = new CLabel(compositeScreen, SWT.NONE);
 		lblScreenFontSelected.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
-		lblScreenFontSelected.setText("(selected)");
+		lblScreenFontSelected.setText(DICT.getString("GeneralStyleToolbox.lblScreenFontSelected.text")); //$NON-NLS-1$
 		
 		CLabel lblScreenColor = new CLabel(compositeScreen, SWT.NONE);
-		lblScreenColor.setText("Background Color");
+		lblScreenColor.setText(DICT.getString("GeneralStyleToolbox.lblScreenColor.text")); //$NON-NLS-1$
 		
 		lblScreenColorSelected = new CLabel(compositeScreen, SWT.NONE);
 		lblScreenColorSelected.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		lblScreenColorSelected.setText("(selected)");
+		lblScreenColorSelected.setText(DICT.getString("GeneralStyleToolbox.lblScreenColorSelected.text")); //$NON-NLS-1$
 		
 		tableScreenBgColor = new Table(compositeScreen, SWT.FULL_SELECTION);
 		tableScreenBgColor.addSelectionListener(new SelectionAdapter() {
@@ -200,27 +202,27 @@ public class GeneralStyleToolbox extends Dialog {
 		
 		TableColumn tblclmnScreenBgColor = new TableColumn(tableScreenBgColor, SWT.NONE);
 		tblclmnScreenBgColor.setWidth(193);
-		tblclmnScreenBgColor.setText("Line Color");
+		tblclmnScreenBgColor.setText(DICT.getString("GeneralStyleToolbox.tblclmnScreenBgColor.text")); //$NON-NLS-1$
 		tblclmnScreenBgColor.setResizable(false);
 		
 		TableItem tableItemScreenColor1 = new TableItem(tableScreenBgColor, SWT.NONE);
-		tableItemScreenColor1.setText("Color 1");
+		tableItemScreenColor1.setText(DICT.getString("GeneralStyleToolbox.tableItemScreenColor1.text(java.lang.String)")); //$NON-NLS-1$
 		
 		TableItem tableItemScreenColor2 = new TableItem(tableScreenBgColor, 0);
-		tableItemScreenColor2.setText("Color 2");
+		tableItemScreenColor2.setText(DICT.getString("GeneralStyleToolbox.tableItemScreenColor2.text(java.lang.String)")); //$NON-NLS-1$
 		
 		TableItem tableItemScreenColor3 = new TableItem(tableScreenBgColor, 0);
-		tableItemScreenColor3.setText("Color 3");
+		tableItemScreenColor3.setText(DICT.getString("GeneralStyleToolbox.tableItemScreenColor3.text(java.lang.String)")); //$NON-NLS-1$
 		
 		CTabItem tbtmPrint = new CTabItem(tabFolder, SWT.NONE);
-		tbtmPrint.setText("Print");
+		tbtmPrint.setText(DICT.getString("GeneralStyleToolbox.tbtmPrint.text")); //$NON-NLS-1$
 		
 		Composite compositePrint = new Composite(tabFolder, SWT.NONE);
 		tbtmPrint.setControl(compositePrint);
 		compositePrint.setLayout(new GridLayout(2, false));
 		
 		CLabel lblPrintFont = new CLabel(compositePrint, SWT.NONE);
-		lblPrintFont.setText("Font");
+		lblPrintFont.setText(DICT.getString("GeneralStyleToolbox.lblPrintFont.text")); //$NON-NLS-1$
 		
 		Button btnPrintFont = new Button(compositePrint, SWT.NONE);
 		btnPrintFont.addSelectionListener(new SelectionAdapter() {
@@ -264,18 +266,18 @@ public class GeneralStyleToolbox extends Dialog {
 			}
 		});
 		btnPrintFont.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		btnPrintFont.setText("...");
+		btnPrintFont.setText(DICT.getString("GeneralStyleToolbox.btnPrintFont.text")); //$NON-NLS-1$
 		
 		lblPrintFontSelected = new CLabel(compositePrint, SWT.NONE);
 		lblPrintFontSelected.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
-		lblPrintFontSelected.setText("(selected)");
+		lblPrintFontSelected.setText(DICT.getString("GeneralStyleToolbox.lblPrintFontSelected.text")); //$NON-NLS-1$
 		
 		CLabel lblPrintColor = new CLabel(compositePrint, SWT.NONE);
-		lblPrintColor.setText("Background Color");
+		lblPrintColor.setText(DICT.getString("GeneralStyleToolbox.lblPrintColor.text")); //$NON-NLS-1$
 		
 		lblPrintColorSelected = new CLabel(compositePrint, SWT.NONE);
 		lblPrintColorSelected.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		lblPrintColorSelected.setText("(selected)");
+		lblPrintColorSelected.setText(DICT.getString("GeneralStyleToolbox.lblPrintColorSelected.text")); //$NON-NLS-1$
 		
 		tablePrintBgColor = new Table(compositePrint, SWT.FULL_SELECTION);
 		tablePrintBgColor.addSelectionListener(new SelectionAdapter() {
@@ -293,17 +295,17 @@ public class GeneralStyleToolbox extends Dialog {
 		
 		TableColumn tblclmnPrintBgColor = new TableColumn(tablePrintBgColor, SWT.NONE);
 		tblclmnPrintBgColor.setWidth(193);
-		tblclmnPrintBgColor.setText("Line Color");
+		tblclmnPrintBgColor.setText(DICT.getString("GeneralStyleToolbox.tblclmnPrintBgColor.text")); //$NON-NLS-1$
 		tblclmnPrintBgColor.setResizable(false);
 		
 		TableItem tableItem = new TableItem(tablePrintBgColor, 0);
-		tableItem.setText("Color 1");
+		tableItem.setText(DICT.getString("GeneralStyleToolbox.tableItem.text(java.lang.String)")); //$NON-NLS-1$
 		
 		TableItem tableItem_1 = new TableItem(tablePrintBgColor, 0);
-		tableItem_1.setText("Color 2");
+		tableItem_1.setText(DICT.getString("GeneralStyleToolbox.tableItem_1.text(java.lang.String)")); //$NON-NLS-1$
 		
 		TableItem tableItem_2 = new TableItem(tablePrintBgColor, 0);
-		tableItem_2.setText("Color 3");
+		tableItem_2.setText(DICT.getString("GeneralStyleToolbox.tableItem_2.text(java.lang.String)")); //$NON-NLS-1$
 		
 		fillColors();
 		initiateStyle();

@@ -16,8 +16,11 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 
 import de.tudresden.inf.gsvgplott.data.style.OverrideStyle;
+import java.util.ResourceBundle;
+import org.eclipse.swt.layout.RowData;
 
 public class CssStyleOverrideDialog extends Dialog {
+	private ResourceBundle DICT = ResourceBundle.getBundle("de.tudresden.inf.gsvgplott.ui.util.messages"); //$NON-NLS-1$
 
 	protected Object result;
 	protected Shell shlCssStyleOverride;
@@ -38,7 +41,7 @@ public class CssStyleOverrideDialog extends Dialog {
 	 */
 	public CssStyleOverrideDialog(Shell parent, int style, OverrideStyle oldOverrideStyle) {
 		super(parent, style);
-		setText("SWT Dialog");
+		setText(DICT.getString("CssStyleOverrideDialog.this.text")); //$NON-NLS-1$
 		
 		// set object reference
 		overrideStyle = oldOverrideStyle;
@@ -71,16 +74,16 @@ public class CssStyleOverrideDialog extends Dialog {
 	private void createContents() {
 		shlCssStyleOverride = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.RESIZE | SWT.APPLICATION_MODAL);
 		shlCssStyleOverride.setSize(419, 293);
-		shlCssStyleOverride.setText("CSS Style Override");
+		shlCssStyleOverride.setText(DICT.getString("CssStyleOverrideDialog.shlCssStyleOverride.text")); //$NON-NLS-1$
 		shlCssStyleOverride.setLayout(new GridLayout(1, false));
 		
 		CLabel lblCustomCss = new CLabel(shlCssStyleOverride, SWT.NONE);
-		lblCustomCss.setText("Custom CSS:");
+		lblCustomCss.setText(DICT.getString("CssStyleOverrideDialog.lblCustomCss.text")); //$NON-NLS-1$
 		
 		styledText = new StyledText(shlCssStyleOverride, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
 		styledText.setFont(SWTResourceManager.getFont("Courier New", 12, SWT.BOLD));
 		styledText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		styledText.setText("This is text.");
+		styledText.setText(DICT.getString("CssStyleOverrideDialog.styledText.text")); //$NON-NLS-1$
 		
 		Composite composite = new Composite(shlCssStyleOverride, SWT.NONE);
 		composite.setLayout(new RowLayout(SWT.HORIZONTAL));
@@ -93,25 +96,27 @@ public class CssStyleOverrideDialog extends Dialog {
 				shlCssStyleOverride.close();
 			}
 		});
-		btnOk.setText("OK");
+		btnOk.setText(DICT.getString("CssStyleOverrideDialog.btnOk.text")); //$NON-NLS-1$
 		
 		btnReset = new Button(composite, SWT.NONE);
+		btnReset.setLayoutData(new RowData(123, SWT.DEFAULT));
 		btnReset.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				styledText.setText("");
 			}
 		});
-		btnReset.setText("Reset");
+		btnReset.setText(DICT.getString("CssStyleOverrideDialog.btnReset.text")); //$NON-NLS-1$
 		
 		btnCancel = new Button(composite, SWT.NONE);
+		btnCancel.setLayoutData(new RowData(113, SWT.DEFAULT));
 		btnCancel.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				shlCssStyleOverride.close();
 			}
 		});
-		btnCancel.setText("Cancel");
+		btnCancel.setText(DICT.getString("CssStyleOverrideDialog.btnCancel.text")); //$NON-NLS-1$
 		
 		shlCssStyleOverride.setDefaultButton(btnOk);
 

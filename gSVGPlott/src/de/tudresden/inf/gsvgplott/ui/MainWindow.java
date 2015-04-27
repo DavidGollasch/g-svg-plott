@@ -14,12 +14,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
+import org.eclipse.jface.window.ApplicationWindow;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.graphics.Point;
@@ -84,7 +86,11 @@ import tud.tangram.svgplot.xml.SvgDocument;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.ModifyEvent;
 
+import java.util.ResourceBundle;
+
 public class MainWindow {
+	private ResourceBundle DICT = ResourceBundle.getBundle("de.tudresden.inf.gsvgplott.ui.util.messages"); //$NON-NLS-1$
+	private static Locale LOC = Locale.GERMAN;
 	
 	public static final String APP_NAME = "gSVGPlott";
 
@@ -154,6 +160,10 @@ public class MainWindow {
 		} catch (Exception e) {
 			// nothing... doesn't matter anyway
 		}
+		
+		//TODO: Remove when finished
+		Locale.setDefault(LOC);
+		ResourceBundle.clearCache();
 		
 		try {
 			MainWindow window = new MainWindow();
@@ -248,15 +258,15 @@ public class MainWindow {
 		
 		CLabel lblPlotoptionsColumn = new CLabel(compositePlotoptionsColumn, SWT.NONE);
 		lblPlotoptionsColumn.setFont(SWTResourceManager.getFont(".Helvetica Neue DeskInterface", 15, SWT.BOLD));
-		lblPlotoptionsColumn.setText("Plot Options");
+		lblPlotoptionsColumn.setText(DICT.getString("MainWindow.lblPlotoptionsColumn.text")); //$NON-NLS-1$
 		
 		Group grpPlotoptionsGeneralRow = new Group(compositePlotoptionsColumn, SWT.NONE);
 		grpPlotoptionsGeneralRow.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		grpPlotoptionsGeneralRow.setText("General");
+		grpPlotoptionsGeneralRow.setText(DICT.getString("MainWindow.grpPlotoptionsGeneralRow.text")); //$NON-NLS-1$
 		grpPlotoptionsGeneralRow.setLayout(new GridLayout(6, false));
 		
 		CLabel lblPoGeneralTitle = new CLabel(grpPlotoptionsGeneralRow, SWT.NONE);
-		lblPoGeneralTitle.setText("Title:");
+		lblPoGeneralTitle.setText(DICT.getString("MainWindow.lblPoGeneralTitle.text")); //$NON-NLS-1$
 		
 		txtPoGeneralTitle = new Text(grpPlotoptionsGeneralRow, SWT.BORDER);
 		txtPoGeneralTitle.addModifyListener(new ModifyListener() {
@@ -265,7 +275,7 @@ public class MainWindow {
 			}
 		});
 		
-		txtPoGeneralTitle.setToolTipText("Enter title of diagram");
+		txtPoGeneralTitle.setToolTipText(DICT.getString("MainWindow.txtPoGeneralTitle.toolTipText")); //$NON-NLS-1$
 		txtPoGeneralTitle.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
 		
 		Button btnPlotoptionsGeneralStyle = new Button(grpPlotoptionsGeneralRow, SWT.FLAT);
@@ -275,11 +285,11 @@ public class MainWindow {
 				triggerOptionsGeneralStyleToolbox();
 			}
 		});
-		btnPlotoptionsGeneralStyle.setToolTipText("Change style");
+		btnPlotoptionsGeneralStyle.setToolTipText(DICT.getString("MainWindow.btnPlotoptionsGeneralStyle.toolTipText")); //$NON-NLS-1$
 		btnPlotoptionsGeneralStyle.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/edit-16.png"));
 		
 		CLabel lblPoGeneralSize = new CLabel(grpPlotoptionsGeneralRow, SWT.NONE);
-		lblPoGeneralSize.setText("Size:");
+		lblPoGeneralSize.setText(DICT.getString("MainWindow.lblPoGeneralSize.text")); //$NON-NLS-1$
 		
 		spinnerPoGeneralWidth = new Spinner(grpPlotoptionsGeneralRow, SWT.BORDER);
 		spinnerPoGeneralWidth.addModifyListener(new ModifyListener() {
@@ -287,14 +297,14 @@ public class MainWindow {
 				triggerOptionsGeneralSizeWidthChanged();
 			}
 		});
-		spinnerPoGeneralWidth.setToolTipText("Width in Millimeters");
+		spinnerPoGeneralWidth.setToolTipText(DICT.getString("MainWindow.spinnerPoGeneralWidth.toolTipText")); //$NON-NLS-1$
 		spinnerPoGeneralWidth.setIncrement(10);
 		spinnerPoGeneralWidth.setMaximum(99999);
 		spinnerPoGeneralWidth.setMinimum(0);
 		spinnerPoGeneralWidth.setSelection(210);
 		
 		CLabel lblPoGeneralSizeMm = new CLabel(grpPlotoptionsGeneralRow, SWT.NONE);
-		lblPoGeneralSizeMm.setText("mm   x");
+		lblPoGeneralSizeMm.setText(DICT.getString("MainWindow.lblPoGeneralSizeMm.text")); //$NON-NLS-1$
 		
 		spinnerPoGeneralHeight = new Spinner(grpPlotoptionsGeneralRow, SWT.BORDER);
 		spinnerPoGeneralHeight.addModifyListener(new ModifyListener() {
@@ -302,18 +312,18 @@ public class MainWindow {
 				triggerOptionsGeneralSizeHeightChanged();
 			}
 		});
-		spinnerPoGeneralHeight.setToolTipText("Height in Millimeters");
+		spinnerPoGeneralHeight.setToolTipText(DICT.getString("MainWindow.spinnerPoGeneralHeight.toolTipText")); //$NON-NLS-1$
 		spinnerPoGeneralHeight.setMaximum(99999);
 		spinnerPoGeneralHeight.setMinimum(0);
 		spinnerPoGeneralHeight.setSelection(297);
 		spinnerPoGeneralHeight.setIncrement(10);
 		
 		CLabel lblPoGeneralSizeMm2 = new CLabel(grpPlotoptionsGeneralRow, SWT.NONE);
-		lblPoGeneralSizeMm2.setText("mm");
+		lblPoGeneralSizeMm2.setText(DICT.getString("MainWindow.lblPoGeneralSizeMm2.text")); //$NON-NLS-1$
 		new Label(grpPlotoptionsGeneralRow, SWT.NONE);
 		
 		CLabel lblPoGeneralGrid = new CLabel(grpPlotoptionsGeneralRow, SWT.NONE);
-		lblPoGeneralGrid.setText("Grid:");
+		lblPoGeneralGrid.setText(DICT.getString("MainWindow.lblPoGeneralGrid.text")); //$NON-NLS-1$
 		
 		btnPoGeneralShowGrid = new Button(grpPlotoptionsGeneralRow, SWT.CHECK);
 		btnPoGeneralShowGrid.addSelectionListener(new SelectionAdapter() {
@@ -323,15 +333,15 @@ public class MainWindow {
 			}
 		});
 		btnPoGeneralShowGrid.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 5, 1));
-		btnPoGeneralShowGrid.setText("Show Grid");
+		btnPoGeneralShowGrid.setText(DICT.getString("MainWindow.btnPoGeneralShowGrid.text")); //$NON-NLS-1$
 		
 		Group grpPlotoptionsXAxisRow = new Group(compositePlotoptionsColumn, SWT.NONE);
 		grpPlotoptionsXAxisRow.setLayout(new GridLayout(5, false));
 		grpPlotoptionsXAxisRow.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		grpPlotoptionsXAxisRow.setText("X Axis");
+		grpPlotoptionsXAxisRow.setText(DICT.getString("MainWindow.grpPlotoptionsXAxisRow.text")); //$NON-NLS-1$
 		
 		CLabel lblPoXaxisTitle = new CLabel(grpPlotoptionsXAxisRow, SWT.NONE);
-		lblPoXaxisTitle.setText("Title:");
+		lblPoXaxisTitle.setText(DICT.getString("MainWindow.lblPoXaxisTitle.text")); //$NON-NLS-1$
 		
 		txtPoXaxisTitle = new Text(grpPlotoptionsXAxisRow, SWT.BORDER);
 		txtPoXaxisTitle.addModifyListener(new ModifyListener() {
@@ -340,7 +350,7 @@ public class MainWindow {
 			}
 		});
 		txtPoXaxisTitle.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
-		txtPoXaxisTitle.setToolTipText("Set x axis title");
+		txtPoXaxisTitle.setToolTipText(DICT.getString("MainWindow.txtPoXaxisTitle.toolTipText")); //$NON-NLS-1$
 		
 		Button btnPlotoptionsXAxisStyle = new Button(grpPlotoptionsXAxisRow, SWT.FLAT);
 		btnPlotoptionsXAxisStyle.addSelectionListener(new SelectionAdapter() {
@@ -349,11 +359,11 @@ public class MainWindow {
 				triggerOptionsXaxisStyleToolbox();
 			}
 		});
-		btnPlotoptionsXAxisStyle.setToolTipText("Change style");
+		btnPlotoptionsXAxisStyle.setToolTipText(DICT.getString("MainWindow.btnPlotoptionsXAxisStyle.toolTipText")); //$NON-NLS-1$
 		btnPlotoptionsXAxisStyle.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/edit-16.png"));
 		
 		CLabel lblPoXaxisRange = new CLabel(grpPlotoptionsXAxisRow, SWT.NONE);
-		lblPoXaxisRange.setText("Range:");
+		lblPoXaxisRange.setText(DICT.getString("MainWindow.lblPoXaxisRange.text")); //$NON-NLS-1$
 		
 		spinnerPoXaxisRangeFrom = new Spinner(grpPlotoptionsXAxisRow, SWT.BORDER);
 		spinnerPoXaxisRangeFrom.addModifyListener(new ModifyListener() {
@@ -365,7 +375,7 @@ public class MainWindow {
 		spinnerPoXaxisRangeFrom.setMinimum(-99999);
 		
 		CLabel lblPoXaxisRangeTo = new CLabel(grpPlotoptionsXAxisRow, SWT.NONE);
-		lblPoXaxisRangeTo.setText("to");
+		lblPoXaxisRangeTo.setText(DICT.getString("MainWindow.lblPoXaxisRangeTo.text")); //$NON-NLS-1$
 		
 		spinnerPoXaxisRangeTo = new Spinner(grpPlotoptionsXAxisRow, SWT.BORDER);
 		spinnerPoXaxisRangeTo.addModifyListener(new ModifyListener() {
@@ -378,7 +388,7 @@ public class MainWindow {
 		spinnerPoXaxisRangeTo.setMinimum(-99999);
 		
 		CLabel lblPoXaxisDivisioning = new CLabel(grpPlotoptionsXAxisRow, SWT.NONE);
-		lblPoXaxisDivisioning.setText("Divisioning:");
+		lblPoXaxisDivisioning.setText(DICT.getString("MainWindow.lblPoXaxisDivisioning.text")); //$NON-NLS-1$
 		
 		btnPoXaxisPiDivisioning = new Button(grpPlotoptionsXAxisRow, SWT.CHECK);
 		btnPoXaxisPiDivisioning.addSelectionListener(new SelectionAdapter() {
@@ -388,10 +398,10 @@ public class MainWindow {
 			}
 		});
 		btnPoXaxisPiDivisioning.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 4, 1));
-		btnPoXaxisPiDivisioning.setText("Pi Divisioning");
+		btnPoXaxisPiDivisioning.setText(DICT.getString("MainWindow.btnPoXaxisPiDivisioning.text")); //$NON-NLS-1$
 		
 		CLabel lblPoXaxisHelplines = new CLabel(grpPlotoptionsXAxisRow, SWT.NONE);
-		lblPoXaxisHelplines.setText("Helplines:");
+		lblPoXaxisHelplines.setText(DICT.getString("MainWindow.lblPoXaxisHelplines.text")); //$NON-NLS-1$
 		
 		txtPoXaxisHelplines = new Text(grpPlotoptionsXAxisRow, SWT.BORDER);
 		txtPoXaxisHelplines.addModifyListener(new ModifyListener() {
@@ -399,7 +409,7 @@ public class MainWindow {
 				triggerOptionsXaxisHelplinesChanged();
 			}
 		});
-		txtPoXaxisHelplines.setToolTipText("Enter y axis intersection points to define x axis helplines");
+		txtPoXaxisHelplines.setToolTipText(DICT.getString("MainWindow.txtPoXaxisHelplines.toolTipText")); //$NON-NLS-1$
 		txtPoXaxisHelplines.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		
 		Button btnPlotoptionsXAxisHelplineStyle = new Button(grpPlotoptionsXAxisRow, SWT.FLAT);
@@ -409,16 +419,16 @@ public class MainWindow {
 				triggerOptionsXaxisHelplineStyleToolbox();
 			}
 		});
-		btnPlotoptionsXAxisHelplineStyle.setToolTipText("Change style");
+		btnPlotoptionsXAxisHelplineStyle.setToolTipText(DICT.getString("MainWindow.btnPlotoptionsXAxisHelplineStyle.toolTipText")); //$NON-NLS-1$
 		btnPlotoptionsXAxisHelplineStyle.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/edit-16.png"));
 		
 		Group grpPlotoptionsYAxisRow = new Group(compositePlotoptionsColumn, SWT.NONE);
 		grpPlotoptionsYAxisRow.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		grpPlotoptionsYAxisRow.setText("Y Axis");
+		grpPlotoptionsYAxisRow.setText(DICT.getString("MainWindow.grpPlotoptionsYAxisRow.text")); //$NON-NLS-1$
 		grpPlotoptionsYAxisRow.setLayout(new GridLayout(5, false));
 		
 		CLabel lblPoYaxisTitle = new CLabel(grpPlotoptionsYAxisRow, SWT.NONE);
-		lblPoYaxisTitle.setText("Title:");
+		lblPoYaxisTitle.setText(DICT.getString("MainWindow.lblPoYaxisTitle.text")); //$NON-NLS-1$
 		
 		txtPoYaxisTitle = new Text(grpPlotoptionsYAxisRow, SWT.BORDER);
 		txtPoYaxisTitle.addModifyListener(new ModifyListener() {
@@ -426,7 +436,7 @@ public class MainWindow {
 				triggerOptionsYaxisTitleChanged();
 			}
 		});
-		txtPoYaxisTitle.setToolTipText("Enter y axis title");
+		txtPoYaxisTitle.setToolTipText(DICT.getString("MainWindow.txtPoYaxisTitle.toolTipText")); //$NON-NLS-1$
 		txtPoYaxisTitle.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		
 		Button btnPlotoptionsYAxisStyle = new Button(grpPlotoptionsYAxisRow, SWT.FLAT);
@@ -436,11 +446,11 @@ public class MainWindow {
 				triggerOptionsYaxisStyleToolbox();
 			}
 		});
-		btnPlotoptionsYAxisStyle.setToolTipText("Change style");
+		btnPlotoptionsYAxisStyle.setToolTipText(DICT.getString("MainWindow.btnPlotoptionsYAxisStyle.toolTipText")); //$NON-NLS-1$
 		btnPlotoptionsYAxisStyle.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/edit-16.png"));
 		
 		CLabel lblPoYaxisRange = new CLabel(grpPlotoptionsYAxisRow, SWT.NONE);
-		lblPoYaxisRange.setText("Range:");
+		lblPoYaxisRange.setText(DICT.getString("MainWindow.lblPoYaxisRange.text")); //$NON-NLS-1$
 		
 		spinnerPoYaxisRangeFrom = new Spinner(grpPlotoptionsYAxisRow, SWT.BORDER);
 		spinnerPoYaxisRangeFrom.addModifyListener(new ModifyListener() {
@@ -452,7 +462,7 @@ public class MainWindow {
 		spinnerPoYaxisRangeFrom.setMinimum(-99999);
 		
 		CLabel lblPoYaxisTo = new CLabel(grpPlotoptionsYAxisRow, SWT.NONE);
-		lblPoYaxisTo.setText("to");
+		lblPoYaxisTo.setText(DICT.getString("MainWindow.lblPoYaxisTo.text")); //$NON-NLS-1$
 		
 		spinnerPoYaxisRangeTo = new Spinner(grpPlotoptionsYAxisRow, SWT.BORDER);
 		spinnerPoYaxisRangeTo.addModifyListener(new ModifyListener() {
@@ -465,7 +475,7 @@ public class MainWindow {
 		spinnerPoYaxisRangeTo.setMinimum(-99999);
 		
 		CLabel lblPoYaxisHelplines = new CLabel(grpPlotoptionsYAxisRow, SWT.NONE);
-		lblPoYaxisHelplines.setText("Helplines:");
+		lblPoYaxisHelplines.setText(DICT.getString("MainWindow.lblPoYaxisHelplines.text")); //$NON-NLS-1$
 		
 		txtPoYaxisHelplines = new Text(grpPlotoptionsYAxisRow, SWT.BORDER);
 		txtPoYaxisHelplines.addModifyListener(new ModifyListener() {
@@ -473,7 +483,7 @@ public class MainWindow {
 				triggerOptionsYaxisHelplinesChanged();
 			}
 		});
-		txtPoYaxisHelplines.setToolTipText("Enter x axis intersection points to define y axis helplines");
+		txtPoYaxisHelplines.setToolTipText(DICT.getString("MainWindow.txtPoYaxisHelplines.toolTipText")); //$NON-NLS-1$
 		txtPoYaxisHelplines.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		
 		Button btnPlotoptionsYAxisHelplineStyle = new Button(grpPlotoptionsYAxisRow, SWT.FLAT);
@@ -483,16 +493,16 @@ public class MainWindow {
 				triggerOptionsYaxisHelplineStyleToolbox();
 			}
 		});
-		btnPlotoptionsYAxisHelplineStyle.setToolTipText("Change style");
+		btnPlotoptionsYAxisHelplineStyle.setToolTipText(DICT.getString("MainWindow.btnPlotoptionsYAxisHelplineStyle.toolTipText")); //$NON-NLS-1$
 		btnPlotoptionsYAxisHelplineStyle.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/edit-16.png"));
 		
 		Group grpPlotoptionsIntegralAreaRow = new Group(compositePlotoptionsColumn, SWT.NONE);
 		grpPlotoptionsIntegralAreaRow.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		grpPlotoptionsIntegralAreaRow.setText("Integral Area");
+		grpPlotoptionsIntegralAreaRow.setText(DICT.getString("MainWindow.grpPlotoptionsIntegralAreaRow.text")); //$NON-NLS-1$
 		grpPlotoptionsIntegralAreaRow.setLayout(new GridLayout(5, false));
 		
 		CLabel lblPoIntegralTitle = new CLabel(grpPlotoptionsIntegralAreaRow, SWT.NONE);
-		lblPoIntegralTitle.setText("Title:");
+		lblPoIntegralTitle.setText(DICT.getString("MainWindow.lblPoIntegralTitle.text")); //$NON-NLS-1$
 		
 		txtPoIntegralTitle = new Text(grpPlotoptionsIntegralAreaRow, SWT.BORDER);
 		txtPoIntegralTitle.addModifyListener(new ModifyListener() {
@@ -500,7 +510,7 @@ public class MainWindow {
 				triggerOptionsIntegralTitleChanged();
 			}
 		});
-		txtPoIntegralTitle.setToolTipText("Enter integral title");
+		txtPoIntegralTitle.setToolTipText(DICT.getString("MainWindow.txtPoIntegralTitle.toolTipText")); //$NON-NLS-1$
 		txtPoIntegralTitle.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		
 		Button btnPlotoptionsIntegralStyle = new Button(grpPlotoptionsIntegralAreaRow, SWT.FLAT);
@@ -510,11 +520,11 @@ public class MainWindow {
 				triggerOptionsIntegralStyleToolbox();
 			}
 		});
-		btnPlotoptionsIntegralStyle.setToolTipText("Change style");
+		btnPlotoptionsIntegralStyle.setToolTipText(DICT.getString("MainWindow.btnPlotoptionsIntegralStyle.toolTipText")); //$NON-NLS-1$
 		btnPlotoptionsIntegralStyle.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/edit-16.png"));
 		
 		CLabel lblPoIntegralRange = new CLabel(grpPlotoptionsIntegralAreaRow, SWT.NONE);
-		lblPoIntegralRange.setText("Range:");
+		lblPoIntegralRange.setText(DICT.getString("MainWindow.lblPoIntegralRange.text")); //$NON-NLS-1$
 		
 		spinnerPoIntegralRangeFrom = new Spinner(grpPlotoptionsIntegralAreaRow, SWT.BORDER);
 		spinnerPoIntegralRangeFrom.addModifyListener(new ModifyListener() {
@@ -528,7 +538,7 @@ public class MainWindow {
 		spinnerPoIntegralRangeFrom.setMinimum(-99999);
 		
 		CLabel lblPoIntegralRangeTo = new CLabel(grpPlotoptionsIntegralAreaRow, SWT.NONE);
-		lblPoIntegralRangeTo.setText("to");
+		lblPoIntegralRangeTo.setText(DICT.getString("MainWindow.lblPoIntegralRangeTo.text")); //$NON-NLS-1$
 		
 		spinnerPoIntegralRangeTo = new Spinner(grpPlotoptionsIntegralAreaRow, SWT.BORDER);
 		spinnerPoIntegralRangeTo.addModifyListener(new ModifyListener() {
@@ -543,7 +553,7 @@ public class MainWindow {
 		spinnerPoIntegralRangeTo.setMinimum(-99999);
 		
 		CLabel lblPoIntegralBordering = new CLabel(grpPlotoptionsIntegralAreaRow, SWT.NONE);
-		lblPoIntegralBordering.setText("Bordering:");
+		lblPoIntegralBordering.setText(DICT.getString("MainWindow.lblPoIntegralBordering.text")); //$NON-NLS-1$
 		
 		comboPoIntegralBorderingFrom = new Combo(grpPlotoptionsIntegralAreaRow, SWT.READ_ONLY);
 		comboPoIntegralBorderingFrom.addModifyListener(new ModifyListener() {
@@ -555,7 +565,7 @@ public class MainWindow {
 		comboPoIntegralBorderingFrom.setItems(new String[] {});
 		
 		CLabel lblPoIntegralAnd = new CLabel(grpPlotoptionsIntegralAreaRow, SWT.NONE);
-		lblPoIntegralAnd.setText("&&");
+		lblPoIntegralAnd.setText(DICT.getString("MainWindow.lblPoIntegralAnd.text")); //$NON-NLS-1$
 		
 		comboPoIntegralBorderingTo = new Combo(grpPlotoptionsIntegralAreaRow, SWT.READ_ONLY);
 		comboPoIntegralBorderingTo.addModifyListener(new ModifyListener() {
@@ -582,7 +592,7 @@ public class MainWindow {
 		lblPreviewOutputColumn.setFont(SWTResourceManager.getFont(".Helvetica Neue DeskInterface", 15, SWT.BOLD));
 		lblPreviewOutputColumn.setForeground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		lblPreviewOutputColumn.setBackground(SWTResourceManager.getColor(51, 51, 51));
-		lblPreviewOutputColumn.setText("Preview && Output");
+		lblPreviewOutputColumn.setText(DICT.getString("MainWindow.lblPreviewOutputColumn.text")); //$NON-NLS-1$
 		
 		TabFolder tabFolderPreview = new TabFolder(compositePreviewOutputColumn, SWT.NONE);
 		GridData gd_tabFolderPreview = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
@@ -590,7 +600,7 @@ public class MainWindow {
 		tabFolderPreview.setLayoutData(gd_tabFolderPreview);
 		
 		TabItem tbtmPreviewScreenView = new TabItem(tabFolderPreview, SWT.NONE);
-		tbtmPreviewScreenView.setText("Screen View");
+		tbtmPreviewScreenView.setText(DICT.getString("MainWindow.tbtmPreviewScreenView.text")); //$NON-NLS-1$
 		
 		Composite compositePreviewScreenView = new Composite(tabFolderPreview, SWT.NONE);
 		tbtmPreviewScreenView.setControl(compositePreviewScreenView);
@@ -600,30 +610,30 @@ public class MainWindow {
 		
 		TabItem tbtmPreviewScreenViewGraph = new TabItem(tabFolderPreviewScreenView, SWT.NONE);
 		tbtmPreviewScreenViewGraph.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
-		tbtmPreviewScreenViewGraph.setText("Graph");
+		tbtmPreviewScreenViewGraph.setText(DICT.getString("MainWindow.tbtmPreviewScreenViewGraph.text")); //$NON-NLS-1$
 		
 		browserPreviewScreenViewGraph = new Browser(tabFolderPreviewScreenView, SWT.NONE);
-		browserPreviewScreenViewGraph.setText("<html>\n<body>\n<p style='font-family: sans-serif; font-size: 0.7em; color: gray;'>The graph's screen view preview goes here.</p>\n</body>\n</html>");
+		browserPreviewScreenViewGraph.setText(DICT.getString("MainWindow.browserPreviewScreenViewGraph.text")); //$NON-NLS-1$
 		tbtmPreviewScreenViewGraph.setControl(browserPreviewScreenViewGraph);
 		
 		TabItem tbtmPreviewScreenViewLegend = new TabItem(tabFolderPreviewScreenView, SWT.NONE);
 		tbtmPreviewScreenViewLegend.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/legend-16.png"));
-		tbtmPreviewScreenViewLegend.setText("Legend");
+		tbtmPreviewScreenViewLegend.setText(DICT.getString("MainWindow.tbtmPreviewScreenViewLegend.text")); //$NON-NLS-1$
 		
 		browserPreviewScreenViewLegend = new Browser(tabFolderPreviewScreenView, SWT.NONE);
-		browserPreviewScreenViewLegend.setText("<html>\n<body>\n<p style='font-family: sans-serif; font-size: 0.7em; color: gray;'>The legend's screen view preview goes here.</p>\n</body>\n</html>");
+		browserPreviewScreenViewLegend.setText(DICT.getString("MainWindow.browserPreviewScreenViewLegend.text")); //$NON-NLS-1$
 		tbtmPreviewScreenViewLegend.setControl(browserPreviewScreenViewLegend);
 		
 		TabItem tbtmPreviewScreenViewDescription = new TabItem(tabFolderPreviewScreenView, SWT.NONE);
 		tbtmPreviewScreenViewDescription.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/list-16.png"));
-		tbtmPreviewScreenViewDescription.setText("Description");
+		tbtmPreviewScreenViewDescription.setText(DICT.getString("MainWindow.tbtmPreviewScreenViewDescription.text")); //$NON-NLS-1$
 		
 		browserPreviewScreenViewDescription = new Browser(tabFolderPreviewScreenView, SWT.NONE);
-		browserPreviewScreenViewDescription.setText("<html>\n<body>\n<p style='font-family: sans-serif; font-size: 0.7em; color: gray;'>The description's screen view preview goes here.</p>\n</body>\n</html>");
+		browserPreviewScreenViewDescription.setText(DICT.getString("MainWindow.browserPreviewScreenViewDescription.text")); //$NON-NLS-1$
 		tbtmPreviewScreenViewDescription.setControl(browserPreviewScreenViewDescription);
 		
 		TabItem tbtmPreviewPrintView = new TabItem(tabFolderPreview, SWT.NONE);
-		tbtmPreviewPrintView.setText("Print View");
+		tbtmPreviewPrintView.setText(DICT.getString("MainWindow.tbtmPreviewPrintView.text")); //$NON-NLS-1$
 		
 		Composite compositePreviewPrintView = new Composite(tabFolderPreview, SWT.NONE);
 		tbtmPreviewPrintView.setControl(compositePreviewPrintView);
@@ -633,26 +643,26 @@ public class MainWindow {
 		
 		TabItem tbtmPreviewPrintViewGraph = new TabItem(tabFolderPreviewPrintView, SWT.NONE);
 		tbtmPreviewPrintViewGraph.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
-		tbtmPreviewPrintViewGraph.setText("Graph");
+		tbtmPreviewPrintViewGraph.setText(DICT.getString("MainWindow.tbtmPreviewPrintViewGraph.text")); //$NON-NLS-1$
 		
 		browserPreviewPrintViewGraph = new Browser(tabFolderPreviewPrintView, SWT.NONE);
-		browserPreviewPrintViewGraph.setText("<html>\n<body>\n<p style='font-family: sans-serif; font-size: 0.7em; color: gray;'>The graph's print view preview goes here.</p>\n</body>\n</html>");
+		browserPreviewPrintViewGraph.setText(DICT.getString("MainWindow.browserPreviewPrintViewGraph.text")); //$NON-NLS-1$
 		tbtmPreviewPrintViewGraph.setControl(browserPreviewPrintViewGraph);
 		
 		TabItem tbtmPreviewPrintViewLegend = new TabItem(tabFolderPreviewPrintView, SWT.NONE);
 		tbtmPreviewPrintViewLegend.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/legend-16.png"));
-		tbtmPreviewPrintViewLegend.setText("Legend");
+		tbtmPreviewPrintViewLegend.setText(DICT.getString("MainWindow.tbtmPreviewPrintViewLegend.text")); //$NON-NLS-1$
 		
 		browserPreviewPrintViewLegend = new Browser(tabFolderPreviewPrintView, SWT.NONE);
-		browserPreviewPrintViewLegend.setText("<html>\n<body>\n<p style='font-family: sans-serif; font-size: 0.7em; color: gray;'>The legend's print view preview goes here.</p>\n</body>\n</html>");
+		browserPreviewPrintViewLegend.setText(DICT.getString("MainWindow.browserPreviewPrintViewLegend.text")); //$NON-NLS-1$
 		tbtmPreviewPrintViewLegend.setControl(browserPreviewPrintViewLegend);
 		
 		TabItem tbtmPreviewPrintViewDescription = new TabItem(tabFolderPreviewPrintView, SWT.NONE);
 		tbtmPreviewPrintViewDescription.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/list-16.png"));
-		tbtmPreviewPrintViewDescription.setText("Description");
+		tbtmPreviewPrintViewDescription.setText(DICT.getString("MainWindow.tbtmPreviewPrintViewDescription.text")); //$NON-NLS-1$
 		
 		browserPreviewPrintViewDescription = new Browser(tabFolderPreviewPrintView, SWT.NONE);
-		browserPreviewPrintViewDescription.setText("<html>\n<body>\n<p style='font-family: sans-serif; font-size: 0.7em; color: gray;'>The description's print view preview goes here.</p>\n</body>\n</html>");
+		browserPreviewPrintViewDescription.setText(DICT.getString("MainWindow.browserPreviewPrintViewDescription.text")); //$NON-NLS-1$
 		tbtmPreviewPrintViewDescription.setControl(browserPreviewPrintViewDescription);
 		
 		Composite compositeOutput = new Composite(compositePreviewOutputColumn, SWT.NONE);
@@ -669,7 +679,7 @@ public class MainWindow {
 		});
 		btnOutputExportExport.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/share-16.png"));
 		btnOutputExportExport.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
-		btnOutputExportExport.setText("Export...");
+		btnOutputExportExport.setText(DICT.getString("MainWindow.btnOutputExportExport.text")); //$NON-NLS-1$
 		
 		scrolledCompositePreviewoutputColumn.setContent(compositePreviewOutputColumn);
 		scrolledCompositePreviewoutputColumn.setMinSize(compositePreviewOutputColumn.computeSize(SWT.DEFAULT, SWT.DEFAULT));
@@ -679,7 +689,7 @@ public class MainWindow {
 		shlGsvgplott.setMenuBar(menu);
 		
 		MenuItem mntmFileSubmenu = new MenuItem(menu, SWT.CASCADE);
-		mntmFileSubmenu.setText("File");
+		mntmFileSubmenu.setText(DICT.getString("MainWindow.mntmFileSubmenu.text")); //$NON-NLS-1$
 		
 		Menu file_1 = new Menu(mntmFileSubmenu);
 		mntmFileSubmenu.setMenu(file_1);
@@ -691,10 +701,10 @@ public class MainWindow {
 				triggerMenuNew();
 			}
 		});
-		mntmFileNew.setText("New");
+		mntmFileNew.setText(DICT.getString("MainWindow.mntmFileNew.text")); //$NON-NLS-1$
 		
 		MenuItem menuItemSeparator1 = new MenuItem(file_1, SWT.SEPARATOR);
-		menuItemSeparator1.setText("sep");
+		menuItemSeparator1.setText(DICT.getString("MainWindow.menuItemSeparator1.text")); //$NON-NLS-1$
 		
 		MenuItem mntmFileOpen = new MenuItem(file_1, SWT.NONE);
 		mntmFileOpen.addSelectionListener(new SelectionAdapter() {
@@ -703,10 +713,10 @@ public class MainWindow {
 				triggerMenuOpen();
 			}
 		});
-		mntmFileOpen.setText("Open...");
+		mntmFileOpen.setText(DICT.getString("MainWindow.mntmFileOpen.text")); //$NON-NLS-1$
 		
 		MenuItem menuItemSeparator2 = new MenuItem(file_1, SWT.SEPARATOR);
-		menuItemSeparator2.setText("sep");
+		menuItemSeparator2.setText(DICT.getString("MainWindow.menuItemSeparator2.text")); //$NON-NLS-1$
 		
 		MenuItem mntmFileSave = new MenuItem(file_1, SWT.NONE);
 		mntmFileSave.addSelectionListener(new SelectionAdapter() {
@@ -715,7 +725,7 @@ public class MainWindow {
 				triggerMenuSave();
 			}
 		});
-		mntmFileSave.setText("Save");
+		mntmFileSave.setText(DICT.getString("MainWindow.mntmFileSave.text")); //$NON-NLS-1$
 		
 		MenuItem mntmSaveAs = new MenuItem(file_1, SWT.NONE);
 		mntmSaveAs.addSelectionListener(new SelectionAdapter() {
@@ -724,16 +734,16 @@ public class MainWindow {
 				triggerMenuSaveAs();
 			}
 		});
-		mntmSaveAs.setText("Save As...");
+		mntmSaveAs.setText(DICT.getString("MainWindow.mntmSaveAs.text")); //$NON-NLS-1$
 		
 		MenuItem mntmExtrasSubmenu = new MenuItem(menu, SWT.CASCADE);
-		mntmExtrasSubmenu.setText("Extras");
+		mntmExtrasSubmenu.setText(DICT.getString("MainWindow.mntmExtrasSubmenu.text")); //$NON-NLS-1$
 		
 		Menu extras_1 = new Menu(mntmExtrasSubmenu);
 		mntmExtrasSubmenu.setMenu(extras_1);
 		
 		MenuItem mntmExtrasStyle = new MenuItem(extras_1, SWT.CASCADE);
-		mntmExtrasStyle.setText("Style");
+		mntmExtrasStyle.setText(DICT.getString("MainWindow.mntmExtrasStyle.text")); //$NON-NLS-1$
 		
 		Menu menu_1 = new Menu(mntmExtrasStyle);
 		mntmExtrasStyle.setMenu(menu_1);
@@ -745,7 +755,7 @@ public class MainWindow {
 				triggerMenuStoreStyle();
 			}
 		});
-		mntmExtrasStyleStoreStyle.setText("Store Style");
+		mntmExtrasStyleStoreStyle.setText(DICT.getString("MainWindow.mntmExtrasStyleStoreStyle.text")); //$NON-NLS-1$
 		
 		MenuItem mntmExtrasStyleLoadStyle = new MenuItem(menu_1, SWT.NONE);
 		mntmExtrasStyleLoadStyle.addSelectionListener(new SelectionAdapter() {
@@ -754,7 +764,7 @@ public class MainWindow {
 				triggerMenuLoadStyle();
 			}
 		});
-		mntmExtrasStyleLoadStyle.setText("Load Style");
+		mntmExtrasStyleLoadStyle.setText(DICT.getString("MainWindow.mntmExtrasStyleLoadStyle.text")); //$NON-NLS-1$
 		
 		MenuItem mntmExtrasStyleResetAll = new MenuItem(menu_1, SWT.NONE);
 		mntmExtrasStyleResetAll.addSelectionListener(new SelectionAdapter() {
@@ -763,7 +773,7 @@ public class MainWindow {
 				triggerMenuResetStyle();
 			}
 		});
-		mntmExtrasStyleResetAll.setText("Reset All");
+		mntmExtrasStyleResetAll.setText(DICT.getString("MainWindow.mntmExtrasStyleResetAll.text")); //$NON-NLS-1$
 		
 		MenuItem mntmExtrasCssStyleOverride = new MenuItem(extras_1, SWT.NONE);
 		mntmExtrasCssStyleOverride.addSelectionListener(new SelectionAdapter() {
@@ -772,33 +782,10 @@ public class MainWindow {
 				triggerMenuCssStyleOverride();
 			}
 		});
-		mntmExtrasCssStyleOverride.setText("CSS Style Override...");
-		
-		MenuItem menuItemSeparator3 = new MenuItem(extras_1, SWT.SEPARATOR);
-		menuItemSeparator3.setText("sep");
-		
-		MenuItem mntmExtrasLanguage = new MenuItem(extras_1, SWT.CASCADE);
-		mntmExtrasLanguage.setText("Language");
-		
-		Menu menu_2 = new Menu(mntmExtrasLanguage);
-		mntmExtrasLanguage.setMenu(menu_2);
-		
-		MenuItem mntmExtrasLanguageEnglish = new MenuItem(menu_2, SWT.RADIO);
-		mntmExtrasLanguageEnglish.setSelection(true);
-		mntmExtrasLanguageEnglish.setText("English (Default)");
-		
-		MenuItem mntmExtrasPreferences = new MenuItem(extras_1, SWT.NONE);
-		mntmExtrasPreferences.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				triggerMenuPreferences();
-			}
-		});
-		mntmExtrasPreferences.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/settings-16.png"));
-		mntmExtrasPreferences.setText("Preferences...");
+		mntmExtrasCssStyleOverride.setText(DICT.getString("MainWindow.mntmExtrasCssStyleOverride.text"));
 		
 		MenuItem mntmHelpSubmenu = new MenuItem(menu, SWT.CASCADE);
-		mntmHelpSubmenu.setText("Help");
+		mntmHelpSubmenu.setText(DICT.getString("MainWindow.mntmHelpSubmenu.text")); //$NON-NLS-1$
 		
 		Menu menu_3 = new Menu(mntmHelpSubmenu);
 		mntmHelpSubmenu.setMenu(menu_3);
@@ -811,7 +798,7 @@ public class MainWindow {
 			}
 		});
 		mntmHelpHelp.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/help-16.png"));
-		mntmHelpHelp.setText("Help...");
+		mntmHelpHelp.setText(DICT.getString("MainWindow.mntmHelpHelp.text")); //$NON-NLS-1$
 
 	}
 
@@ -1564,14 +1551,6 @@ public class MainWindow {
 	}
 	
 	/**
-	 * Open Preferences Dialog
-	 */
-	protected void triggerMenuPreferences() {
-		PreferencesDialog pd = new PreferencesDialog(shlGsvgplott, 0);
-		pd.open();
-	}
-	
-	/**
 	 * Open Help Dialog
 	 */
 	protected void triggerMenuHelp() {
@@ -1599,11 +1578,11 @@ public class MainWindow {
 		CLabel lblDataColumn = new CLabel(compositeDataColumn, SWT.NONE);
 		lblDataColumn.setFont(SWTResourceManager.getFont(".Helvetica Neue DeskInterface", 15, SWT.BOLD));
 		lblDataColumn.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		lblDataColumn.setText("Data");
+		lblDataColumn.setText(DICT.getString("MainWindow.lblDataColumn.text")); //$NON-NLS-1$
 		
 		CLabel lblDataRowFunctions = new CLabel(compositeDataColumn, SWT.NONE);
 		lblDataRowFunctions.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		lblDataRowFunctions.setText("Functions");
+		lblDataRowFunctions.setText(DICT.getString("MainWindow.lblDataRowFunctions.text")); //$NON-NLS-1$
 		
 		Label lblSepDataRowFunctions = new Label(compositeDataColumn, SWT.SEPARATOR | SWT.HORIZONTAL);
 		lblSepDataRowFunctions.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -1620,7 +1599,7 @@ public class MainWindow {
 		Button btnDataColumnFunctionsAddFunction = new Button(compositeDataColumn, SWT.FLAT);
 		btnDataColumnFunctionsAddFunction.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/add-16.png"));
 		btnDataColumnFunctionsAddFunction.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		btnDataColumnFunctionsAddFunction.setText("Add Function");
+		btnDataColumnFunctionsAddFunction.setText(DICT.getString("MainWindow.btnDataColumnFunctionsAddFunction.text")); //$NON-NLS-1$
 		btnDataColumnFunctionsAddFunction.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -1632,7 +1611,7 @@ public class MainWindow {
 		
 		CLabel lblDataRowMarkedpoints = new CLabel(compositeDataColumn, SWT.NONE);
 		lblDataRowMarkedpoints.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		lblDataRowMarkedpoints.setText("Marked Points");
+		lblDataRowMarkedpoints.setText(DICT.getString("MainWindow.lblDataRowMarkedpoints.text")); //$NON-NLS-1$
 		
 		Label lblSepMarkedpointsRow = new Label(compositeDataColumn, SWT.SEPARATOR | SWT.HORIZONTAL);
 		lblSepMarkedpointsRow.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -1648,7 +1627,7 @@ public class MainWindow {
 		Button btnDataColumnListsAddPointList = new Button(compositeDataColumn, SWT.FLAT);
 		btnDataColumnListsAddPointList.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/add-16.png"));
 		btnDataColumnListsAddPointList.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		btnDataColumnListsAddPointList.setText("Add Point List");
+		btnDataColumnListsAddPointList.setText(DICT.getString("MainWindow.btnDataColumnListsAddPointList.text")); //$NON-NLS-1$
 		btnDataColumnListsAddPointList.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -1658,7 +1637,7 @@ public class MainWindow {
 		
 		Button btnDataColumnPointListStyle = new Button(compositeDataColumn, SWT.FLAT);
 		btnDataColumnPointListStyle.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		btnDataColumnPointListStyle.setToolTipText("Change style");
+		btnDataColumnPointListStyle.setToolTipText(DICT.getString("MainWindow.btnDataColumnPointListStyle.toolTipText")); //$NON-NLS-1$
 		btnDataColumnPointListStyle.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/edit-16.png"));
 		btnDataColumnPointListStyle.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -1679,7 +1658,7 @@ public class MainWindow {
 	 */
 	protected void operateAddFunction(Function function) {
 		functionIDcounter++;
-		String name = "Function " + String.valueOf(functionIDcounter);
+		String name = DICT.getString("MainWindow.grpDataRowFunction1.text") + String.valueOf(functionIDcounter);
 		
 		Group grpDataRowFunction1 = new Group(temporaryContainer, SWT.NONE);
 		grpDataRowFunction1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -1687,7 +1666,7 @@ public class MainWindow {
 		grpDataRowFunction1.setLayout(new GridLayout(3, false));
 		
 		CLabel lblDRFTitle1 = new CLabel(grpDataRowFunction1, SWT.NONE);
-		lblDRFTitle1.setText("Title:");
+		lblDRFTitle1.setText(DICT.getString("MainWindow.lblDRFTitle1.text"));
 		
 		Text txtDRFTitle1 = new Text(grpDataRowFunction1, SWT.BORDER);
 		txtDRFTitle1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -1705,7 +1684,7 @@ public class MainWindow {
 		});
 		
 		Button btnDRFStyle1 = new Button(grpDataRowFunction1, SWT.FLAT);
-		btnDRFStyle1.setToolTipText("Change style");
+		btnDRFStyle1.setToolTipText(DICT.getString("MainWindow.btnDRFStyle1.toolTipText"));
 		btnDRFStyle1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/edit-16.png"));
 		btnDRFStyle1.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -1745,7 +1724,7 @@ public class MainWindow {
 		compositeDRFControls1.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1));
 		
 		Button btnDRFMoveUp1 = new Button(compositeDRFControls1, SWT.FLAT);
-		btnDRFMoveUp1.setToolTipText("Move item up");
+		btnDRFMoveUp1.setToolTipText(DICT.getString("MainWindow.btnDRFMoveUp1.toolTipText"));
 		btnDRFMoveUp1.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
 		btnDRFMoveUp1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/up-16.png"));
 		btnDRFMoveUp1.addSelectionListener(new SelectionAdapter() {
@@ -1756,7 +1735,7 @@ public class MainWindow {
 		});
 		
 		Button btnDRFMoveDown1 = new Button(compositeDRFControls1, SWT.FLAT);
-		btnDRFMoveDown1.setToolTipText("Move item down");
+		btnDRFMoveDown1.setToolTipText(DICT.getString("MainWindow.btnDRFMoveDown1.toolTipText"));
 		btnDRFMoveDown1.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
 		btnDRFMoveDown1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/down-16.png"));
 		btnDRFMoveDown1.addSelectionListener(new SelectionAdapter() {
@@ -1767,12 +1746,12 @@ public class MainWindow {
 		});
 		
 		Button btnDRFRemove1 = new Button(compositeDRFControls1, SWT.FLAT);
-		btnDRFRemove1.setToolTipText("Remove item");
+		btnDRFRemove1.setToolTipText(DICT.getString("MainWindow.btnDRFRemove1.toolTipText"));
 		GridData gd_btnDRFRemove1 = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
 		gd_btnDRFRemove1.horizontalIndent = 5;
 		btnDRFRemove1.setLayoutData(gd_btnDRFRemove1);
 		btnDRFRemove1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/remove-16.png"));
-		btnDRFRemove1.setText("Remove");
+		btnDRFRemove1.setText(DICT.getString("MainWindow.btnDRFRemove1.text"));
 		btnDRFRemove1.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -1800,7 +1779,7 @@ public class MainWindow {
 	 */
 	protected void operateAddPointList(MarkedPointsList pointlist) {
 		pointlistIDcounter++;
-		String name = "Point List " + String.valueOf(pointlistIDcounter);
+		String name = DICT.getString("MainWindow.grpDataRowMarkedpointsPointList.text") + String.valueOf(pointlistIDcounter);
 		
 		Group grpDataRowMarkedpointsPointList = new Group(temporaryContainer, SWT.NONE);
 		grpDataRowMarkedpointsPointList.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -1808,7 +1787,7 @@ public class MainWindow {
 		grpDataRowMarkedpointsPointList.setText(name);
 		
 		CLabel lblDRMTitle1 = new CLabel(grpDataRowMarkedpointsPointList, SWT.NONE);
-		lblDRMTitle1.setText("Title:");
+		lblDRMTitle1.setText(DICT.getString("MainWindow.lblDRMTitle1.text"));
 		
 		Text txtDRMtitle1 = new Text(grpDataRowMarkedpointsPointList, SWT.BORDER);
 		txtDRMtitle1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
@@ -1845,11 +1824,11 @@ public class MainWindow {
 		
 		TableColumn tblclmnDRMXValue1 = new TableColumn(tableDRMlist1, SWT.NONE);
 		tblclmnDRMXValue1.setWidth(75);
-		tblclmnDRMXValue1.setText("X Value");
+		tblclmnDRMXValue1.setText(DICT.getString("MainWindow.tblclmnDRMXValue1.text"));
 		
 		TableColumn tblclmnDRMYValue1 = new TableColumn(tableDRMlist1, SWT.NONE);
 		tblclmnDRMYValue1.setWidth(75);
-		tblclmnDRMYValue1.setText("Y Value");
+		tblclmnDRMYValue1.setText(DICT.getString("MainWindow.tblclmnDRMYValue1.text"));
 		
 //		TableItem tableItemDRMlist1point2 = new TableItem(tableDRMlist1, SWT.NONE);
 //		tableItemDRMlist1point2.setText(new String[] {"3.5", "4.5"});
@@ -1867,7 +1846,7 @@ public class MainWindow {
 		compositeDRMlistControls1.setLayout(gl_compositeDRMlistControls1);
 		
 		Button btnDRMlistAdd1 = new Button(compositeDRMlistControls1, SWT.NONE);
-		btnDRMlistAdd1.setText("Add...");
+		btnDRMlistAdd1.setText(DICT.getString("MainWindow.btnDRMlistAdd1.text"));
 		btnDRMlistAdd1.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -1876,7 +1855,7 @@ public class MainWindow {
 		});
 		
 		Button btnDRMlistRemove1 = new Button(compositeDRMlistControls1, SWT.NONE);
-		btnDRMlistRemove1.setText("Remove");
+		btnDRMlistRemove1.setText(DICT.getString("MainWindow.btnDRMlistRemove1.text"));
 		btnDRMlistRemove1.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -1894,7 +1873,7 @@ public class MainWindow {
 		compositeDRMControls1.setLayout(gl_compositeDRMControls1);
 		
 		Button btnDRMMoveUp1 = new Button(compositeDRMControls1, SWT.FLAT);
-		btnDRMMoveUp1.setToolTipText("Move item up");
+		btnDRMMoveUp1.setToolTipText(DICT.getString("MainWindow.btnDRMMoveUp1.toolTipText"));
 		btnDRMMoveUp1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/up-16.png"));
 		btnDRMMoveUp1.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -1904,7 +1883,7 @@ public class MainWindow {
 		});
 		
 		Button btnDRMMoveDown1 = new Button(compositeDRMControls1, SWT.FLAT);
-		btnDRMMoveDown1.setToolTipText("Move item down");
+		btnDRMMoveDown1.setToolTipText(DICT.getString("MainWindow.btnDRMMoveDown1.toolTipText"));
 		btnDRMMoveDown1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/down-16.png"));
 		btnDRMMoveDown1.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -1914,12 +1893,12 @@ public class MainWindow {
 		});
 		
 		Button btnDRMRemove1 = new Button(compositeDRMControls1, SWT.FLAT);
-		btnDRMRemove1.setToolTipText("Remove item");
+		btnDRMRemove1.setToolTipText(DICT.getString("MainWindow.btnDRMRemove1.toolTipText"));
 		GridData gd_btnDRMRemove1 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_btnDRMRemove1.horizontalIndent = 5;
 		btnDRMRemove1.setLayoutData(gd_btnDRMRemove1);
 		btnDRMRemove1.setImage(SWTResourceManager.getImage(MainWindow.class, "/de/tudresden/inf/gsvgplott/ui/icons/remove-16.png"));
-		btnDRMRemove1.setText("Remove");
+		btnDRMRemove1.setText(DICT.getString("MainWindow.btnDRMRemove1.text"));
 		btnDRMRemove1.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {

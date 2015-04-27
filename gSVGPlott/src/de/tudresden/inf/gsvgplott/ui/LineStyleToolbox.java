@@ -31,8 +31,10 @@ import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
+import java.util.ResourceBundle;
 
 public class LineStyleToolbox extends Dialog {
+	private ResourceBundle DICT = ResourceBundle.getBundle("de.tudresden.inf.gsvgplott.ui.util.messages"); //$NON-NLS-1$
 
 	protected Object result;
 	protected Shell shlTest;
@@ -66,7 +68,7 @@ public class LineStyleToolbox extends Dialog {
 	 */
 	public LineStyleToolbox(Shell parent, int style, LineStyle oldScreenLineStyle, LineStyle oldPrintLineStyle) {
 		super(parent, SWT.BORDER | SWT.CLOSE);
-		setText("SWT Dialog");
+		setText(DICT.getString("LineStyleToolbox.this.text")); //$NON-NLS-1$
 		
 		screenLineStyle = oldScreenLineStyle;
 		printLineStyle = oldPrintLineStyle;
@@ -105,7 +107,7 @@ public class LineStyleToolbox extends Dialog {
 	 */
 	private void createContents() {
 		shlTest = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.TOOL | SWT.APPLICATION_MODAL);
-		shlTest.setText("Line Style");
+		shlTest.setText(DICT.getString("LineStyleToolbox.shlTest.text")); //$NON-NLS-1$
 		shlTest.setSize(215, 310);
 		shlTest.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
@@ -114,20 +116,20 @@ public class LineStyleToolbox extends Dialog {
 		tabFolder.setSelectionBackground(Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT));
 		
 		CTabItem tbtmScreen = new CTabItem(tabFolder, SWT.NONE);
-		tbtmScreen.setText("Screen");
+		tbtmScreen.setText(DICT.getString("LineStyleToolbox.tbtmScreen.text")); //$NON-NLS-1$
 		
 		Composite compositeScreen = new Composite(tabFolder, SWT.NONE);
 		tbtmScreen.setControl(compositeScreen);
 		compositeScreen.setLayout(new GridLayout(2, false));
 		
 		CLabel lblScreenStyle = new CLabel(compositeScreen, SWT.NONE);
-		lblScreenStyle.setText("Style");
+		lblScreenStyle.setText(DICT.getString("LineStyleToolbox.lblScreenStyle.text")); //$NON-NLS-1$
 		
 		lblScreenStyleSelected = new CLabel(compositeScreen, SWT.NONE);
 		GridData gd_lblScreenStyleSelected = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
 		gd_lblScreenStyleSelected.widthHint = 100;
 		lblScreenStyleSelected.setLayoutData(gd_lblScreenStyleSelected);
-		lblScreenStyleSelected.setText("(selected)");
+		lblScreenStyleSelected.setText(DICT.getString("LineStyleToolbox.lblScreenStyleSelected.text")); //$NON-NLS-1$
 		
 		tableScreenLineStyle = new Table(compositeScreen, SWT.FULL_SELECTION);
 		tableScreenLineStyle.addSelectionListener(new SelectionAdapter() {
@@ -149,38 +151,38 @@ public class LineStyleToolbox extends Dialog {
 		TableColumn tblclmnScreenLineStyle = new TableColumn(tableScreenLineStyle, SWT.NONE);
 		tblclmnScreenLineStyle.setResizable(false);
 		tblclmnScreenLineStyle.setWidth(193);
-		tblclmnScreenLineStyle.setText("Line Style");
+		tblclmnScreenLineStyle.setText(DICT.getString("LineStyleToolbox.tblclmnScreenLineStyle.text")); //$NON-NLS-1$
 		
 		TableItem tableItemScreenStyle1 = new TableItem(tableScreenLineStyle, SWT.NONE);
 		tableItemScreenStyle1.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
-		tableItemScreenStyle1.setText("Solid");
+		tableItemScreenStyle1.setText(DICT.getString("LineStyleToolbox.tableItemScreenStyle1.text(java.lang.String)")); //$NON-NLS-1$
 		
 		TableItem tableItemScreenStyle2 = new TableItem(tableScreenLineStyle, SWT.NONE);
 		tableItemScreenStyle2.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
-		tableItemScreenStyle2.setText("Dotted");
+		tableItemScreenStyle2.setText(DICT.getString("LineStyleToolbox.tableItemScreenStyle2.text(java.lang.String)")); //$NON-NLS-1$
 		
 		TableItem tableItemScreenStyle3 = new TableItem(tableScreenLineStyle, SWT.NONE);
 		tableItemScreenStyle3.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
-		tableItemScreenStyle3.setText("Dashed");
+		tableItemScreenStyle3.setText(DICT.getString("LineStyleToolbox.tableItemScreenStyle3.text(java.lang.String)")); //$NON-NLS-1$
 		
 		TableItem tableItemScreenStyle4 = new TableItem(tableScreenLineStyle, 0);
-		tableItemScreenStyle4.setText("Longdashed");
+		tableItemScreenStyle4.setText(DICT.getString("LineStyleToolbox.tableItemScreenStyle4.text(java.lang.String)")); //$NON-NLS-1$
 		tableItemScreenStyle4.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
 		
 		TableItem tableItemScreenStyle5 = new TableItem(tableScreenLineStyle, 0);
-		tableItemScreenStyle5.setText("Dashdotted");
+		tableItemScreenStyle5.setText(DICT.getString("LineStyleToolbox.tableItemScreenStyle5.text(java.lang.String)")); //$NON-NLS-1$
 		tableItemScreenStyle5.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
 		
 		TableItem tableItemScreenStyle6 = new TableItem(tableScreenLineStyle, 0);
-		tableItemScreenStyle6.setText("Dashdoubledotted");
+		tableItemScreenStyle6.setText(DICT.getString("LineStyleToolbox.tableItemScreenStyle6.text(java.lang.String)")); //$NON-NLS-1$
 		tableItemScreenStyle6.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
 		
 		CLabel lblScreenWidth = new CLabel(compositeScreen, SWT.NONE);
-		lblScreenWidth.setText("Width");
+		lblScreenWidth.setText(DICT.getString("LineStyleToolbox.lblScreenWidth.text")); //$NON-NLS-1$
 		
 		lblScreenWidthSelected = new CLabel(compositeScreen, SWT.NONE);
 		lblScreenWidthSelected.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		lblScreenWidthSelected.setText("(selected)");
+		lblScreenWidthSelected.setText(DICT.getString("LineStyleToolbox.lblScreenWidthSelected.text")); //$NON-NLS-1$
 		
 		tableScreenLineWidth = new Table(compositeScreen, SWT.FULL_SELECTION);
 		tableScreenLineWidth.addSelectionListener(new SelectionAdapter() {
@@ -201,55 +203,55 @@ public class LineStyleToolbox extends Dialog {
 		
 		TableColumn tblclmnScreenLineWidth = new TableColumn(tableScreenLineWidth, SWT.NONE);
 		tblclmnScreenLineWidth.setWidth(193);
-		tblclmnScreenLineWidth.setText("Line Width");
+		tblclmnScreenLineWidth.setText(DICT.getString("LineStyleToolbox.tblclmnScreenLineWidth.text")); //$NON-NLS-1$
 		tblclmnScreenLineWidth.setResizable(false);
 		
 		TableItem tableItemScreenWidth1 = new TableItem(tableScreenLineWidth, SWT.NONE);
 		tableItemScreenWidth1.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
-		tableItemScreenWidth1.setText("1px");
+		tableItemScreenWidth1.setText(DICT.getString("LineStyleToolbox.tableItemScreenWidth1.text(java.lang.String)")); //$NON-NLS-1$
 		
 		TableItem tableItemScreenWidth2 = new TableItem(tableScreenLineWidth, 0);
 		tableItemScreenWidth2.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
-		tableItemScreenWidth2.setText("2px");
+		tableItemScreenWidth2.setText(DICT.getString("LineStyleToolbox.tableItemScreenWidth2.text(java.lang.String)")); //$NON-NLS-1$
 		
 		TableItem tableItemScreenWidth3 = new TableItem(tableScreenLineWidth, 0);
 		tableItemScreenWidth3.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
-		tableItemScreenWidth3.setText("3px");
+		tableItemScreenWidth3.setText(DICT.getString("LineStyleToolbox.tableItemScreenWidth3.text(java.lang.String)")); //$NON-NLS-1$
 		
 		TableItem tableItemScreenWidth4 = new TableItem(tableScreenLineWidth, 0);
 		tableItemScreenWidth4.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
-		tableItemScreenWidth4.setText("4px");
+		tableItemScreenWidth4.setText(DICT.getString("LineStyleToolbox.tableItemScreenWidth4.text(java.lang.String)")); //$NON-NLS-1$
 		
 		TableItem tableItemScreenWidth5 = new TableItem(tableScreenLineWidth, 0);
 		tableItemScreenWidth5.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
-		tableItemScreenWidth5.setText("5px");
+		tableItemScreenWidth5.setText(DICT.getString("LineStyleToolbox.tableItemScreenWidth5.text(java.lang.String)")); //$NON-NLS-1$
 		
 		TableItem tableItemScreenWidth6 = new TableItem(tableScreenLineWidth, 0);
 		tableItemScreenWidth6.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
-		tableItemScreenWidth6.setText("6px");
+		tableItemScreenWidth6.setText(DICT.getString("LineStyleToolbox.tableItemScreenWidth6.text(java.lang.String)")); //$NON-NLS-1$
 		
 		TableItem tableItemScreenWidth7 = new TableItem(tableScreenLineWidth, 0);
 		tableItemScreenWidth7.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
-		tableItemScreenWidth7.setText("7px");
+		tableItemScreenWidth7.setText(DICT.getString("LineStyleToolbox.tableItemScreenWidth7.text(java.lang.String)")); //$NON-NLS-1$
 		
 		TableItem tableItemScreenWidth8 = new TableItem(tableScreenLineWidth, 0);
 		tableItemScreenWidth8.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
-		tableItemScreenWidth8.setText("8px");
+		tableItemScreenWidth8.setText(DICT.getString("LineStyleToolbox.tableItemScreenWidth8.text(java.lang.String)")); //$NON-NLS-1$
 		
 		TableItem tableItemScreenWidth9 = new TableItem(tableScreenLineWidth, 0);
 		tableItemScreenWidth9.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
-		tableItemScreenWidth9.setText("9px");
+		tableItemScreenWidth9.setText(DICT.getString("LineStyleToolbox.tableItemScreenWidth9.text(java.lang.String)")); //$NON-NLS-1$
 		
 		TableItem tableItemScreenWidth10 = new TableItem(tableScreenLineWidth, 0);
 		tableItemScreenWidth10.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
-		tableItemScreenWidth10.setText("10px");
+		tableItemScreenWidth10.setText(DICT.getString("LineStyleToolbox.tableItemScreenWidth10.text(java.lang.String)")); //$NON-NLS-1$
 		
 		CLabel lblScreenColor = new CLabel(compositeScreen, SWT.NONE);
-		lblScreenColor.setText("Color");
+		lblScreenColor.setText(DICT.getString("LineStyleToolbox.lblScreenColor.text")); //$NON-NLS-1$
 		
 		lblScreenColorSelected = new CLabel(compositeScreen, SWT.NONE);
 		lblScreenColorSelected.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		lblScreenColorSelected.setText("(selected)");
+		lblScreenColorSelected.setText(DICT.getString("LineStyleToolbox.lblScreenColorSelected.text")); //$NON-NLS-1$
 		
 		tableScreenLineColor = new Table(compositeScreen, SWT.FULL_SELECTION);
 		tableScreenLineColor.addSelectionListener(new SelectionAdapter() {
@@ -269,33 +271,33 @@ public class LineStyleToolbox extends Dialog {
 		
 		TableColumn tblclmnScreenLineColor = new TableColumn(tableScreenLineColor, SWT.NONE);
 		tblclmnScreenLineColor.setWidth(193);
-		tblclmnScreenLineColor.setText("Line Color");
+		tblclmnScreenLineColor.setText(DICT.getString("LineStyleToolbox.tblclmnScreenLineColor.text")); //$NON-NLS-1$
 		tblclmnScreenLineColor.setResizable(false);
 		
 		TableItem tableItemScreenColor1 = new TableItem(tableScreenLineColor, SWT.NONE);
-		tableItemScreenColor1.setText("Color 1");
+		tableItemScreenColor1.setText(DICT.getString("LineStyleToolbox.tableItemScreenColor1.text(java.lang.String)")); //$NON-NLS-1$
 		
 		TableItem tableItemScreenColor2 = new TableItem(tableScreenLineColor, 0);
-		tableItemScreenColor2.setText("Color 2");
+		tableItemScreenColor2.setText(DICT.getString("LineStyleToolbox.tableItemScreenColor2.text(java.lang.String)")); //$NON-NLS-1$
 		
 		TableItem tableItemScreenColor3 = new TableItem(tableScreenLineColor, 0);
-		tableItemScreenColor3.setText("Color 3");
+		tableItemScreenColor3.setText(DICT.getString("LineStyleToolbox.tableItemScreenColor3.text(java.lang.String)")); //$NON-NLS-1$
 		
 		CTabItem tbtmPrint = new CTabItem(tabFolder, SWT.NONE);
-		tbtmPrint.setText("Print");
+		tbtmPrint.setText(DICT.getString("LineStyleToolbox.tbtmPrint.text")); //$NON-NLS-1$
 		
 		Composite compositePrint = new Composite(tabFolder, SWT.NONE);
 		tbtmPrint.setControl(compositePrint);
 		compositePrint.setLayout(new GridLayout(2, false));
 		
 		CLabel lblPrintStyle = new CLabel(compositePrint, SWT.NONE);
-		lblPrintStyle.setText("Style");
+		lblPrintStyle.setText(DICT.getString("LineStyleToolbox.lblPrintStyle.text")); //$NON-NLS-1$
 		
 		lblPrintStyleSelected = new CLabel(compositePrint, SWT.NONE);
 		GridData gd_lblPrintStyleSelected = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
 		gd_lblPrintStyleSelected.widthHint = 100;
 		lblPrintStyleSelected.setLayoutData(gd_lblPrintStyleSelected);
-		lblPrintStyleSelected.setText("(selected)");
+		lblPrintStyleSelected.setText(DICT.getString("LineStyleToolbox.lblPrintStyleSelected.text")); //$NON-NLS-1$
 		
 		tablePrintLineStyle = new Table(compositePrint, SWT.FULL_SELECTION);
 		tablePrintLineStyle.addSelectionListener(new SelectionAdapter() {
@@ -317,27 +319,27 @@ public class LineStyleToolbox extends Dialog {
 		
 		TableColumn tblclmnPrintLineStyle = new TableColumn(tablePrintLineStyle, SWT.NONE);
 		tblclmnPrintLineStyle.setWidth(193);
-		tblclmnPrintLineStyle.setText("Line Style");
+		tblclmnPrintLineStyle.setText(DICT.getString("LineStyleToolbox.tblclmnPrintLineStyle.text")); //$NON-NLS-1$
 		tblclmnPrintLineStyle.setResizable(false);
 		
 		TableItem tableItem = new TableItem(tablePrintLineStyle, 0);
-		tableItem.setText("Solid");
+		tableItem.setText(DICT.getString("LineStyleToolbox.tableItem.text(java.lang.String)")); //$NON-NLS-1$
 		tableItem.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
 		
 		TableItem tableItem_1 = new TableItem(tablePrintLineStyle, 0);
-		tableItem_1.setText("Dashed");
+		tableItem_1.setText(DICT.getString("LineStyleToolbox.tableItem_1.text(java.lang.String)")); //$NON-NLS-1$
 		tableItem_1.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
 		
 		TableItem tableItem_2 = new TableItem(tablePrintLineStyle, 0);
-		tableItem_2.setText("Dotted");
+		tableItem_2.setText(DICT.getString("LineStyleToolbox.tableItem_2.text(java.lang.String)")); //$NON-NLS-1$
 		tableItem_2.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
 		
 		CLabel lblPrintWidth = new CLabel(compositePrint, SWT.NONE);
-		lblPrintWidth.setText("Width");
+		lblPrintWidth.setText(DICT.getString("LineStyleToolbox.lblPrintWidth.text")); //$NON-NLS-1$
 		
 		lblPrintWidthSelected = new CLabel(compositePrint, SWT.NONE);
 		lblPrintWidthSelected.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		lblPrintWidthSelected.setText("(selected)");
+		lblPrintWidthSelected.setText(DICT.getString("LineStyleToolbox.lblPrintWidthSelected.text")); //$NON-NLS-1$
 		
 		tablePrintLineWidth = new Table(compositePrint, SWT.FULL_SELECTION);
 		tablePrintLineWidth.addSelectionListener(new SelectionAdapter() {
@@ -358,55 +360,55 @@ public class LineStyleToolbox extends Dialog {
 		
 		TableColumn tblclmnPrintLineWidth = new TableColumn(tablePrintLineWidth, SWT.NONE);
 		tblclmnPrintLineWidth.setWidth(193);
-		tblclmnPrintLineWidth.setText("Line Width");
+		tblclmnPrintLineWidth.setText(DICT.getString("LineStyleToolbox.tblclmnPrintLineWidth.text")); //$NON-NLS-1$
 		tblclmnPrintLineWidth.setResizable(false);
 		
 		TableItem tableItem_3 = new TableItem(tablePrintLineWidth, 0);
-		tableItem_3.setText("1px");
+		tableItem_3.setText(DICT.getString("LineStyleToolbox.tableItem_3.text(java.lang.String)")); //$NON-NLS-1$
 		tableItem_3.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
 		
 		TableItem tableItem_4 = new TableItem(tablePrintLineWidth, 0);
-		tableItem_4.setText("2px");
+		tableItem_4.setText(DICT.getString("LineStyleToolbox.tableItem_4.text(java.lang.String)")); //$NON-NLS-1$
 		tableItem_4.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
 		
 		TableItem tableItem_5 = new TableItem(tablePrintLineWidth, 0);
-		tableItem_5.setText("3px");
+		tableItem_5.setText(DICT.getString("LineStyleToolbox.tableItem_5.text(java.lang.String)")); //$NON-NLS-1$
 		tableItem_5.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
 		
 		TableItem tableItem_6 = new TableItem(tablePrintLineWidth, 0);
-		tableItem_6.setText("4px");
+		tableItem_6.setText(DICT.getString("LineStyleToolbox.tableItem_6.text(java.lang.String)")); //$NON-NLS-1$
 		tableItem_6.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
 		
 		TableItem tableItem_7 = new TableItem(tablePrintLineWidth, 0);
-		tableItem_7.setText("5px");
+		tableItem_7.setText(DICT.getString("LineStyleToolbox.tableItem_7.text(java.lang.String)")); //$NON-NLS-1$
 		tableItem_7.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
 		
 		TableItem tableItem_8 = new TableItem(tablePrintLineWidth, 0);
-		tableItem_8.setText("6px");
+		tableItem_8.setText(DICT.getString("LineStyleToolbox.tableItem_8.text(java.lang.String)")); //$NON-NLS-1$
 		tableItem_8.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
 		
 		TableItem tableItem_9 = new TableItem(tablePrintLineWidth, 0);
-		tableItem_9.setText("7px");
+		tableItem_9.setText(DICT.getString("LineStyleToolbox.tableItem_9.text(java.lang.String)")); //$NON-NLS-1$
 		tableItem_9.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
 		
 		TableItem tableItem_10 = new TableItem(tablePrintLineWidth, 0);
-		tableItem_10.setText("8px");
+		tableItem_10.setText(DICT.getString("LineStyleToolbox.tableItem_10.text(java.lang.String)")); //$NON-NLS-1$
 		tableItem_10.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
 		
 		TableItem tableItem_11 = new TableItem(tablePrintLineWidth, 0);
-		tableItem_11.setText("9px");
+		tableItem_11.setText(DICT.getString("LineStyleToolbox.tableItem_11.text(java.lang.String)")); //$NON-NLS-1$
 		tableItem_11.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
 		
 		TableItem tableItem_12 = new TableItem(tablePrintLineWidth, 0);
-		tableItem_12.setText("10px");
+		tableItem_12.setText(DICT.getString("LineStyleToolbox.tableItem_12.text(java.lang.String)")); //$NON-NLS-1$
 		tableItem_12.setImage(SWTResourceManager.getImage(LineStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
 		
 		CLabel lblPrintColor = new CLabel(compositePrint, SWT.NONE);
-		lblPrintColor.setText("Color");
+		lblPrintColor.setText(DICT.getString("LineStyleToolbox.lblPrintColor.text")); //$NON-NLS-1$
 		
 		lblPrintColorSelected = new CLabel(compositePrint, SWT.NONE);
 		lblPrintColorSelected.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		lblPrintColorSelected.setText("(selected)");
+		lblPrintColorSelected.setText(DICT.getString("LineStyleToolbox.lblPrintColorSelected.text")); //$NON-NLS-1$
 		
 		tablePrintLineColor = new Table(compositePrint, SWT.FULL_SELECTION);
 		tablePrintLineColor.addSelectionListener(new SelectionAdapter() {
@@ -426,17 +428,17 @@ public class LineStyleToolbox extends Dialog {
 		
 		TableColumn tblclmnPrintLineColor = new TableColumn(tablePrintLineColor, SWT.NONE);
 		tblclmnPrintLineColor.setWidth(193);
-		tblclmnPrintLineColor.setText("Line Color");
+		tblclmnPrintLineColor.setText(DICT.getString("LineStyleToolbox.tblclmnPrintLineColor.text")); //$NON-NLS-1$
 		tblclmnPrintLineColor.setResizable(false);
 		
 		TableItem tableItem_13 = new TableItem(tablePrintLineColor, 0);
-		tableItem_13.setText("Color 1");
+		tableItem_13.setText(DICT.getString("LineStyleToolbox.tableItem_13.text(java.lang.String)")); //$NON-NLS-1$
 		
 		TableItem tableItem_14 = new TableItem(tablePrintLineColor, 0);
-		tableItem_14.setText("Color 2");
+		tableItem_14.setText(DICT.getString("LineStyleToolbox.tableItem_14.text(java.lang.String)")); //$NON-NLS-1$
 		
 		TableItem tableItem_15 = new TableItem(tablePrintLineColor, 0);
-		tableItem_15.setText("Color 3");
+		tableItem_15.setText(DICT.getString("LineStyleToolbox.tableItem_15.text(java.lang.String)")); //$NON-NLS-1$
 		
 		fillLineStyles();
 		fillLineWidths();

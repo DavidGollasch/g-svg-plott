@@ -35,8 +35,10 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.ModifyEvent;
+import java.util.ResourceBundle;
 
 public class PointStyleToolbox extends Dialog {
+	private ResourceBundle DICT = ResourceBundle.getBundle("de.tudresden.inf.gsvgplott.ui.util.messages"); //$NON-NLS-1$
 
 	protected Object result;
 	protected Shell shlToolbox;
@@ -70,7 +72,7 @@ public class PointStyleToolbox extends Dialog {
 	 */
 	public PointStyleToolbox(Shell parent, int style, PointStyle oldScreenPointStyle, PointStyle oldPrintPointStyle) {
 		super(parent, SWT.BORDER | SWT.CLOSE);
-		setText("SWT Dialog");
+		setText(DICT.getString("PointStyleToolbox.this.text")); //$NON-NLS-1$
 		
 		screenPointStyle = oldScreenPointStyle;
 		printPointStyle = oldPrintPointStyle;
@@ -109,7 +111,7 @@ public class PointStyleToolbox extends Dialog {
 	 */
 	private void createContents() {
 		shlToolbox = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.TOOL);
-		shlToolbox.setText("Point Style");
+		shlToolbox.setText(DICT.getString("PointStyleToolbox.shlToolbox.text")); //$NON-NLS-1$
 		shlToolbox.setSize(236, 305);
 		shlToolbox.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
@@ -118,18 +120,18 @@ public class PointStyleToolbox extends Dialog {
 		tabFolder.setSelectionBackground(Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT));
 		
 		CTabItem tbtmScreen = new CTabItem(tabFolder, SWT.NONE);
-		tbtmScreen.setText("Screen");
+		tbtmScreen.setText(DICT.getString("PointStyleToolbox.tbtmScreen.text")); //$NON-NLS-1$
 		
 		Composite compositeScreen = new Composite(tabFolder, SWT.NONE);
 		tbtmScreen.setControl(compositeScreen);
 		compositeScreen.setLayout(new GridLayout(4, false));
 		
 		CLabel lblScreenStyle = new CLabel(compositeScreen, SWT.NONE);
-		lblScreenStyle.setText("Style");
+		lblScreenStyle.setText(DICT.getString("PointStyleToolbox.lblScreenStyle.text")); //$NON-NLS-1$
 		
 		lblScreenStyleSelected = new CLabel(compositeScreen, SWT.NONE);
 		lblScreenStyleSelected.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 3, 1));
-		lblScreenStyleSelected.setText("(selected)");
+		lblScreenStyleSelected.setText(DICT.getString("PointStyleToolbox.lblScreenStyleSelected.text")); //$NON-NLS-1$
 		
 		tableScreenPointStyle = new Table(compositeScreen, SWT.FULL_SELECTION);
 		tableScreenPointStyle.addSelectionListener(new SelectionAdapter() {
@@ -149,18 +151,18 @@ public class PointStyleToolbox extends Dialog {
 		TableColumn tblclmnScreenPointStyle = new TableColumn(tableScreenPointStyle, SWT.NONE);
 		tblclmnScreenPointStyle.setResizable(false);
 		tblclmnScreenPointStyle.setWidth(193);
-		tblclmnScreenPointStyle.setText("Point Style");
+		tblclmnScreenPointStyle.setText(DICT.getString("PointStyleToolbox.tblclmnScreenPointStyle.text")); //$NON-NLS-1$
 		
 		TableItem tableItemScreenStyleSolid = new TableItem(tableScreenPointStyle, SWT.NONE);
 		tableItemScreenStyleSolid.setImage(SWTResourceManager.getImage(PointStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
-		tableItemScreenStyleSolid.setText("Example");
+		tableItemScreenStyleSolid.setText(DICT.getString("PointStyleToolbox.tableItemScreenStyleSolid.text(java.lang.String)")); //$NON-NLS-1$
 		
 		CLabel lblScreenColor = new CLabel(compositeScreen, SWT.NONE);
-		lblScreenColor.setText("Color");
+		lblScreenColor.setText(DICT.getString("PointStyleToolbox.lblScreenColor.text")); //$NON-NLS-1$
 		
 		lblScreenColorSelected = new CLabel(compositeScreen, SWT.NONE);
 		lblScreenColorSelected.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 3, 1));
-		lblScreenColorSelected.setText("(selected)");
+		lblScreenColorSelected.setText(DICT.getString("PointStyleToolbox.lblScreenColorSelected.text")); //$NON-NLS-1$
 		
 		tableScreenPointColor = new Table(compositeScreen, SWT.FULL_SELECTION);
 		tableScreenPointColor.addSelectionListener(new SelectionAdapter() {
@@ -180,17 +182,17 @@ public class PointStyleToolbox extends Dialog {
 		
 		TableColumn tblclmnScreenPointColor = new TableColumn(tableScreenPointColor, SWT.NONE);
 		tblclmnScreenPointColor.setWidth(193);
-		tblclmnScreenPointColor.setText("Line Color");
+		tblclmnScreenPointColor.setText(DICT.getString("PointStyleToolbox.tblclmnScreenPointColor.text")); //$NON-NLS-1$
 		tblclmnScreenPointColor.setResizable(false);
 		
 		TableItem tableItemScreenColor1 = new TableItem(tableScreenPointColor, SWT.NONE);
-		tableItemScreenColor1.setText("Color 1");
+		tableItemScreenColor1.setText(DICT.getString("PointStyleToolbox.tableItemScreenColor1.text(java.lang.String)")); //$NON-NLS-1$
 		
 		TableItem tableItemScreenColor2 = new TableItem(tableScreenPointColor, 0);
-		tableItemScreenColor2.setText("Color 2");
+		tableItemScreenColor2.setText(DICT.getString("PointStyleToolbox.tableItemScreenColor2.text(java.lang.String)")); //$NON-NLS-1$
 		
 		TableItem tableItemScreenColor3 = new TableItem(tableScreenPointColor, 0);
-		tableItemScreenColor3.setText("Color 3");
+		tableItemScreenColor3.setText(DICT.getString("PointStyleToolbox.tableItemScreenColor3.text(java.lang.String)")); //$NON-NLS-1$
 		
 		btnScreenBordered = new Button(compositeScreen, SWT.CHECK);
 		btnScreenBordered.addSelectionListener(new SelectionAdapter() {
@@ -199,10 +201,10 @@ public class PointStyleToolbox extends Dialog {
 				screenPointStyle.setShowBorder(btnScreenBordered.getSelection());
 			}
 		});
-		btnScreenBordered.setText("Bordered");
+		btnScreenBordered.setText(DICT.getString("PointStyleToolbox.btnScreenBordered.text")); //$NON-NLS-1$
 		
 		CLabel lblScreenSize = new CLabel(compositeScreen, SWT.NONE);
-		lblScreenSize.setText("Size:");
+		lblScreenSize.setText(DICT.getString("PointStyleToolbox.lblScreenSize.text")); //$NON-NLS-1$
 		
 		spinnerScreenSize = new Spinner(compositeScreen, SWT.BORDER);
 		spinnerScreenSize.addModifyListener(new ModifyListener() {
@@ -215,21 +217,21 @@ public class PointStyleToolbox extends Dialog {
 		spinnerScreenSize.setSelection(15);
 		
 		CLabel lblScreenPx = new CLabel(compositeScreen, SWT.NONE);
-		lblScreenPx.setText("px");
+		lblScreenPx.setText(DICT.getString("PointStyleToolbox.lblScreenPx.text")); //$NON-NLS-1$
 		
 		CTabItem tbtmPrint = new CTabItem(tabFolder, SWT.NONE);
-		tbtmPrint.setText("Print");
+		tbtmPrint.setText(DICT.getString("PointStyleToolbox.tbtmPrint.text")); //$NON-NLS-1$
 		
 		Composite compositePrint = new Composite(tabFolder, SWT.NONE);
 		tbtmPrint.setControl(compositePrint);
 		compositePrint.setLayout(new GridLayout(4, false));
 		
 		CLabel lblPrintStyle = new CLabel(compositePrint, SWT.NONE);
-		lblPrintStyle.setText("Style");
+		lblPrintStyle.setText(DICT.getString("PointStyleToolbox.lblPrintStyle.text")); //$NON-NLS-1$
 		
 		lblPrintStyleSelected = new CLabel(compositePrint, SWT.NONE);
 		lblPrintStyleSelected.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 3, 1));
-		lblPrintStyleSelected.setText("(selected)");
+		lblPrintStyleSelected.setText(DICT.getString("PointStyleToolbox.lblPrintStyleSelected.text")); //$NON-NLS-1$
 		
 		tablePrintPointStyle = new Table(compositePrint, SWT.FULL_SELECTION);
 		tablePrintPointStyle.addSelectionListener(new SelectionAdapter() {
@@ -249,19 +251,19 @@ public class PointStyleToolbox extends Dialog {
 		
 		TableColumn tblclmnPrintPointStyle = new TableColumn(tablePrintPointStyle, SWT.NONE);
 		tblclmnPrintPointStyle.setWidth(193);
-		tblclmnPrintPointStyle.setText("Line Style");
+		tblclmnPrintPointStyle.setText(DICT.getString("PointStyleToolbox.tblclmnPrintPointStyle.text")); //$NON-NLS-1$
 		tblclmnPrintPointStyle.setResizable(false);
 		
 		TableItem tableItem = new TableItem(tablePrintPointStyle, 0);
-		tableItem.setText("Example");
+		tableItem.setText(DICT.getString("PointStyleToolbox.tableItem.text(java.lang.String)")); //$NON-NLS-1$
 		tableItem.setImage(SWTResourceManager.getImage(PointStyleToolbox.class, "/de/tudresden/inf/gsvgplott/ui/icons/graphic-16.png"));
 		
 		CLabel lblPrintColor = new CLabel(compositePrint, SWT.NONE);
-		lblPrintColor.setText("Color");
+		lblPrintColor.setText(DICT.getString("PointStyleToolbox.lblPrintColor.text")); //$NON-NLS-1$
 		
 		lblPrintColorSelected = new CLabel(compositePrint, SWT.NONE);
 		lblPrintColorSelected.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 3, 1));
-		lblPrintColorSelected.setText("(selected)");
+		lblPrintColorSelected.setText(DICT.getString("PointStyleToolbox.lblPrintColorSelected.text")); //$NON-NLS-1$
 		
 		tablePrintPointColor = new Table(compositePrint, SWT.FULL_SELECTION);
 		tablePrintPointColor.addSelectionListener(new SelectionAdapter() {
@@ -281,17 +283,17 @@ public class PointStyleToolbox extends Dialog {
 		
 		TableColumn tblclmnPrintPointColor = new TableColumn(tablePrintPointColor, SWT.NONE);
 		tblclmnPrintPointColor.setWidth(193);
-		tblclmnPrintPointColor.setText("Line Color");
+		tblclmnPrintPointColor.setText(DICT.getString("PointStyleToolbox.tblclmnPrintPointColor.text")); //$NON-NLS-1$
 		tblclmnPrintPointColor.setResizable(false);
 		
 		TableItem tableItem_13 = new TableItem(tablePrintPointColor, 0);
-		tableItem_13.setText("Color 1");
+		tableItem_13.setText(DICT.getString("PointStyleToolbox.tableItem_13.text(java.lang.String)")); //$NON-NLS-1$
 		
 		TableItem tableItem_14 = new TableItem(tablePrintPointColor, 0);
-		tableItem_14.setText("Color 2");
+		tableItem_14.setText(DICT.getString("PointStyleToolbox.tableItem_14.text(java.lang.String)")); //$NON-NLS-1$
 		
 		TableItem tableItem_15 = new TableItem(tablePrintPointColor, 0);
-		tableItem_15.setText("Color 3");
+		tableItem_15.setText(DICT.getString("PointStyleToolbox.tableItem_15.text(java.lang.String)")); //$NON-NLS-1$
 		
 		btnPrintBordered = new Button(compositePrint, SWT.CHECK);
 		btnPrintBordered.addSelectionListener(new SelectionAdapter() {
@@ -300,10 +302,10 @@ public class PointStyleToolbox extends Dialog {
 				printPointStyle.setShowBorder(btnPrintBordered.getSelection());
 			}
 		});
-		btnPrintBordered.setText("Bordered");
+		btnPrintBordered.setText(DICT.getString("PointStyleToolbox.btnPrintBordered.text")); //$NON-NLS-1$
 		
 		CLabel lblPrintSize = new CLabel(compositePrint, SWT.NONE);
-		lblPrintSize.setText("Size:");
+		lblPrintSize.setText(DICT.getString("PointStyleToolbox.lblPrintSize.text")); //$NON-NLS-1$
 		
 		spinnerPrintSize = new Spinner(compositePrint, SWT.BORDER);
 		spinnerPrintSize.addModifyListener(new ModifyListener() {
@@ -316,7 +318,7 @@ public class PointStyleToolbox extends Dialog {
 		spinnerPrintSize.setSelection(15);
 		
 		CLabel lblPrintPx = new CLabel(compositePrint, SWT.NONE);
-		lblPrintPx.setText("px");
+		lblPrintPx.setText(DICT.getString("PointStyleToolbox.lblPrintPx.text")); //$NON-NLS-1$
 		
 		fillPointTypes();
 		fillColors();

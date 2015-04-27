@@ -10,8 +10,10 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import java.util.ResourceBundle;
 
 public class HelpDialog extends Dialog {
+	private ResourceBundle DICT = ResourceBundle.getBundle("de.tudresden.inf.gsvgplott.ui.util.messages"); //$NON-NLS-1$
 
 	protected Object result;
 	protected Shell shlHelp;
@@ -23,7 +25,7 @@ public class HelpDialog extends Dialog {
 	 */
 	public HelpDialog(Shell parent, int style) {
 		super(parent, style);
-		setText("SWT Dialog");
+		setText(DICT.getString("HelpDialog.this.text")); //$NON-NLS-1$
 	}
 
 	/**
@@ -49,11 +51,11 @@ public class HelpDialog extends Dialog {
 	private void createContents() {
 		shlHelp = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.RESIZE | SWT.APPLICATION_MODAL);
 		shlHelp.setSize(600, 383);
-		shlHelp.setText("Help");
+		shlHelp.setText(DICT.getString("HelpDialog.shlHelp.text")); //$NON-NLS-1$
 		shlHelp.setLayout(new GridLayout(1, false));
 		
 		Browser browser = new Browser(shlHelp, SWT.NONE);
-		browser.setUrl("http://gollasch-it.de");
+		browser.setUrl(DICT.getString("HelpDialog.browser.url")); //$NON-NLS-1$
 		browser.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		Button btnClose = new Button(shlHelp, SWT.NONE);
@@ -64,7 +66,7 @@ public class HelpDialog extends Dialog {
 			}
 		});
 		btnClose.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		btnClose.setText("Close");
+		btnClose.setText(DICT.getString("HelpDialog.btnClose.text")); //$NON-NLS-1$
 	}
 
 }

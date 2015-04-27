@@ -423,11 +423,29 @@ public class SvgPlotHelper {
 	}
 	
 	public static String formatColor(Color color) {
-		//FIXME: Color calculation faulty
 		String result = "#";
-		result += Integer.toHexString(color.getRed());
-		result += Integer.toHexString(color.getGreen());
-		result += Integer.toHexString(color.getBlue());
+		String red = Integer.toHexString(color.getRed());
+		String green = Integer.toHexString(color.getGreen());
+		String blue = Integer.toHexString(color.getBlue());
+		
+		if(red.length() == 1) {
+			red = "0" + red;
+		}
+		if(green.length() == 1) {
+			green = "0" + green;
+		}
+		if(blue.length() == 1) {
+			blue = "0" + blue;
+		}
+		
+		result += red;
+		result += green;
+		result += blue;
+		
+		if(result.length() != 7) {
+			return "#000000";
+		}
+		
 		return result;
 	}
 }
