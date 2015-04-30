@@ -554,7 +554,7 @@ public class LineStyleToolbox extends Dialog {
 		screenGc.dispose();
 		this.lblScreenColorSelected.setBackground(screenIcon);
 		
-		int sWidth = screenLineStyle.getWidth();
+		float sWidth = screenLineStyle.getWidth();
 		lblScreenWidthSelected.setText(sWidth + "px");
 		
 		String pStyle = printLineStyle.getStyle();
@@ -571,7 +571,7 @@ public class LineStyleToolbox extends Dialog {
 		printGc.dispose();
 		this.lblPrintColorSelected.setBackground(printIcon);
 		
-		int pWidth = printLineStyle.getWidth();
+		float pWidth = printLineStyle.getWidth();
 		lblPrintWidthSelected.setText(pWidth + "px");
 	}
 	

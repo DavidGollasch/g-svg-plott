@@ -3,6 +3,8 @@
  */
 package de.tudresden.inf.gsvgplott.data.style;
 
+import java.awt.Color;
+
 import de.tudresden.inf.gsvgplott.data.style.palettes.ColorPalette;
 import de.tudresden.inf.gsvgplott.data.style.palettes.LineTypePalette;
 import de.tudresden.inf.gsvgplott.data.style.palettes.PointTypePalette;
@@ -25,18 +27,19 @@ public class DefaultStyles {
 	}
 	
 	public static TextStyle getDefaultScreenGeneralTextStyle() {
-		TextStyle x = new TextStyle("Arial", 14, ColorPalette.LOCORICE, false, false);
+		TextStyle x = new TextStyle("serif", 36, ColorPalette.LOCORICE, false, false);
 		return x;
 	}
 	
 	public static TextStyle getDefaultPrintGeneralTextStyle() {
-		return getDefaultScreenGeneralTextStyle();
+		TextStyle x = new TextStyle("Braille DE Computer", 36, ColorPalette.LOCORICE, false, false);
+		return x;
 	}
 	
 	// AXES & HELPLINES
 	
 	public static LineStyle getDefaultScreenXaxisLineStyle() {
-		LineStyle x = new LineStyle(LineTypePalette.SOLID, 1, ColorPalette.LOCORICE);
+		LineStyle x = new LineStyle(LineTypePalette.SOLID, (float)0.5, new Color(17,17,17));
 		return x;
 	}
 	
@@ -45,7 +48,7 @@ public class DefaultStyles {
 	}
 	
 	public static LineStyle getDefaultScreenXaxisHelplinesLineStyle() {
-		LineStyle x = new LineStyle(LineTypePalette.DASHED, 1, ColorPalette.LOCORICE);
+		LineStyle x = new LineStyle(LineTypePalette.DASHED, (float)0.5, new Color(17,17,17));
 		return x;
 	}
 	

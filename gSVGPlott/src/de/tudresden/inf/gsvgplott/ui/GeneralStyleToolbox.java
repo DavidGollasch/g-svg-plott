@@ -174,7 +174,9 @@ public class GeneralStyleToolbox extends Dialog {
 		btnScreenFont.setText(DICT.getString("GeneralStyleToolbox.btnScreenFont.text")); //$NON-NLS-1$
 		
 		lblScreenFontSelected = new CLabel(compositeScreen, SWT.NONE);
-		lblScreenFontSelected.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+		GridData gd_lblScreenFontSelected = new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1);
+		gd_lblScreenFontSelected.widthHint = 150;
+		lblScreenFontSelected.setLayoutData(gd_lblScreenFontSelected);
 		lblScreenFontSelected.setText(DICT.getString("GeneralStyleToolbox.lblScreenFontSelected.text")); //$NON-NLS-1$
 		
 		CLabel lblScreenColor = new CLabel(compositeScreen, SWT.NONE);

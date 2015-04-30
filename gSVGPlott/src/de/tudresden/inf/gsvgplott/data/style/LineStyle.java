@@ -11,7 +11,7 @@ import java.awt.Color;
  */
 public class LineStyle {
 	private String style;
-	private int width;
+	private float width;
 	private Color color;
 	
 	/**
@@ -19,7 +19,7 @@ public class LineStyle {
 	 * @param width
 	 * @param color
 	 */
-	public LineStyle(String style, int width, Color color) {
+	public LineStyle(String style, float width, Color color) {
 		super();
 		this.style = style;
 		this.width = width;
@@ -44,7 +44,7 @@ public class LineStyle {
 		int result = 1;
 		result = prime * result + ((color == null) ? 0 : color.hashCode());
 		result = prime * result + ((style == null) ? 0 : style.hashCode());
-		result = prime * result + width;
+		result = prime * result + Math.round(width);
 		return result;
 	}
 
@@ -87,13 +87,13 @@ public class LineStyle {
 	/**
 	 * @return the width
 	 */
-	public int getWidth() {
+	public float getWidth() {
 		return width;
 	}
 	/**
 	 * @param width the width to set
 	 */
-	public void setWidth(int width) {
+	public void setWidth(float width) {
 		this.width = width;
 	}
 	/**

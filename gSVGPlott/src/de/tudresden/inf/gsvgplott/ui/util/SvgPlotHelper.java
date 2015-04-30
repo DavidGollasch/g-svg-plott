@@ -63,7 +63,7 @@ public class SvgPlotHelper {
 			String sGtsM = "text";
 			Map<String, String> sGtsV = new HashMap<String, String>();
 			sGtsV.put("font-family", sGts.getFont() + ", sans-serif");
-			sGtsV.put("font-size", String.valueOf(sGts.getSize()));
+			sGtsV.put("font-size", String.valueOf(sGts.getSize() + "pt"));
 			sGtsV.put("fill", formatColor(sGts.getColor()));
 			sGtsV.put("stroke", "none");
 			if(sGts.isItalic()) {
@@ -81,7 +81,7 @@ public class SvgPlotHelper {
 			String pGtsM = "text";
 			Map<String, String> pGtsV = new HashMap<String, String>();
 			pGtsV.put("font-family", pGts.getFont() + ", sans-serif");
-			pGtsV.put("font-size", String.valueOf(pGts.getSize()));
+			pGtsV.put("font-size", String.valueOf(pGts.getSize()+"pt"));
 			pGtsV.put("fill", formatColor(pGts.getColor()));
 			pGtsV.put("stroke", "none");
 			if(pGts.isItalic()) {
@@ -134,7 +134,7 @@ public class SvgPlotHelper {
 		if(pXls != null) {
 			String pXlsM = "#x-axis, #x-axis-arrow, #x-tics";
 			Map<String, String> pXlsV = new HashMap<String, String>();
-			pXlsV.put("stroke", formatColor(sXls.getColor()));
+			pXlsV.put("stroke", formatColor(pXls.getColor()));
 			pXlsV.put("fill", "transparent");
 			pXlsV.put("stroke-width", String.valueOf(pXls.getWidth()));
 			if(pXls.getStyle().isEmpty()) {
