@@ -581,6 +581,51 @@ public class MainWindow {
 		grpPlotoptionsIntegralAreaRow.setText(DICT.getString("MainWindow.grpPlotoptionsIntegralAreaRow.text")); //$NON-NLS-1$
 		grpPlotoptionsIntegralAreaRow.setLayout(new GridLayout(5, false));
 		
+		CLabel lblPoIntegralInfo = new CLabel(grpPlotoptionsIntegralAreaRow, SWT.NONE);
+		lblPoIntegralInfo.setFont(SWTResourceManager.getFont(".Helvetica Neue DeskInterface", 11, SWT.BOLD));
+		lblPoIntegralInfo.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 4, 1));
+		lblPoIntegralInfo.setText(DICT.getString("MainWindow.lblWarning.text"));
+		new Label(grpPlotoptionsIntegralAreaRow, SWT.NONE);
+		
+		CLabel lblPoIntegralBordering = new CLabel(grpPlotoptionsIntegralAreaRow, SWT.NONE);
+		lblPoIntegralBordering.setText(DICT.getString("MainWindow.lblPoIntegralBordering.text"));
+		
+		comboPoIntegralBorderingFrom = new Combo(grpPlotoptionsIntegralAreaRow, SWT.READ_ONLY);
+		comboPoIntegralBorderingFrom.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent arg0) {
+				triggerOptionsIntegralBroderingFromChanged();
+			}
+		});
+		comboPoIntegralBorderingFrom.getAccessible().addAccessibleListener(new AccessibleAdapter() {
+			public void getName(AccessibleEvent e) {
+				e.result = DICT.getString("MainWindow.comboPoIntegralBorderingFrom.access");
+			}
+		});
+		comboPoIntegralBorderingFrom.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+		comboPoIntegralBorderingFrom.setItems(new String[] {});
+		
+		CLabel lblPoIntegralAnd = new CLabel(grpPlotoptionsIntegralAreaRow, SWT.NONE);
+		lblPoIntegralAnd.setText(DICT.getString("MainWindow.lblPoIntegralAnd.text"));
+		
+		comboPoIntegralBorderingTo = new Combo(grpPlotoptionsIntegralAreaRow, SWT.READ_ONLY);
+		comboPoIntegralBorderingTo.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent arg0) {
+				triggerOptionsIntegralBorderingToChanged();
+			}
+		});
+		comboPoIntegralBorderingTo.getAccessible().addAccessibleListener(new AccessibleAdapter() {
+			public void getName(AccessibleEvent e) {
+				e.result = DICT.getString("MainWondow.comboPoIntegralBorderingTo.access");
+			}
+		});
+		comboPoIntegralBorderingTo.setItems(new String[] {"x axis"});
+		comboPoIntegralBorderingTo.select(0);
+		new Label(grpPlotoptionsIntegralAreaRow, SWT.NONE);
+		
+		Label lblSep = new Label(grpPlotoptionsIntegralAreaRow, SWT.SEPARATOR | SWT.HORIZONTAL);
+		lblSep.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 5, 1));
+		lblSep.setText(DICT.getString("MainWindow.lblSep.text"));
+		
 		CLabel lblPoIntegralTitle = new CLabel(grpPlotoptionsIntegralAreaRow, SWT.NONE);
 		lblPoIntegralTitle.setText(DICT.getString("MainWindow.lblPoIntegralTitle.text")); //$NON-NLS-1$
 		
@@ -651,41 +696,6 @@ public class MainWindow {
 		spinnerPoIntegralRangeTo.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
 		spinnerPoIntegralRangeTo.setMaximum(99999);
 		spinnerPoIntegralRangeTo.setMinimum(-99999);
-		
-		CLabel lblPoIntegralBordering = new CLabel(grpPlotoptionsIntegralAreaRow, SWT.NONE);
-		lblPoIntegralBordering.setText(DICT.getString("MainWindow.lblPoIntegralBordering.text")); //$NON-NLS-1$
-		
-		comboPoIntegralBorderingFrom = new Combo(grpPlotoptionsIntegralAreaRow, SWT.READ_ONLY);
-		comboPoIntegralBorderingFrom.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent arg0) {
-				triggerOptionsIntegralBroderingFromChanged();
-			}
-		});
-		comboPoIntegralBorderingFrom.getAccessible().addAccessibleListener(new AccessibleAdapter() {
-			public void getName(AccessibleEvent e) {
-				e.result = DICT.getString("MainWindow.comboPoIntegralBorderingFrom.access");
-			}
-		});
-		comboPoIntegralBorderingFrom.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		comboPoIntegralBorderingFrom.setItems(new String[] {});
-		
-		CLabel lblPoIntegralAnd = new CLabel(grpPlotoptionsIntegralAreaRow, SWT.NONE);
-		lblPoIntegralAnd.setText(DICT.getString("MainWindow.lblPoIntegralAnd.text")); //$NON-NLS-1$
-		
-		comboPoIntegralBorderingTo = new Combo(grpPlotoptionsIntegralAreaRow, SWT.READ_ONLY);
-		comboPoIntegralBorderingTo.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent arg0) {
-				triggerOptionsIntegralBorderingToChanged();
-			}
-		});
-		comboPoIntegralBorderingTo.getAccessible().addAccessibleListener(new AccessibleAdapter() {
-			public void getName(AccessibleEvent e) {
-				e.result = DICT.getString("MainWondow.comboPoIntegralBorderingTo.access");
-			}
-		});
-		comboPoIntegralBorderingTo.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
-		comboPoIntegralBorderingTo.setItems(new String[] {"x axis"});
-		comboPoIntegralBorderingTo.select(0);
 		scrolledCompositePlotoptionsColumn.setContent(compositePlotoptionsColumn);
 		scrolledCompositePlotoptionsColumn.setMinSize(compositePlotoptionsColumn.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		
@@ -1025,6 +1035,12 @@ public class MainWindow {
 		if(prtPS == null) {
 			prtPS = DefaultStyles.getDefaultPrintMarkedPointsListPointStyle();
 		}
+		for(Entry<Group, MarkedPointsList> e : pointlistMap.entrySet()) {
+			MarkedPointsList l = e.getValue();
+			l.setPointScreenStyle(scrPS);
+			l.setPointPrintStyle(prtPS);
+		}
+		
 		
 		PointStyleToolbox ps = new PointStyleToolbox(shlGsvgplott, 0, scrPS, prtPS);
 		ps.setOpeningLocation(Display.getDefault().getCursorLocation());
@@ -1054,6 +1070,8 @@ public class MainWindow {
 		if(prtLS == null) {
 			prtLS = DefaultStyles.getDefaultPrintFunctionLineStyle();
 		}
+		f.setFunctionScreenStyle(scrLS);
+		f.setFunctionPrintStyle(prtLS);
 		
 		LineStyleToolbox ls = new LineStyleToolbox(shlGsvgplott, 0, scrLS, prtLS);
 		ls.setOpeningLocation(Display.getDefault().getCursorLocation());
@@ -1101,6 +1119,10 @@ public class MainWindow {
 		if(prtTS == null) {
 			prtTS = DefaultStyles.getDefaultPrintGeneralTextStyle();
 		}
+		diagram.setBackgroundScreenStyle(scrAS);
+		diagram.setBackgroundPrintStyle(prtAS);
+		diagram.setTextScreenStyle(scrTS);
+		diagram.setTextPrintStyle(prtTS);
 		
 		GeneralStyleToolbox gt = new GeneralStyleToolbox(shlGsvgplott, 0, scrTS, prtTS, scrAS, prtAS);
 		gt.setOpeningLocation(Display.getDefault().getCursorLocation());
@@ -1129,6 +1151,8 @@ public class MainWindow {
 		if(prtLS == null) {
 			prtLS = DefaultStyles.getDefaultPrintXaxisLineStyle();
 		}
+		diagram.getXaxis().setAxisScreenStyle(scrLS);
+		diagram.getXaxis().setAxisPrintStyle(prtLS);
 		
 		LineStyleToolbox lt = new LineStyleToolbox(shlGsvgplott, 0, scrLS, prtLS);
 		lt.setOpeningLocation(Display.getDefault().getCursorLocation());
@@ -1154,6 +1178,8 @@ public class MainWindow {
 		if(prtLS == null) {
 			prtLS = DefaultStyles.getDefaultPrintXaxisHelplinesLineStyle();
 		}
+		diagram.getXaxis().setHelplineScreenStyle(scrLS);
+		diagram.getXaxis().setHelplinePrintStyle(prtLS);
 		
 		LineStyleToolbox lt = new LineStyleToolbox(shlGsvgplott, 0, scrLS, prtLS);
 		lt.setOpeningLocation(Display.getDefault().getCursorLocation());
@@ -1178,6 +1204,8 @@ public class MainWindow {
 		if(prtLS == null) {
 			prtLS = DefaultStyles.getDefaultPrintYaxisLineStyle();
 		}
+		diagram.getYaxis().setAxisScreenStyle(scrLS);
+		diagram.getYaxis().setAxisPrintStyle(prtLS);
 		
 		LineStyleToolbox lt = new LineStyleToolbox(shlGsvgplott, 0, scrLS, prtLS);
 		lt.setOpeningLocation(Display.getDefault().getCursorLocation());
@@ -1202,6 +1230,8 @@ public class MainWindow {
 		if(prtLS == null) {
 			prtLS = DefaultStyles.getDefaultPrintYaxisHelplinesLineStyle();
 		}
+		diagram.getYaxis().setHelplineScreenStyle(scrLS);
+		diagram.getYaxis().setHelplinePrintStyle(prtLS);
 		
 		LineStyleToolbox lt = new LineStyleToolbox(shlGsvgplott, 0, scrLS, prtLS);
 		lt.setOpeningLocation(Display.getDefault().getCursorLocation());
@@ -1229,6 +1259,10 @@ public class MainWindow {
 		}
 		if(prtAS == null) {
 			prtAS = DefaultStyles.getDefaultPrintIntegralAreaStyle();
+		}
+		if(diagram.getIntegral() != null) {
+			diagram.getIntegral().setAreaScreenStyle(scrAS);
+			diagram.getIntegral().setAreaPrintStyle(prtAS);
 		}
 		
 		AreaStyleToolbox at = new AreaStyleToolbox(shlGsvgplott, 0, scrAS, prtAS);
@@ -1296,8 +1330,9 @@ public class MainWindow {
 		// add helplines
 		ArrayList<Helpline> helplines = new ArrayList<Helpline>();
 		for (String s : listValues) {
+			String s1 = s.replaceAll(",", ".");
 			try {
-				double n = Double.parseDouble(s);
+				double n = Double.parseDouble(s1);
 				Helpline h = new Helpline(n);
 				helplines.add(h);
 			} catch (Exception e) {
@@ -1345,8 +1380,9 @@ public class MainWindow {
 		//add helplines
 		ArrayList<Helpline> helplines = new ArrayList<Helpline>();
 		for(String s : listValues) {
+			String s1 = s.replaceAll(",", ".");
 			try {
-				double n = Double.parseDouble(s);
+				double n = Double.parseDouble(s1);
 				Helpline h = new Helpline(n);
 				helplines.add(h);
 			} catch (Exception e) {
@@ -1834,6 +1870,7 @@ public class MainWindow {
 					return;
 				
 				String func = ((Text)arg0.getSource()).getText();
+				func = func.replaceAll(",", ".");
 				f.setFunction(func);
 				
 			}
@@ -2405,7 +2442,7 @@ public class MainWindow {
 		if(xhelps != null) {
 			String helplines = "";
 			for(Helpline h : xhelps) {
-				helplines += " " + Double.toString(h.getIntersection()) + ";";
+				helplines += Double.toString(h.getIntersection()) + " ";
 			}
 			this.txtPoXaxisHelplines.setText(helplines);
 		}
@@ -2418,7 +2455,7 @@ public class MainWindow {
 		if(yhelps != null) {
 			String helplines = "";
 			for(Helpline h : yhelps) {
-				helplines += " " + Double.toString(h.getIntersection()) + ";";
+				helplines += Double.toString(h.getIntersection()) + " ";
 			}
 			this.txtPoYaxisHelplines.setText(helplines);
 		}
@@ -2562,7 +2599,7 @@ public class MainWindow {
 				new ArrayList<tud.tangram.svgplot.plotting.Function>();
 		for(Function f : diagram.getFunctions()) {
 			tud.tangram.svgplot.plotting.Function func = 
-					new tud.tangram.svgplot.plotting.Function(f.getTitle(), f.getFunction());
+					new tud.tangram.svgplot.plotting.Function(f.getTitle(), f.getFunction().replaceAll(",", "."));
 			functions.add(func);
 		}
 		plotter.setFunctions(functions);

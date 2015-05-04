@@ -35,6 +35,7 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.ModifyEvent;
+
 import java.util.ResourceBundle;
 
 public class PointStyleToolbox extends Dialog {
@@ -112,7 +113,7 @@ public class PointStyleToolbox extends Dialog {
 	private void createContents() {
 		shlToolbox = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.TOOL);
 		shlToolbox.setText(DICT.getString("PointStyleToolbox.shlToolbox.text")); //$NON-NLS-1$
-		shlToolbox.setSize(236, 305);
+		shlToolbox.setSize(231, 333);
 		shlToolbox.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
 		CTabFolder tabFolder = new CTabFolder(shlToolbox, SWT.BORDER);
@@ -338,6 +339,8 @@ public class PointStyleToolbox extends Dialog {
 		lblPrintSize.setParent(invisibleShell);
 		lblPrintPx.setParent(invisibleShell);
 		spinnerPrintSize.setParent(invisibleShell);
+		btnScreenBordered.setParent(invisibleShell);
+		btnPrintBordered.setParent(invisibleShell);
 
 	}
 	
@@ -416,6 +419,7 @@ public class PointStyleToolbox extends Dialog {
 		screenGc.setForeground(screenNewcolor);
 		screenGc.fillRectangle(0, 0, 16, 16);
 		screenGc.dispose();
+		this.lblScreenColorSelected.setText("(r" + Integer.toString(screenC.getRed()) + ", g" + Integer.toString(screenC.getGreen()) + ", b" + Integer.toString(screenC.getBlue()) + ")");
 		this.lblScreenColorSelected.setBackground(screenIcon);
 		
 		int sSize = screenPointStyle.getSize();
@@ -436,6 +440,7 @@ public class PointStyleToolbox extends Dialog {
 		printGc.setForeground(printNewcolor);
 		printGc.fillRectangle(0, 0, 16, 16);
 		printGc.dispose();
+		this.lblPrintColorSelected.setText("(r" + Integer.toString(printC.getRed()) + ", g" + Integer.toString(printC.getGreen()) + ", b" + Integer.toString(printC.getBlue()) + ")");
 		this.lblPrintColorSelected.setBackground(printIcon);
 		
 		int pSize = printPointStyle.getSize();

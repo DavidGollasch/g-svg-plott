@@ -101,7 +101,7 @@ public class AreaStyleToolbox extends Dialog {
 	private void createContents() {
 		shlToolbox = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.TOOL);
 		shlToolbox.setText(DICT.getString("AreaStyleToolbox.shlToolbox.text")); //$NON-NLS-1$
-		shlToolbox.setSize(209, 196);
+		shlToolbox.setSize(230, 319);
 		shlToolbox.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
 		CTabFolder tabFolder = new CTabFolder(shlToolbox, SWT.BORDER);
@@ -259,10 +259,10 @@ public class AreaStyleToolbox extends Dialog {
 		iconPrint.setBackground(newcolor2);
 		
 		// set color icons in form
-		lblScreenColorSelected.setText("");
+		lblScreenColorSelected.setText("(r" + Integer.toString(screen.getRed()) + ", g" + Integer.toString(screen.getGreen()) + ", b" + Integer.toString(screen.getBlue()) + ")");
 		lblScreenColorSelected.setBackground(iconScreen);
 		
-		lblPrintColorSelected.setText("");
+		lblPrintColorSelected.setText("(r" + Integer.toString(print.getRed()) + ", g" + Integer.toString(print.getGreen()) + ", b" + Integer.toString(print.getBlue()) + ")");
 		lblPrintColorSelected.setBackground(iconPrint);
 	}
 	

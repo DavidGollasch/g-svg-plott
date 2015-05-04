@@ -33,6 +33,7 @@ import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
+
 import java.util.ResourceBundle;
 
 public class GeneralStyleToolbox extends Dialog {
@@ -112,7 +113,7 @@ public class GeneralStyleToolbox extends Dialog {
 	private void createContents() {
 		shlToolbox = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.TOOL);
 		shlToolbox.setText(DICT.getString("GeneralStyleToolbox.shlToolbox.text")); //$NON-NLS-1$
-		shlToolbox.setSize(209, 255);
+		shlToolbox.setSize(274, 336);
 		shlToolbox.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
 		CTabFolder tabFolder = new CTabFolder(shlToolbox, SWT.BORDER);
@@ -271,7 +272,9 @@ public class GeneralStyleToolbox extends Dialog {
 		btnPrintFont.setText(DICT.getString("GeneralStyleToolbox.btnPrintFont.text")); //$NON-NLS-1$
 		
 		lblPrintFontSelected = new CLabel(compositePrint, SWT.NONE);
-		lblPrintFontSelected.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+		GridData gd_lblPrintFontSelected = new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1);
+		gd_lblPrintFontSelected.widthHint = 150;
+		lblPrintFontSelected.setLayoutData(gd_lblPrintFontSelected);
 		lblPrintFontSelected.setText(DICT.getString("GeneralStyleToolbox.lblPrintFontSelected.text")); //$NON-NLS-1$
 		
 		CLabel lblPrintColor = new CLabel(compositePrint, SWT.NONE);
@@ -412,6 +415,7 @@ public class GeneralStyleToolbox extends Dialog {
 		screenGc.setForeground(screenNewcolor);
 		screenGc.fillRectangle(0, 0, 16, 16);
 		screenGc.dispose();
+		this.lblScreenColorSelected.setText("(r" + Integer.toString(screenC.getRed()) + ", g" + Integer.toString(screenC.getGreen()) + ", b" + Integer.toString(screenC.getBlue()) + ")");
 		this.lblScreenColorSelected.setBackground(screenIcon);
 		
 		
@@ -424,6 +428,7 @@ public class GeneralStyleToolbox extends Dialog {
 		printGc.setForeground(printNewcolor);
 		printGc.fillRectangle(0, 0, 16, 16);
 		printGc.dispose();
+		this.lblPrintColorSelected.setText("(r" + Integer.toString(printC.getRed()) + ", g" + Integer.toString(printC.getGreen()) + ", b" + Integer.toString(printC.getBlue()) + ")");
 		this.lblPrintColorSelected.setBackground(printIcon);
 	}
 	

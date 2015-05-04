@@ -60,8 +60,13 @@ public class HelpDialog extends Dialog {
 		shlHelp.setLayout(new GridLayout(1, false));
 		
 		Browser browser = new Browser(shlHelp, SWT.NONE);
+		
 		URL url = HelpDialog.class.getResource("/de/tudresden/inf/gsvgplott/docs/Help_de.htm");
-		browser.setUrl(url.toString());
+		if(url != null)
+			browser.setUrl(url.toString());
+		else
+			browser.setText("<html><body><h1>No Help Document Found.</h1></body></html>");
+		
 		browser.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		Button btnClose = new Button(shlHelp, SWT.NONE);

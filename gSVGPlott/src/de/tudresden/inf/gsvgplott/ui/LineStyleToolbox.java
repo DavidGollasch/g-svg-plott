@@ -31,6 +31,7 @@ import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
+
 import java.util.ResourceBundle;
 
 public class LineStyleToolbox extends Dialog {
@@ -108,7 +109,7 @@ public class LineStyleToolbox extends Dialog {
 	private void createContents() {
 		shlTest = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.TOOL | SWT.APPLICATION_MODAL);
 		shlTest.setText(DICT.getString("LineStyleToolbox.shlTest.text")); //$NON-NLS-1$
-		shlTest.setSize(215, 310);
+		shlTest.setSize(271, 409);
 		shlTest.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
 		CTabFolder tabFolder = new CTabFolder(shlTest, SWT.BORDER);
@@ -126,6 +127,7 @@ public class LineStyleToolbox extends Dialog {
 		lblScreenStyle.setText(DICT.getString("LineStyleToolbox.lblScreenStyle.text")); //$NON-NLS-1$
 		
 		lblScreenStyleSelected = new CLabel(compositeScreen, SWT.NONE);
+		lblScreenStyleSelected.setAlignment(SWT.RIGHT);
 		GridData gd_lblScreenStyleSelected = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
 		gd_lblScreenStyleSelected.widthHint = 100;
 		lblScreenStyleSelected.setLayoutData(gd_lblScreenStyleSelected);
@@ -145,7 +147,7 @@ public class LineStyleToolbox extends Dialog {
 			}
 		});
 		GridData gd_tableScreenLineStyle = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
-		gd_tableScreenLineStyle.minimumHeight = 50;
+		gd_tableScreenLineStyle.minimumHeight = 80;
 		tableScreenLineStyle.setLayoutData(gd_tableScreenLineStyle);
 		
 		TableColumn tblclmnScreenLineStyle = new TableColumn(tableScreenLineStyle, SWT.NONE);
@@ -181,7 +183,8 @@ public class LineStyleToolbox extends Dialog {
 		lblScreenWidth.setText(DICT.getString("LineStyleToolbox.lblScreenWidth.text")); //$NON-NLS-1$
 		
 		lblScreenWidthSelected = new CLabel(compositeScreen, SWT.NONE);
-		lblScreenWidthSelected.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		lblScreenWidthSelected.setAlignment(SWT.RIGHT);
+		lblScreenWidthSelected.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		lblScreenWidthSelected.setText(DICT.getString("LineStyleToolbox.lblScreenWidthSelected.text")); //$NON-NLS-1$
 		
 		tableScreenLineWidth = new Table(compositeScreen, SWT.FULL_SELECTION);
@@ -194,11 +197,11 @@ public class LineStyleToolbox extends Dialog {
 				
 				String newWidth = selectedItem.getText();
 				newWidth = newWidth.replace("px", "");
-				screenLineStyle.setWidth(Integer.parseInt(newWidth));
+				screenLineStyle.setWidth(Float.parseFloat(newWidth));
 			}
 		});
 		GridData gd_tableScreenLineWidth = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
-		gd_tableScreenLineWidth.minimumHeight = 50;
+		gd_tableScreenLineWidth.minimumHeight = 80;
 		tableScreenLineWidth.setLayoutData(gd_tableScreenLineWidth);
 		
 		TableColumn tblclmnScreenLineWidth = new TableColumn(tableScreenLineWidth, SWT.NONE);
@@ -250,7 +253,8 @@ public class LineStyleToolbox extends Dialog {
 		lblScreenColor.setText(DICT.getString("LineStyleToolbox.lblScreenColor.text")); //$NON-NLS-1$
 		
 		lblScreenColorSelected = new CLabel(compositeScreen, SWT.NONE);
-		lblScreenColorSelected.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		lblScreenColorSelected.setAlignment(SWT.RIGHT);
+		lblScreenColorSelected.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		lblScreenColorSelected.setText(DICT.getString("LineStyleToolbox.lblScreenColorSelected.text")); //$NON-NLS-1$
 		
 		tableScreenLineColor = new Table(compositeScreen, SWT.FULL_SELECTION);
@@ -294,6 +298,7 @@ public class LineStyleToolbox extends Dialog {
 		lblPrintStyle.setText(DICT.getString("LineStyleToolbox.lblPrintStyle.text")); //$NON-NLS-1$
 		
 		lblPrintStyleSelected = new CLabel(compositePrint, SWT.NONE);
+		lblPrintStyleSelected.setAlignment(SWT.RIGHT);
 		GridData gd_lblPrintStyleSelected = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
 		gd_lblPrintStyleSelected.widthHint = 100;
 		lblPrintStyleSelected.setLayoutData(gd_lblPrintStyleSelected);
@@ -313,7 +318,7 @@ public class LineStyleToolbox extends Dialog {
 			}
 		});
 		GridData gd_tablePrintLineStyle = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
-		gd_tablePrintLineStyle.minimumHeight = 50;
+		gd_tablePrintLineStyle.minimumHeight = 80;
 		gd_tablePrintLineStyle.widthHint = 132;
 		tablePrintLineStyle.setLayoutData(gd_tablePrintLineStyle);
 		
@@ -338,7 +343,8 @@ public class LineStyleToolbox extends Dialog {
 		lblPrintWidth.setText(DICT.getString("LineStyleToolbox.lblPrintWidth.text")); //$NON-NLS-1$
 		
 		lblPrintWidthSelected = new CLabel(compositePrint, SWT.NONE);
-		lblPrintWidthSelected.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		lblPrintWidthSelected.setAlignment(SWT.RIGHT);
+		lblPrintWidthSelected.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		lblPrintWidthSelected.setText(DICT.getString("LineStyleToolbox.lblPrintWidthSelected.text")); //$NON-NLS-1$
 		
 		tablePrintLineWidth = new Table(compositePrint, SWT.FULL_SELECTION);
@@ -351,11 +357,11 @@ public class LineStyleToolbox extends Dialog {
 				
 				String newWidth = selectedItem.getText();
 				newWidth = newWidth.replace("px", "");
-				printLineStyle.setWidth(Integer.parseInt(newWidth));
+				printLineStyle.setWidth(Float.parseFloat(newWidth));
 			}
 		});
 		GridData gd_tablePrintLineWidth = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
-		gd_tablePrintLineWidth.minimumHeight = 50;
+		gd_tablePrintLineWidth.minimumHeight = 80;
 		tablePrintLineWidth.setLayoutData(gd_tablePrintLineWidth);
 		
 		TableColumn tblclmnPrintLineWidth = new TableColumn(tablePrintLineWidth, SWT.NONE);
@@ -407,7 +413,8 @@ public class LineStyleToolbox extends Dialog {
 		lblPrintColor.setText(DICT.getString("LineStyleToolbox.lblPrintColor.text")); //$NON-NLS-1$
 		
 		lblPrintColorSelected = new CLabel(compositePrint, SWT.NONE);
-		lblPrintColorSelected.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		lblPrintColorSelected.setAlignment(SWT.RIGHT);
+		lblPrintColorSelected.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		lblPrintColorSelected.setText(DICT.getString("LineStyleToolbox.lblPrintColorSelected.text")); //$NON-NLS-1$
 		
 		tablePrintLineColor = new Table(compositePrint, SWT.FULL_SELECTION);
@@ -485,7 +492,7 @@ public class LineStyleToolbox extends Dialog {
 		this.tableScreenLineWidth.removeAll();
 		this.tablePrintLineWidth.removeAll();
 		
-		String[] widths = {"1px", "2px", "3px", "4px", "5px", "6px", "7px", "8px", "9px", "10px"};
+		String[] widths = {"0.25px", "0.5px", "0.75px", "1px", "2px", "3px", "4px", "5px", "6px", "7px", "8px", "9px", "10px"};
 		for(String s : widths) {
 			TableItem item1 = new TableItem(tableScreenLineWidth, SWT.NONE);
 			TableItem item2 = new TableItem(tablePrintLineWidth, SWT.NONE);
@@ -541,7 +548,13 @@ public class LineStyleToolbox extends Dialog {
 	
 	private void initiateStyle() {
 		String sStyle = screenLineStyle.getStyle();
-		lblScreenStyleSelected.setText(sStyle); //TODO: could be improved to show correct selection (image and name)
+		if(sStyle.equals(""))
+			sStyle = "solid";
+		else if (sStyle.equals("5,5"))
+			sStyle = "dashed";
+		else if(sStyle.equals("1,3"))
+			sStyle = "dotted";
+		lblScreenStyleSelected.setText("dash(" + sStyle + ")"); //TODO: could be improved to show correct selection (image and name)
 		
 		Color sColor = screenLineStyle.getColor();
 		Color screenC = sColor;
@@ -552,6 +565,7 @@ public class LineStyleToolbox extends Dialog {
 		screenGc.setForeground(screenNewcolor);
 		screenGc.fillRectangle(0, 0, 16, 16);
 		screenGc.dispose();
+		this.lblScreenColorSelected.setText("(r" + Integer.toString(screenC.getRed()) + ", g" + Integer.toString(screenC.getGreen()) + ", b" + Integer.toString(screenC.getBlue()) + ")");
 		this.lblScreenColorSelected.setBackground(screenIcon);
 		
 		float sWidth = screenLineStyle.getWidth();
@@ -569,6 +583,7 @@ public class LineStyleToolbox extends Dialog {
 		printGc.setForeground(printNewcolor);
 		printGc.fillRectangle(0, 0, 16, 16);
 		printGc.dispose();
+		this.lblPrintColorSelected.setText("(r" + Integer.toString(printC.getRed()) + ", g" + Integer.toString(printC.getGreen()) + ", b" + Integer.toString(printC.getBlue()) + ")");
 		this.lblPrintColorSelected.setBackground(printIcon);
 		
 		float pWidth = printLineStyle.getWidth();
